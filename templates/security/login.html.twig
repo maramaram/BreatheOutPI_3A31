@@ -1,0 +1,45 @@
+{% extends 'basefront.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+{% block up%}
+    <section class="slider">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <br>
+                    <span class="h6 d-inline-block mb-4 subhead text-uppercase">Create account</span>
+                    <h1 class="text-uppercase text-white mb-5">Welcome Back to Our <span class="text-color">fitness </span><br>Website</h1>
+
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block body %}
+    <form method="post">
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        {% if app.user %}
+            <div class="mb-3">
+                You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+            </div>
+        {% endif %}
+
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <label for="inputEmail">Email</label>
+
+        <input type="text" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="username" required autofocus>
+        <label for="inputPassword">Password</label>
+        <input type="password" name="_password" id="Password" class="form-control" >
+
+        <input type="hidden" name="_csrf_token"
+               value="{{ csrf_token('authenticate') }}"
+        >
+
+        <button class="btn btn-lg btn-primary" type="submit">
+            Sign in
+        </button>
+    </form>
+{% endblock %}
