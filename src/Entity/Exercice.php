@@ -42,6 +42,7 @@ class Exercice
     private ?string $nd = null;
 
     #[
+        Assert\NotNull(message: "Veuillez télécharger une image."),
         Assert\Image(
             minWidth: 200,
             maxWidth: 400,
@@ -53,17 +54,16 @@ class Exercice
             maxHeightMessage: "La hauteur de l'image ne doit pas dépasser 400 pixels."
         )
     ]
-    
     #[ORM\Column(length: 255)]
     private ?string $img = null;
 
     #[
+        Assert\NotNull(message: "Veuillez télécharger un gif."),
         Assert\File(
             mimeTypes: ["image/gif"],
             mimeTypesMessage: "Veuillez télécharger un fichier GIF valide"
         )
     ]
-  
     #[ORM\Column(length: 255)]
     private ?string $gif = null;
 

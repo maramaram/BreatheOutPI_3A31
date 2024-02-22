@@ -65,8 +65,11 @@ class ExerciceController extends AbstractController
             // Récupérez le fichier téléchargé à partir du formulaire
             $file = $form->get('img')->getData();
             $file2 = $form->get('gif')->getData();
+            if($file !=null)
+      
             // Générez un nom unique pour le fichier téléchargé
             $fileName = uniqid().'.'.$file->guessExtension();
+      
             $fileNamee = uniqid().'.'.$file2->guessExtension();
             // Déplacez le fichier vers le répertoire de destination
             $file->move($directoryy, $fileName);
@@ -75,6 +78,7 @@ class ExerciceController extends AbstractController
             $Exercice->setImg($directory.'/'.$fileName);
             $Exercice->setGif($directoryg.'/'.$fileNamee);
             // Persistez l'entité dans la base de données
+        
             $e->persist($Exercice);
             $e->flush();
             
@@ -105,6 +109,7 @@ class ExerciceController extends AbstractController
     // Récupérez le fichier téléchargé à partir du formulaire
     $file = $form->get('img')->getData();
     $file2 = $form->get('gif')->getData();
+   
     // Générez un nom unique pour le fichier téléchargé
     $fileName = uniqid().'.'.$file->guessExtension();
     $fileNamee = uniqid().'.'.$file2->guessExtension();
@@ -114,6 +119,7 @@ class ExerciceController extends AbstractController
     // Enregistrez le chemin de l'image dans votre base de données
     $weza->setImg($directory.'/'.$fileName);
     $weza->setGif($directoryg.'/'.$fileNamee);
+
     // Persistez l'entité dans la base de données
     $e->persist($weza);
       $e->flush();
