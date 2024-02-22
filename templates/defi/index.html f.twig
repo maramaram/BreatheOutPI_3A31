@@ -1,0 +1,325 @@
+{% extends 'basefront.html.twig' %}
+
+{% block title %}EXERCICES{% endblock %}
+{% block up %}
+<section class="page-title bg-2">
+ <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+          <ul class="list-inline mb-0">
+            <li class="list-inline-item"><a href="index.html" class="text-sm letter-spacing text-white text-uppercase font-weight-bold">Home</a></li>
+            <li class="list-inline-item"><span class="text-white">|</span></li>
+            <li class="list-inline-item"><a href="#" class="text-color text-uppercase text-sm letter-spacing">About us</a></li>
+          </ul>
+           <h1 class="text-lg text-white mt-2">Exercices</h1>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+
+{% block body %}
+<div class="container-fluid mt-4">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-9">
+            <div class="card p-4 mt-3">
+                <h3 class="heading mt-5 text-center">Salut! Choisissez-vous?</h3> 
+                <div class="d-flex justify-content-center px-5">
+                    <div class="search">
+                        <input type="text" class="search-input" placeholder="Recherche..." name=""> 
+                        <a href="#" class="search-icon">
+                            <i class="fa fa-search"></i>
+                        </a>
+                    </div> 
+                </div>
+                <div class="row mt-4 g-1 px-4 mb-5 justify-content-center"> <!-- Ajout de justify-content-center ici -->
+                    <div class="col-md-2 text-center"> <!-- Ajout de text-center ici -->
+                        <div class="card-inner p-3 d-flex flex-column align-items-center"> 
+                            <img src="{{asset('Front/images/exo/simple.png')}}" width="100"> 
+                            <div class="text-center mg-text"> 
+                              
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 text-center"> <!-- Ajout de text-center ici -->
+                        <div class="card-inner p-3 d-flex flex-column align-items-center">
+                            <img src="{{asset('Front/images/exo/normal.png')}}" width="100">
+                            <div class="text-center mg-text"> 
+                            
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="col-md-2 text-center"> <!-- Ajout de text-center ici -->
+                        <div class="card-inner p-3 d-flex flex-column align-items-center"> 
+                            <img src="{{asset('Front/images/exo/hard.png')}}" width="100"> 
+                            <div class="text-center mg-text"> 
+                            
+                            </div> 
+                        </div> 
+                    </div> 
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+                        <section class="section blog bg-gray">
+	
+		<div class="row">
+	
+
+<div class="row">
+  {% for i in weza %}
+    <div class="col-lg-3 col-md-3 mb-2">
+      <section class="performance-facts" style="height: 425px;">
+        <header class="performance-facts__header">
+          <h1 class="performance-facts__title">{{i.nom}}</h1>
+          <p>{{i.nbj}} Jours</p>
+        </header>
+        <table class="performance-facts__table">
+          <thead>
+            <tr>
+              <th colspan="3" class="small-info">
+                Exercice par jour
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th colspan="2">
+                <b>Nombre d'exercices: </b>
+                {{i.ex | length}}
+              </th>
+              <td>
+                Séries/Répétitions
+              </td>
+            </tr>
+            <tr class="thick-row">
+              <td colspan="3" class="small-info">
+                <b>% S/R *</b>
+              </td>
+            </tr>
+            {% for j in i.ex %}
+            <tr>
+              <th colspan="2">
+                <a href="{{path('ex_detail',{'id':j.id})}}" style="color: black;"><b>{{j.nom}}</b></a>
+              </th>
+              <td>
+                <b>{{j.nd * 2}}/{{j.nd * 5}}</b>
+              </td>
+            </tr>
+            {% endfor %}
+            <tr class="thick-end">
+              <th colspan="2">
+                <b>30 min max par exercice</b>
+              </th>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="performance-facts__table--grid">
+          <tbody>
+          
+            <tr class="thin-end">
+              <td colspan="2">
+              <div style="text-align: center; margin-bottom: 20px;">
+                {% if i.nd == 1 %}
+                    <img src="{{asset('Front/images/exo/et1.png')}}" width="40%" height="40%" />
+                {% endif %}        
+                {% if i.nd == 2 %}
+                    <img src="{{asset('Front/images/exo/et2.png')}}" width="40%" height="40%" />
+                {% endif %}
+                {% if i.nd == 3 %}
+                    <img src="{{asset('Front/images/exo/et3.png')}}" width="40%" height="40%" />
+                {% endif %}
+            </div>
+              </td>
+             
+            </tr>
+          </tbody>
+        </table>
+        <p class="small-info">{{i.des}}</p>
+      </section>
+    </div>
+    {% if loop.index % 4 == 3 or loop.last %}
+      </div><div class="row">
+    {% endif %}
+  {% endfor %}
+</div>
+</div>
+
+		</div>
+
+		<div class="row justify-content-center mt-5">
+			<nav aria-label="Page navigation ">
+  <ul class="pagination justify-content-center">
+    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+    <li class="page-item active" aria-current="page"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+  </ul>
+</nav>
+		</div>
+	
+</section>
+{% endblock %}
+
+
+
+
+
+{% block css %}
+<!-- bootstrap.min css -->
+  <link rel="stylesheet" href="{{asset('Front/plugins/bootstrap/css/bootstrap.min.css')}}">
+  <!-- Icofont Css -->
+  <link rel="stylesheet" href="{{asset('Front/plugins/icofont/icofont.min.css')}}">
+  <!-- Themify Css -->
+  <link rel="stylesheet" href="{{asset('Front/plugins/themify/css/themify-icons.css')}}">
+  <!-- animate.css -->
+  <link rel="stylesheet" href="{{asset('Front/plugins/animate-css/animate.css')}}">
+  <!-- Magnify Popup -->
+  <link rel="stylesheet" href="{{asset('Front/plugins/magnific-popup/dist/magnific-popup.css')}}">
+  <!-- Owl Carousel CSS -->
+  <link rel="stylesheet" href="{{asset('Front/plugins/slick-carousel/slick/slick.css')}}">
+  <link rel="stylesheet" href="{{asset('Front/plugins/slick-carousel/slick/slick-theme.css')}}">
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="{{asset('Front/css/style.css')}}">
+<link rel="stylesheet" href="{{asset('Front/css/exo.css')}}">
+<style>
+.image {
+  width: 250px;
+  float: left;
+  margin: 20px;
+}
+body {
+  font-size: small;
+  line-height: 1.4;
+}
+p {
+  margin: 0;
+}
+
+.performance-facts {
+  border: 3px solid black;
+  margin-left:260px;
+  margin-top:20px;
+  float: left;
+  width: 400px;
+  padding: 0.5rem;
+  table {
+    border-collapse: collapse;
+  }
+}
+.performance-facts__title {
+  font-weight: bold;
+  font-size: 2rem;
+  margin: 0 0 0.25rem 0;
+}
+.performance-facts__header {
+  border-bottom: 10px solid black;
+  padding: 0 0 0.25rem 0;
+  margin: 0 0 0.5rem 0;
+  p {
+    margin: 0;
+  }
+}
+.performance-facts__table {
+  width: 100%;
+  thead tr {
+    th,
+    td {
+      border: 0;
+    }
+  }
+  th,
+  td {
+    font-weight: normal;
+    text-align: left;
+    padding: 0.25rem 0;
+    border-top: 1px solid black;
+    white-space: nowrap;
+  }
+  td {
+    &:last-child {
+      text-align: right;
+    }
+  }
+  .blank-cell {
+    width: 1rem;
+    border-top: 0;
+  }
+  .thick-row {
+    th,
+    td {
+      border-top-width: 5px;
+    }
+  }
+}
+.small-info {
+  font-size: 0.7rem;
+}
+
+.performance-facts__table--small {
+  @extend .performance-facts__table;
+  border-bottom: 1px solid #999;
+  margin: 0 0 0.5rem 0;
+  thead {
+    tr {
+      border-bottom: 1px solid black;
+    }
+  }
+  td {
+    &:last-child {
+      text-align: left;
+    }
+  }
+  th,
+  td {
+    border: 0;
+    padding: 0;
+  }
+}
+
+.performance-facts__table--grid {
+  @extend .performance-facts__table;
+  margin: 0 0 0.5rem 0;
+  td {
+    &:last-child {
+      text-align: left;
+      &::before {
+        content: "•";
+        font-weight: bold;
+        margin: 0 0.25rem 0 0;
+      }
+    }
+  }
+}
+
+.text-center {
+  text-align: center;
+}
+.thick-end {
+  border-bottom: 10px solid black;
+}
+.thin-end {
+  border-bottom: 1px solid black;
+}
+
+</style>
+{% endblock %}

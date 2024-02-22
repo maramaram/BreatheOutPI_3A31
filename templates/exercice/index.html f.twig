@@ -1,0 +1,206 @@
+{% extends 'basefront.html.twig' %}
+
+{% block title %}EXERCICES{% endblock %}
+{% block up %}
+<section class="page-title bg-2">
+ <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+          <ul class="list-inline mb-0">
+            <li class="list-inline-item"><a href="index.html" class="text-sm letter-spacing text-white text-uppercase font-weight-bold">Home</a></li>
+            <li class="list-inline-item"><span class="text-white">|</span></li>
+            <li class="list-inline-item"><a href="#" class="text-color text-uppercase text-sm letter-spacing">About us</a></li>
+          </ul>
+           <h1 class="text-lg text-white mt-2">Exercices</h1>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+
+{% block body %}
+<div class="container-fluid mt-4">
+ <div class="row d-flex justify-content-center">
+  <div class="col-md-9"> <div class="card p-4 mt-3">
+   <h3 class="heading mt-5 text-center">Salut! choisissez-vous?</h3> 
+   <div class="d-flex justify-content-center px-5"> <div class="search">
+    <input type="text" class="search-input" placeholder="Recherche..." name=""> <a href="#" class="search-icon"> <i class="fa fa-search"></i> </a>
+     </div> 
+     </div>
+      <div class="row mt-4 g-1 px-4 mb-5"> 
+      <div class="col-md-2"> 
+      <div class="card-inner p-3 d-flex flex-column align-items-center"> 
+      <img src="{{asset('Front/images/exo/pec.png')}}" width="100"> 
+      <div class="text-center mg-text"> 
+      <span class="mg-text">Pectoraux</span> 
+      </div>
+       </div>
+        </div>
+         <div class="col-md-2">
+          <div class="card-inner p-3 d-flex flex-column align-items-center">
+           <img src="{{asset('Front/images/exo/ep.png')}}" width="100">
+            <div class="text-center mg-text"> 
+            <span class="mg-text">Epaules</span>
+             </div>
+              </div>
+               </div> 
+               <div class="col-md-2">
+                <div class="card-inner p-3 d-flex flex-column align-items-center"> 
+                <img src="{{asset('Front/images/exo/bi.png')}}" width="100"> <div class="text-center mg-text"> 
+                <span class="mg-text">Biceps</span> 
+                </div> </div> </div> <div class="col-md-2"> 
+                <div class="card-inner p-3 d-flex flex-column align-items-center"> 
+                <img src="{{asset('Front/images/exo/tri.png')}}" width="100"> <div class="text-center mg-text"> 
+                <span class="mg-text">Triceps</span> </div> </div> </div> <div class="col-md-2">
+                 <div class="card-inner p-3 d-flex flex-column align-items-center">
+                  <img src="{{asset('Front/images/exo/ab.png')}}" width="100">
+                  <div class="text-center mg-text"> <span class="mg-text">Abdos</span> 
+                  </div>
+                   </div>
+                    </div>
+                     <div class="col-md-2"> 
+                     <div class="card-inner p-3 d-flex flex-column align-items-center"> 
+                     <img src="{{asset('Front/images/exo/dos.png')}}" width="100">
+                     <div class="text-center mg-text"> <span class="mg-text">Dos</span> 
+                     </div>
+                      </div>
+                       </div> 
+                       </div> 
+                      
+                       <div class="row mt-4 g-1 px-4 mb-5 justify-content-center"> 
+      <div class="col-md-2"> 
+      <div class="card-inner p-3 d-flex flex-column align-items-center"> 
+      <img src="{{asset('Front/images/exo/jaa.png')}}" width="100"> 
+      <div class="text-center mg-text"> 
+      <span class="mg-text">Quadriceps</span> 
+      </div>
+       </div>
+        </div>
+        <div class="col-md-2"> 
+      <div class="card-inner p-3 d-flex flex-column align-items-center"> 
+      <img src="{{asset('Front/images/exo/jar.png')}}" width="100"> 
+      <div class="text-center mg-text"> 
+      <span class="mg-text">Ischio-jambiers</span> 
+      </div>
+       </div>
+        </div>
+        <div class="col-md-2"> 
+      <div class="card-inner p-3 d-flex flex-column align-items-center"> 
+      <img src="{{asset('Front/images/exo/ass.png')}}" width="100"> 
+      <div class="text-center mg-text"> 
+      <span class="mg-text">Fessiers</span> 
+      </div>
+       </div>
+        </div>
+           <div class="col-md-2"> 
+      <div class="card-inner p-3 d-flex flex-column align-items-center"> 
+      <img src="{{asset('Front/images/exo/mo.png')}}" width="100"> 
+      <div class="text-center mg-text"> 
+      <span class="mg-text">Mollets</span> 
+      </div>
+       </div>
+        </div>
+        </div>
+        
+                       </div> 
+                       
+                       </div>
+                       
+                        </div> 
+                        </div>
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+                        <section class="section blog bg-gray">
+	<div class="container">
+		<div class="row">
+	
+
+{% for i in weza %}
+
+<div class="col-lg-4 col-md-6 mb-4"> 
+    <article class="card border-0 rounded-0">
+        <a href="{{path('ex_detail',{'id':i.id})}}"><img src="{{asset(i.img)}}" alt="" class="img-fluid"></a>
+
+        <div class="mt-3 px-4 py-3" style="min-height: 225px; position: relative;">
+            <div class="blog-post-meta text-capitalize mb-2">
+                <span class="post-meta date-meta mr-2">
+                    <i class="ti-calendar mr-2"></i>{{i.mc}}
+                </span> 
+            </div>
+            <center><a href="{{path('ex_detail',{'id':i.id})}}"><h4 class="mb-3 font-secondary">{{i.nom}}</h4></a></center>
+
+            <div style="position: absolute; bottom: 15px; left: 0; right: 0; text-align: center;"> 
+                {% if i.nd == 1 %}
+                    <img src="{{asset('Front/images/exo/dif1.png')}}" width="30%" height="30%" />
+                {% endif %}        
+                {% if i.nd == 2 %}
+                    <img src="{{asset('Front/images/exo/dif2.png')}}" width="30%" height="30%" />
+                {% endif %}
+                {% if i.nd == 3 %}
+                    <img src="{{asset('Front/images/exo/dif3.png')}}" width="30%" height="30%" />
+                {% endif %}
+            </div>
+        </div>
+    </article>
+</div>
+{% endfor %}
+
+
+
+		</div>
+
+		<div class="row justify-content-center mt-5">
+			<nav aria-label="Page navigation ">
+  <ul class="pagination justify-content-center">
+    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+    <li class="page-item active" aria-current="page"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</section>
+{% endblock %}
+
+
+
+
+
+{% block css %}
+<!-- bootstrap.min css -->
+  <link rel="stylesheet" href="{{asset('Front/plugins/bootstrap/css/bootstrap.min.css')}}">
+  <!-- Icofont Css -->
+  <link rel="stylesheet" href="{{asset('Front/plugins/icofont/icofont.min.css')}}">
+  <!-- Themify Css -->
+  <link rel="stylesheet" href="{{asset('Front/plugins/themify/css/themify-icons.css')}}">
+  <!-- animate.css -->
+  <link rel="stylesheet" href="{{asset('Front/plugins/animate-css/animate.css')}}">
+  <!-- Magnify Popup -->
+  <link rel="stylesheet" href="{{asset('Front/plugins/magnific-popup/dist/magnific-popup.css')}}">
+  <!-- Owl Carousel CSS -->
+  <link rel="stylesheet" href="{{asset('Front/plugins/slick-carousel/slick/slick.css')}}">
+  <link rel="stylesheet" href="{{asset('Front/plugins/slick-carousel/slick/slick-theme.css')}}">
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="{{asset('Front/css/style.css')}}">
+<link rel="stylesheet" href="{{asset('Front/css/exo.css')}}">
+{% endblock %}
