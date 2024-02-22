@@ -1,0 +1,57 @@
+{% extends 'basefront.html.twig' %}
+{% block menu %}
+
+    <nav class="navbar navbar-expand-lg navigation fixed-top" id="navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="">
+                <h2 class="text-white text-capitalize"></i>Breathe<span class="text-color">Out</span></h2>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsid"
+                    aria-controls="navbarsid" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="ti-view-list"></span>
+            </button>
+            <div class="collapse text-center navbar-collapse" id="navbarsid">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.html">Boutique<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false">Entrainement</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="">Exercices</a></li>
+                            <li><a class="dropdown-item" href="">Défis</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="service.html">Sessions</a></li>
+                    <li class="nav-item"><a class="nav-link" href="pricing.html">Coachs</a></li>
+                    <li class="nav-item"><a class="nav-link" href="pricing.html">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">A propos de nous</a></li>
+                </ul>
+                <div class="my-md-0 ml-lg-4 mt-4 mt-lg-0 ml-auto text-lg-right mb-3 mb-lg-0">
+                    <a href="{{ path('app_user_show', {'id': app.user.getId()}) }}">
+                        <h3 class="text-color mb-0" style="margin-right: 10px;"><i></i>PROFILE</h3>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+{% block title %}home COACH{% endblock %}
+
+{% block up%}
+    <section class="slider">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <br>
+                    <span class="h6 d-inline-block mb-4 subhead text-uppercase">Home Page</span>
+                    <h1 class="text-uppercase text-white mb-5">Hello Coach<span class="text-color"><br>{{ app.user.getPrenom() }} </span><br>To your Home Page</h1>
+
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+

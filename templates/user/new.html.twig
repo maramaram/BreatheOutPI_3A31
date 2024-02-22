@@ -1,0 +1,27 @@
+{% extends 'basefront.html.twig' %}
+
+
+
+{% block up%}
+
+
+    <section class="slider">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <span class="h6 d-inline-block mb-4 subhead text-uppercase">Create account</span>
+                    <h1 class="text-uppercase text-white mb-5">Welcome On Our <span class="text-color">fitness </span><br>Website</h1>
+
+                 </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block body %}
+    <h1>Sign up</h1>
+
+    {{ include('user/_form.html.twig') }}
+
+    <a href="{{ path('app_login') }}"></a>
+
+{% endblock %}
