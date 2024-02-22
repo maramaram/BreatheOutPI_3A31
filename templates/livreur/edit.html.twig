@@ -1,0 +1,21 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}Modifier le Livreur{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h4>Modifier le Livreur</h4>
+                        </div>
+                        {{ include('livreur/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

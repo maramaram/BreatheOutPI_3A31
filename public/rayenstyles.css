@@ -1,0 +1,119 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #007bff;
+}
+
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+th {
+    background-color: #007bff;
+    color: #fff;
+}
+
+tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+.actions {
+    display: flex; /* Ajout de cette propriété */
+    align-items: center; /* Ajout de cette propriété */
+}
+
+.actions a, .actions form {
+    margin-right: 10px;
+}
+
+.actions a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.actions a:hover {
+    text-decoration: underline;
+}
+
+.delete-btn {
+    background-color: #dc3545; /* Couleur du bouton Supprimer */
+    color: #fff;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 4px;
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background-color: #c82333; /* Couleur du bouton Supprimer au survol */
+}
+
+.btn-primary {
+    font-size: 14px;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 4px;
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.label-column {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+    font-weight: bold;
+    width: 30%;
+    
+}
+
+.form-input {
+    width: 100%; /* Utilise la largeur maximale */
+   
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.button-container a {
+    margin-left: 10px;
+}
+
+
+
+
+

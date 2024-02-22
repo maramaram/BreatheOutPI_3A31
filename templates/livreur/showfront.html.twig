@@ -1,0 +1,36 @@
+{% extends 'basefront.html.twig' %}
+
+{% block title %}Détails du Livreur{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h4>Informations sur le Livreur</h4>
+                        </div>
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th>Nom</th>
+                                    <td>{{ livreur.nom }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Prénom</th>
+                                    <td>{{ livreur.prenom }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Disponibilité</th>
+                                    <td>{{ livreur.disponibilite }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

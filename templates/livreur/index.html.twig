@@ -1,0 +1,58 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}Liste des Livreurs{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h4>Liste des Livreurs</h4>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" />
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-dark" type="button">Chercher</button>
+                        </div>
+                    </div>
+                    <a href="{{ path('app_livreur_new') }}"><button class="btn btn-outline-dark btn-block" type="button">Ajouter</button></a>
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nom</th>
+                                    <th>Prénom</th>
+                                    <th>Disponibilité</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for livreur in livreurs %}
+                                    <tr>
+                                        <td>{{ livreur.id }}</td>
+                                        <td>{{ livreur.nom }}</td>
+                                        <td>{{ livreur.prenom }}</td>
+                                        <td>{{ livreur.disponibilite }}</td>
+                                        <td class="text-center">
+                                            <a href="{{ path('app_livreur_show', {'id': livreur.id}) }}" class="btn btn-dark">Voir</a>
+                                            <a href="{{ path('app_livreur_edit', {'id': livreur.id}) }}" class="btn btn-dark">Modifier</a>
+                                            {{ include('livreur/_delete_form.html.twig') }}
+                                        </td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="5">Aucun enregistrement trouvé</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

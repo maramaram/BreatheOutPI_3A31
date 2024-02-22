@@ -1,0 +1,50 @@
+{% extends 'basefront.html.twig' %}
+
+{% block title %}Détails de la Commande{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h4>Informations sur la Commande</h4>
+                        </div>
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th>Id</th>
+                                    <td>{{ commande.id }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Statut</th>
+                                    <td>{{ commande.statut }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Prix Total du Panier</th>
+                                    <td>{{ commande.panier.getPrixTot() }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Adress du Client</th>
+                                    <td>{{ commande.panier.getClient().getAdress() }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Nom du livreur</th>
+                                    <td>{{ commande.livreur.getNom() }}</td>
+                                </tr>
+                                
+
+                                <!-- Ajoutez d'autres lignes en fonction des champs de votre entité Commande -->
+                            </tbody>
+                        </table>
+                        <div class="button-container">
+                            <a href="{{ path('app_livreur_showfront', {'id': commande.livreur.getId()} )}}" class="btn btn-dark">Info Livreur</a>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
