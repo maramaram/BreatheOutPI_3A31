@@ -18,6 +18,11 @@
                 <td class="form-input">{{ form_widget(form.disponibilite, {'attr': {'class': 'form-control', 'style': 'width: 100%; height:25px;'}}) }}</td>
                 <td>{{ form_errors(form.disponibilite) }}</td>            
             </tr>
+            <tr>
+                <td class="label-column">{{ form_label(form.image) }}</td>
+                <td class="form-input">{{ form_widget(form.image, {'attr': {'class': 'form-control', 'style': 'width: 100%; height:25px;'}}) }}</td>
+                <td>{{ form_errors(form.image) }}</td>            
+            </tr>
         </tbody>
     </table>
 </div>

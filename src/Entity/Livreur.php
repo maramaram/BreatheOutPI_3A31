@@ -59,6 +59,22 @@ class Livreur
     #[ORM\OneToMany(mappedBy: 'livreur', targetEntity: Commande::class)]
     private Collection $commande;
 
+    #[ORM\Column(length: 255)]
+    
+    #[  Assert\NotNull(message: "Veuillez télécharger une image."),
+        Assert\Image(
+            minWidth: 200,
+            maxWidth: 400,
+            minHeight: 200,
+            maxHeight: 400,
+            minWidthMessage: "La largeur de l'image doit être d'au moins 200 pixels.",
+            maxWidthMessage: "La largeur de l'image ne doit pas dépasser 400 pixels.",
+            minHeightMessage: "La hauteur de l'image doit être d'au moins 200 pixels.",
+            maxHeightMessage: "La hauteur de l'image ne doit pas dépasser 400 pixels."
+        )
+    ]
+    private ?string $image = null;
+
     public function __construct()
     {
         $this->commande = new ArrayCollection();
@@ -131,6 +147,18 @@ class Livreur
                 $commande->setLivreur(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): static
+    {
+        $this->image = $image;
 
         return $this;
     }

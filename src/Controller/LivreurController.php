@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\HttpFoundation\File\File;
 
 #[Route('/livreur')]
 class LivreurController extends AbstractController
@@ -31,6 +33,21 @@ class LivreurController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $directory = 'Front/images';
+            $directoryy = 'D:/projetpi/projetwebjava/public/Front/images';
+            // Récupérez le fichier téléchargé à partir du formulaire
+            $file = $form->get('image')->getData();
+
+            // Générez un nom unique pour le fichier téléchargé
+            $fileName = uniqid().'.'.$file->guessExtension();
+
+            // Déplacez le fichier vers le répertoire de destination
+            $file->move($directoryy, $fileName);
+
+            // Enregistrez le chemin de l'image dans votre base de données
+            $livreur->setImage($directory.'/'.$fileName);
+
+            // Persistez l'entité dans la base de données
             $entityManager->persist($livreur);
             $entityManager->flush();
 
@@ -58,6 +75,20 @@ class LivreurController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $directory = 'Front/images';
+            $directoryy = 'D:/projetpi/projetwebjava/public/Front/images';
+            // Récupérez le fichier téléchargé à partir du formulaire
+            $file = $form->get('image')->getData();
+
+            // Générez un nom unique pour le fichier téléchargé
+            $fileName = uniqid().'.'.$file->guessExtension();
+
+            // Déplacez le fichier vers le répertoire de destination
+            $file->move($directoryy, $fileName);
+
+            // Enregistrez le chemin de l'image dans votre base de données
+            $livreur->setImage($directory.'/'.$fileName);
+
             $entityManager->flush();
 
             return $this->redirectToRoute('app_livreur_index', [], Response::HTTP_SEE_OTHER);
@@ -80,11 +111,12 @@ class LivreurController extends AbstractController
         return $this->redirectToRoute('app_livreur_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/showfront/{id}', name: 'app_livreur_showfront', methods: ['GET'])]
-    public function showfront(Livreur $livreur): Response
+    #[Route('/showfront/{id}/{idcommande}', name: 'app_livreur_showfront', methods: ['GET'])]
+    public function showfront(Livreur $livreur, ?int $idcommande = null): Response
     {
         return $this->render('livreur/showfront.html.twig', [
             'livreur' => $livreur,
+            'idcommande' => $idcommande,
         ]);
     }
 }

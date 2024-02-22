@@ -26,6 +26,7 @@
                                     <th>Nom</th>
                                     <th>Prénom</th>
                                     <th>Disponibilité</th>
+                                    <th>image</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -36,6 +37,7 @@
                                         <td>{{ livreur.nom }}</td>
                                         <td>{{ livreur.prenom }}</td>
                                         <td>{{ livreur.disponibilite }}</td>
+                                        <td><img src="{{asset(livreur.image)}}"width="30%"height="30%"></td>
                                         <td class="text-center">
                                             <a href="{{ path('app_livreur_show', {'id': livreur.id}) }}" class="btn btn-dark">Voir</a>
                                             <a href="{{ path('app_livreur_edit', {'id': livreur.id}) }}" class="btn btn-dark">Modifier</a>

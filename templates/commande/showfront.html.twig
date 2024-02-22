@@ -39,7 +39,7 @@
                             </tbody>
                         </table>
                         <div class="button-container">
-                            <a href="{{ path('app_livreur_showfront', {'id': commande.livreur.getId()} )}}" class="btn btn-dark">Info Livreur</a>
+                            <a href="{{ path('app_livreur_showfront', {'id': commande.livreur.getId(),'idcommande':commande.id } )}}" class="btn btn-dark">Info Livreur</a>
                             
                         </div>
                     </div>
