@@ -1,0 +1,99 @@
+{% extends 'basefront.html.twig' %}
+
+{% block title %}Ajouter commentaire{% endblock %}
+
+{% block up %}
+<section class="page-title bg-2">
+ <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+          <ul class="list-inline mb-0">
+            <li class="list-inline-item"><a href="index.html" class="text-sm letter-spacing text-white text-uppercase font-weight-bold">Home</a></li>
+            <li class="list-inline-item"><span class="text-white">|</span></li>
+            <li class="list-inline-item"><a href="#" class="text-color text-uppercase text-sm letter-spacing">About us</a></li>
+          </ul>
+           <h1 class="text-lg text-white mt-2">Postes</h1>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block body %}
+<div class="row justify-content-center row mt-4 mb-4">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title text-center mb-4">Ajouter Comment</h4>
+                <div class="basic-form">
+                    {{ form_start(form, {'attr': {'class': 'form-horizontal mt-4 mb-4', 'novalidate': 'novalidate'}}) }}
+
+                    <div class="form-group row">
+                        <label for="{{ form.contenu.vars.id }}" class="col-sm-3 col-form-label text-end">Contenu</label>
+                        <div class="col-sm-9">
+                            {{ form_widget(form.contenu, {'attr': {'class': 'form-control', 'placeholder': 'Votre commentaire'}}) }}
+                            {{ form_errors(form.contenu) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="{{ form.client.vars.id }}" class="col-sm-3 col-form-label text-end">Client</label>
+                        <div class="col-sm-9">
+                            {{ form_widget(form.client, {'attr': {'class': 'form-control', 'placeholder': 'Votre nom'}}) }}
+                            {{ form_errors(form.client) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-9">
+                            <div class="btn-wrapper">
+                                {{ form_widget(form.Sauvegarder, {'attr': {'class': 'btn btn-dark btn-sm', 'style': 'width: 100%;'}}) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<style>
+      .video-container {
+        position: relative;
+        padding-bottom: 61%; /* Ajustez cette valeur selon vos besoins pour que la vidéo soit de la même hauteur que le formulaire */
+        height: 0;
+        overflow: hidden;
+    }
+
+    .video-container video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    .label-box {
+        background-color: #f8f9fa; /* Couleur de fond */
+        border: 1px solid #000; /* Contour noir */
+        padding: 5px; /* Espacement interne */
+        border-radius: 5px; /* Coins arrondis */
+    }
+    
+    .btn-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+    
+    .card-body {
+        background-color: #f0f0f0; /* Couleur de fond du corps de la carte */
+        border-radius: 10px; /* Coins arrondis de la carte */
+    }
+</style>
+{% endblock %}

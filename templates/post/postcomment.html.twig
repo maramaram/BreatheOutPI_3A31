@@ -1,0 +1,209 @@
+{% extends 'basefront.html.twig' %}
+
+{% block title %}
+Frontpost ✅
+{% endblock %}
+
+{% block up %}
+<section class="page-title bg-2">
+ <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+          <ul class="list-inline mb-0">
+            <li class="list-inline-item"><a href="index.html" class="text-sm letter-spacing text-white text-uppercase font-weight-bold">Home</a></li>
+            <li class="list-inline-item"><span class="text-white">|</span></li>
+            <li class="list-inline-item"><a href="#" class="text-color text-uppercase text-sm letter-spacing">About us</a></li>
+          </ul>
+           <h1 class="text-lg text-white mt-2">Postes</h1>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block body %}
+<section class="section blog bg-gray">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-lg-9 col-md-12">
+				<div class="row">
+					<div class="col-lg-12">
+					<span class="post-meta author">
+						<img src="{{ asset(weza.Author.img) }}" alt="{{ weza.Author.nom }}" style="max-width: 60px; max-height: 60px; border-radius: 50%; margin-right: 10px;">
+						{{ weza.Author.nom }}
+					</span>
+
+					            <span class="post-meta date-meta mr-2">
+                            	 <i class="ti-calendar mr-2"></i>{{ weza.date | date('Y-m-d') }}
+                                </span>
+
+					<p class="mt-4" style="font-size: 24px; font-weight: bold; text-transform: uppercase; color: #333;">{{ weza.title }}</p>
+	<img src="{{asset(weza.image)}}" alt="" class="img-fluid">
+	<p class="mt-4">{{weza.content}}</p>
+
+	<div class="border-top border-bottom py-4 text-center social-share">
+		<h4 class="mb-4 font-secondary text-uppercase font-weight-normal">Like the post?</h4>
+		<ul class="list-inline mb-0">
+			<li class="list-inline-item"><a href="#"><i class="ti-facebook"></i></a></li>
+			<li class="list-inline-item"><a href="#"><i class="ti-twitter"></i></a></li>
+			<li class="list-inline-item"><a href="#"><i class="ti-linkedin"></i></a></li>
+		</ul>
+	</div>
+	<div class="mt-4 py-4 text-center social-share">
+	<div class="row">
+	<div class="col-lg-4 col-md-6">
+	</div>
+	</div>
+	</div>
+
+
+	<div class="mt-5 border-bottom pb-5">
+		<h4 class="mb-2 font-secondary text-uppercase font-weight-normal mb-4">comments</h4>
+
+ 		{% for i in weza.comment %}
+<div class="media mt-5">
+    <img src="{{ asset(i.client.img) }}" class="mr-4 img-fluid" style="max-width: 80px;" alt="...">
+
+    <div class="media-body">
+        <h4 class="mt-0 mb-0"></h4>
+        <span><strong>{{i.client.nom}}</strong> {# le 15 january 2019 At 10:30 pm #}</span>
+        <p class="mt-2">{{i.contenu}}</p>
+
+<div class="d-flex align-items-center mt-3">
+    <!-- Delete button with custom trash icon -->
+    <a href="{{ path('fco_dex', {'id': i.id}) }}" class="mr-2">
+        <img src="{{ asset('front/images/post/delete.png') }}" alt="Delete Icon" style="width: 20px; height: 20px;">
+    </a>
+
+    <!-- Modify button with custom edit icon -->
+    <a href="{{ path('fco_mod', {'id': i.id}) }}" class="mr-2">
+        <img src="{{ asset('front/images/post/modifier.png') }}" alt="Edit Icon" style="width: 20px; height: 20px;">
+    </a>
+
+    <!-- Like button with custom like icon -->
+    <a href="{{ path('fco_like', {'id': i.id}) }}" class="mr-2">
+        <img src="{{ asset('front/images/post/like2.png') }}" alt="Like Icon" style="width: 20px; height: 20px;">
+    </a>
+    
+    <!-- Afficher le nombre de likes à côté du bouton -->
+    <span><strong>{{ i.nbLikes }}</strong></span>
+</div>
+
+
+
+    </div>
+</div>
+
+	{% endfor %}
+
+
+
+
+
+	</div>
+	<div class="mt-4 py-4 text-center comments">
+		<h4 class="mb-2 font-secondary text-uppercase font-weight-normal">Leave a comment</h4>
+
+	
+
+
+				 <a href="{{path('cof_add',{'id':weza})}}"> <button class="btn btn-main mt-3 " type="submit">Ajouter commentaire</button> </a> 
+	
+
+	</div>
+</div>
+
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-8">
+				<div class="card border-0 rounded-0 mb-5">
+	<form action="#" class="search position-relative">
+		<input type="text" placeholder="Search" class="form-control">
+		<i class="ti-search"></i>
+	</form>
+</div>
+
+<div class="mb-5 follow">
+	<h5 class="font-secondary mb-4"><i class="ti-minus mr-2 text-color"></i>Follow us</h5>
+
+	<a href="#" class="text-muted"><i class="ti-facebook"></i></a>
+	<a href="#" class="text-muted"><i class="ti-twitter"></i></a>
+	<a href="#" class="text-muted"><i class="ti-linkedin"></i></a>
+	<a href="#" class="text-muted"><i class="ti-pinterest"></i></a>
+	<a href="#" class="text-muted"><i class="ti-dribbble"></i></a>
+</div>
+
+
+{# <div class="mb-5">
+	<h5 class="font-secondary mb-4"><i class="ti-minus mr-2 text-color"></i>Popular posts</h5>
+
+	<div class="media mb-4">
+	  <img src="images/blog/blog-post-5.jpg" alt="" class="img-fluid pr-4 w-50 align-self-center">
+	  <div class="media-body">
+	    <a href="#" class="text-black d-block lh-25"> Track your daily body fitness</a>
+	  </div>
+	</div>
+
+	<div class="media mb-4">
+	  <img src="images/blog/blog-post-6.jpg" alt="" class="img-fluid pr-4 w-50 align-self-center">
+	  <div class="media-body">
+	    <a href="#" class="text-black d-block lh-25">Keep your body fitness track</a>
+	  </div>
+	</div>
+
+	<div class="media mb-4">
+	  <img src="images/blog/post1.jpg" alt="" class="img-fluid pr-4 w-50 align-self-center">
+	  <div class="media-body">
+	    <a href="#" class="text-black d-block lh-25">Keep your body fitness track</a>
+	  </div>
+	</div>
+</div> #}
+
+
+<div class="mb-5 categories">
+	<h5 class="font-secondary mb-4"><i class="ti-minus mr-2 text-color"></i>Categories</h5>
+	
+	<ul class="list-group">
+	  <li class="list-group-item d-flex justify-content-between align-items-center rounded-0 border-0">
+	     <a href="#" class="text-muted">Fitness</a>
+	    <span class="badge bg-primary badge-pill text-white border-0">14</span>
+	  </li>
+	  <li class="list-group-item d-flex justify-content-between align-items-center rounded-0 border-0">
+	     <a href="#" class="text-muted">Body building</a>
+	    <span class="badge bg-primary badge-pill text-white">2</span>
+	  </li>
+	  <li class="list-group-item d-flex justify-content-between align-items-center rounded-0 border-0">
+	    <a href="#" class="text-muted">Cycling</a>
+	    <span class="badge bg-primary badge-pill text-white">1</span>
+	  </li>
+	  <li class="list-group-item d-flex justify-content-between align-items-center rounded-0 border-0">
+	    <a href="#" class="text-muted"> Paracyling</a>
+	    <span class="badge bg-primary badge-pill text-white">5</span>
+	  </li>
+	</ul>
+</div>
+
+<div class="mb-5 tags">
+	<h5 class="font-secondary mb-4"><i class="ti-minus mr-2 text-color"></i>Tags</h5>
+
+	<a href="#">body</a>
+	<a href="#">fitness</a>
+	<a href="#">health</a>
+	<a href="#">diet</a>
+	<a href="#">plan</a>
+	<a href="#">gym</a>
+	<a href="#">trainer</a>
+	<a href="#">tutorials</a>
+</div>
+
+			</div>
+		</div>
+	</div>
+
+	
+</section>
+
+
+
+{% endblock %}
+
