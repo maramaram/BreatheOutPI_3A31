@@ -1,0 +1,140 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}FIRAS !{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Ajouter Session</h4>
+                <div class="basic-form">
+                  {{ form_start(form, {'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'}}) }}
+                    
+                    <div class="form-group row">
+                        <div class="col-sm-2">
+                            <div class="label-box">
+                                {{ form_label(form.date, 'Date') }}
+                            </div>
+                        </div>
+                        <div class="col-sm-10">
+                            {{ form_widget(form.date, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_errors(form.date) }}
+                        </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                        <div class="col-sm-2">
+                            <div class="label-box">
+                                {{ form_label(form.type, 'Type') }}
+                            </div>
+                        </div>
+                        <div class="col-sm-10">
+                            {{ form_widget(form.type, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_errors(form.type) }}
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="form-group row">
+                        <div class="col-sm-2">
+                            <div class="label-box">
+                                {{ form_label(form.cap, 'Capaciter') }}
+                            </div>
+                        </div>
+                        <div class="col-sm-10">
+                            {{ form_widget(form.cap, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_errors(form.cap) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-2">
+                            <div class="label-box">
+                                {{ form_label(form.des, 'Description') }}
+                            </div>
+                        </div>
+                        <div class="col-sm-10">
+                            {{ form_widget(form.des, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_errors(form.des) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-2">
+                            <div class="label-box">
+                                {{ form_label(form.coach, 'Coach') }}
+                            </div>
+                        </div>
+                        <div class="col-sm-10">
+                            {{ form_widget(form.coach, {'attr': {'class': 'form-select custom-select'}}) }}
+                            {{ form_errors(form.coach) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-2">
+                            <div class="label-box">
+                                {{ form_label(form.vid, 'Video') }}
+                            </div>
+                        </div>
+                        <div class="col-sm-10">
+                            {{ form_widget(form.vid, {'attr': {'class': 'form-select custom-select'}}) }}
+                            {{ form_errors(form.vid) }}
+                        </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-10">
+                            <div class="btn-wrapper">
+                                {{ form_widget(form.Sauvegarder, {'attr': {'class': 'btn btn-dark btn-sm', 'style': 'width: 60%;'}}) }}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+</div>
+
+
+<style>
+      .video-container {
+        position: relative;
+        padding-bottom: 61%; /* Ajustez cette valeur selon vos besoins pour que la vidéo soit de la même hauteur que le formulaire */
+        height: 0;
+        overflow: hidden;
+    }
+
+    .video-container video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    .label-box {
+        background-color: #f8f9fa; /* Couleur de fond */
+        border: 1px solid #000; /* Contour noir */
+        padding: 5px; /* Espacement interne */
+        border-radius: 5px; /* Coins arrondis */
+    }
+    
+    .btn-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+    
+    .card-body {
+        background-color: #f0f0f0; /* Couleur de fond du corps de la carte */
+        border-radius: 10px; /* Coins arrondis de la carte */
+    }
+</style>
+{% endblock %}

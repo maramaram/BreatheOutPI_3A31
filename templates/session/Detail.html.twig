@@ -1,0 +1,139 @@
+{% extends 'basefront.html.twig' %}
+
+{% block title %}AZIZ !{% endblock %}
+{% block up %}
+<section class="page-title bg-2">
+ <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+          <ul class="list-inline mb-0">
+            <li class="list-inline-item"><a href="index.html" class="text-sm letter-spacing text-white text-uppercase font-weight-bold">Home</a></li>
+            <li class="list-inline-item"><span class="text-white">|</span></li>
+            <li class="list-inline-item"><a href="#" class="text-color text-uppercase text-sm letter-spacing">About us</a></li>
+          </ul>
+           <h1 class="text-lg text-white mt-2">Detail Session</h1>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+{% block body %}
+<section class="section about">
+	<div class="container">
+		<div class="row align-items-center">
+		<div class="col-lg-6 mt-lg-4 col-md-6">
+    <video width="60%" height="60%" controls>
+        <source src="{{asset(weza.vid)}}" type="video/mp4">
+    </video>
+</div>
+			<div class="col-lg-6 col-md-12">
+				<div class="about-item position-relative mt-5 mt-lg-0">
+					<span class="h5 text-lg text-muted">{{weza.cap}} Places</span>
+					<h2 class="mt-1 mb-3">
+                    {% if weza.type == 1 %}
+         <span class="badge badge-success px-2" style="font-size: 12px;">Endurance</span>
+          {% endif %}        
+          {% if weza.type == 2 %}
+           <span class="badge badge-primary px-2" style="font-size: 12px;">Force</span>
+           {% endif %}
+              {% if weza.type == 3 %}
+            <span class="badge badge-danger px-2" style="font-size: 12px;">Prise de muscle</span>
+              {% endif %}</h2>
+
+					<p class="mb-4">{{weza.des}}</p>
+
+					<div class="row">
+    <div class="col-md-6">
+        <a href="{{ path('re_ftest', {'id': weza.id}) }}" class="btn btn-main btn-block">Réserver<i class="ti-angle-right ml-2"></i></a>
+        <a href="{{ path('se_ftest') }}" class="btn btn-main btn-block">Session<i class="ti-angle-right ml-2"></i></a>
+    </div>
+    
+</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Section About End -->
+
+<!-- Why choose us Start -->
+<section class="section why">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-lg-8 text-center">
+				<div class="section-title">
+					<div class="divider mb-3"></div>
+					<h2>Why CHoose us</h2>
+				</div>
+			</div>
+		</div>
+
+		<div class="row ">
+			<div class="col-lg-4 col-md-6">
+				<div class="card p-4 text-center mb-4 border-0 bg-black-50 rounded-0 ">
+					<i class="icofont-dumbbells text-lg text-color"></i>
+					<h3 class="mt-3 text-white">Modern Equipment</h3>
+					<p class="mt-3 mb-4 text-white"></p>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6">
+				<div class="card p-4 text-center border-0 mb-4 rounded-0">
+					<i class="icofont-muscle text-lg text-color"></i>
+					<h3 class="mt-3">PROFFESIONAL TRAINer</h3>
+					<p class="mt-3 mb-4"></p>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6">
+				<div class="card p-4 text-center border-0 mb-4 rounded-0 bg-black-50">
+					<i class="icofont-fruits text-lg text-color"></i>
+					<h3 class="mt-3 text-white">HEALTHY DIET Plan</h3>
+					<p class="mt-3 mb-4 text-white"></p>
+				</div>
+			</div>
+
+			<div class="col-lg-4 col-md-6">
+				<div class="card p-4 text-center border-0 rounded-0 ">
+					<i class="icofont-thumbs-up text-lg text-color"></i>
+					<h3 class="mt-3">24/7 Helping People</h3>
+					<p class="mt-3 mb-4"></p>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6">
+				<div class="card p-4 text-center border-0 rounded-0 bg-black-50">
+					<i class="icofont-ui-fire-wall text-lg text-color"></i>
+					<h3 class="mt-3 text-white">Unique to Your Needs</h3>
+					<p class="mt-3 mb-4 text-white"></p>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6">
+				<div class="card p-4 text-center border-0 rounded-0">
+					<i class="icofont-bill-alt text-lg text-color"></i>
+					<h3 class="mt-3">Online payment</h3>
+					<p class="mt-3 mb-4"></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Why choose us End -->
+{% endblock %}
+
+
+{% block css %}
+<!-- bootstrap.min css -->
+  <link rel="stylesheet" href="{{asset('Front/plugins/bootstrap/css/bootstrap.min.css')}}">
+  <!-- Icofont Css -->
+  <link rel="stylesheet" href="{{asset('Front/plugins/icofont/icofont.min.css')}}">
+  <!-- Themify Css -->
+  <link rel="stylesheet" href="{{asset('Front/plugins/themify/css/themify-icons.css')}}">
+  <!-- animate.css -->
+  <link rel="stylesheet" href="{{asset('Front/plugins/animate-css/animate.css')}}">
+  <!-- Magnify Popup -->
+  <link rel="stylesheet" href="{{asset('Front/plugins/magnific-popup/dist/magnific-popup.css')}}">
+  <!-- Owl Carousel CSS -->
+  <link rel="stylesheet" href="{{asset('Front/plugins/slick-carousel/slick/slick.css')}}">
+  <link rel="stylesheet" href="{{asset('Front/plugins/slick-carousel/slick/slick-theme.css')}}">
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="{{asset('Front/css/style.css')}}">
+
+{% endblock %}

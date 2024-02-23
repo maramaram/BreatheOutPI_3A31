@@ -1,0 +1,79 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}FIRAS !{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+      
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h4>Table Session</h4>
+                    </div>
+                    <div class="input-group mb-3">
+                                            
+                                        <input type="text" class="form-control" >
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-dark btn-block" type="button">Chercher</button>
+                                            </div>
+                                        </div>
+                                     <a href="{{path('se_add')}}"> <button class="btn btn-outline-dark btn-block" type="button">Ajouter</button> </a>
+                                      <br> 
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Type</th>
+                                    <th>Coatch</th>
+                                    <th>Description</th>
+                                    <th>date</th>
+                                    <th>Capaciter</th>
+                                    <th>Vidéo</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in weza %}
+                                <tr>
+                                    <th>{{i.id}}</th>
+                                    {% if i.type == 1 %}
+                                    <td><span class="badge badge-success px-2" style="font-size: 12px;">Endurance</span></td>
+                                    {% endif %}        
+                                    {% if i.type == 2 %}
+                                    <td><span class="badge badge-primary px-2" style="font-size: 12px;">Force</span></td>
+                                    {% endif %}
+                                    {% if i.type == 3 %}
+                                    <td><span class="badge badge-danger px-2" style="font-size: 12px;">Prise de muscle</span></td>
+                                    {% endif %}
+                                    <td><b><center>{{i.coach}}</center></b></td>
+                                    <td class="color-primary"><div  style="width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{i.des}}</div></td>
+                                    <td>
+                                    {{ i.date|date("Y-m-d H:i") }}
+                                    </td>
+                                     <td>
+                                    {{i.cap}}
+                                    </td>
+                                     <td>
+                                    <video width="30%" height="30%" controls>
+        <source src="{{asset(i.vid)}}" type="video/mp4">
+    </video>
+                                    </td>
+                                    <td> 
+                                         <a href="{{path('se_mod',{'id':i.id})}}"><button type="submit" class="btn btn-dark btn-block">Modifier</button></a>
+                                         <br>
+                                        <a href="{{path('se_dex',{'id':i.id})}}"><button type="submit" class="btn btn-dark btn-block">Supprimer</button></a>
+                                            </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- /# card -->
+       
+    </div>
+</div>
+{% endblock %}

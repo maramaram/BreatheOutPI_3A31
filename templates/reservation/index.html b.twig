@@ -1,0 +1,67 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}FIRAS !{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+      
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h4>Table Reservation</h4>
+                    </div>
+                    <div class="input-group mb-3">
+                                            
+                                        <input type="text" class="form-control" >
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-dark btn-block" type="button">Chercher</button>
+                                            </div>
+                                        </div>
+                                     <a href="{{path('re_add')}}"> <button class="btn btn-outline-dark btn-block" type="button">Ajouter</button> </a>
+                                      <br> 
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>etat</th>
+                                    <th>Client</th>
+                                    <th>Session</th>
+                                    <th>date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in weza %}
+                                <tr>
+                                    <th>{{i.id}}</th>
+                                    {% if i.etat == 1 %}
+                                    <td><span class="badge badge-success px-2" style="font-size: 12px;">En cours</span></td>
+                                    {% endif %}        
+                                    {% if i.etat == 2 %}
+                                    <td><span class="badge badge-primary px-2" style="font-size: 12px;">Finit</span></td>
+                                    {% endif %}
+                                    <td><b><center>{{i.user}}</center></b></td>
+                                    <td><b><center>{{i.session}}</center></b></td>
+                                    <td>
+                                    {{ i.date|date("Y-m-d H:i") }}
+                                    </td>
+                                   
+                                    <td> 
+                                         <a href="{{path('re_mod',{'id':i.id})}}"><button type="submit" class="btn btn-dark btn-block">Modifier</button></a>
+                                         <br>
+                                        <a href="{{path('re_dex',{'id':i.id})}}"><button type="submit" class="btn btn-dark btn-block">Supprimer</button></a>
+                                            </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- /# card -->
+       
+    </div>
+</div>
+{% endblock %}
