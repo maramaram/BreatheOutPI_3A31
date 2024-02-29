@@ -4,8 +4,11 @@
 
 {% block body %}
     <h1>User index</h1>
-
-    <table class="table">
+    <script src="{{ asset('/Back/js/jquery.js') }}"></script>
+    <div class="search-container">
+        <input type="text" class="search-label" placeholder="Search with ID" id="search">
+    </div>
+    <table class="table" id="tableac">
         <thead>
         <tr>
             <th>Id</th>
@@ -32,8 +35,6 @@
                 <td>{{ user.status }}</td>
                 <td>
                     <a href="{{ path('app_user_back_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('app_user_back_edit', {'id': user.id}) }}">edit</a>
-                    <a href="{{ path('app_user_back_delete', {'id': user.id}) }}">delete</a>
                 </td>
             </tr>
         {% else %}
@@ -44,6 +45,28 @@
         {% endfor %}
         </tbody>
     </table>
-
+    <script>
+        $(document).ready(function(){
+            $('#search').keyup(function(){
+                search_table($(this).val());
+            });
+            function search_table(value){
+                $('#tableac tbody tr').each(function(){
+                    var found = false;
+                    $(this).find('td:first-child').each(function(){ // nth-child(2)
+                        if($(this).text().toLowerCase().includes(value.toLowerCase())){
+                            found = true;
+                            return false;
+                        }
+                    });
+                    if(found){
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            }
+        });
+    </script>
     <a href="{{ path('app_user_back_new') }}">Create new</a>
 {% endblock %}

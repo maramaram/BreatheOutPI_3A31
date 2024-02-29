@@ -20,6 +20,7 @@ class User implements PasswordAuthenticatedUserInterface,UserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"First Name is required")]
     #[Assert\Length(
         min: 3,
         max: 10,
@@ -28,7 +29,6 @@ class User implements PasswordAuthenticatedUserInterface,UserInterface
         pattern: '/^[a-z]+$/i',
         message: 'the first name must only contains characters[a-z].'
     )]
-    #[Assert\NotBlank(message:"First Name is required")]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
@@ -42,7 +42,6 @@ class User implements PasswordAuthenticatedUserInterface,UserInterface
         message: 'the last name must only contains characters[a-z].'
     )]
     #[Assert\NotBlank(message:"Last Name is required")]
-
     private ?string $prenom = null;
 
     #[ORM\Column(length: 255)]
@@ -62,18 +61,31 @@ class User implements PasswordAuthenticatedUserInterface,UserInterface
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Assert\NotBlank(message:"Birthday date is required")]
+    #[Assert\LessThan("today")]
     private ?\DateTimeInterface $date_N = null;
 
     #[ORM\Column(length: 255)]
     private ?string $role = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(
+        min: 15,
+        max: 150,
+        exactMessage: 'less characters for your last name'
+    )]
+    #[Assert\NotBlank(message:"Adress is required")]
     private ?string $adress = null;
 
     #[
-        Assert\File(
-            mimeTypes: ["image/png"],
-            mimeTypesMessage: "Veuillez télécharger un fichier PNG valide"
+        Assert\Image(
+            minWidth: 200,
+            maxWidth: 600,
+            minHeight: 200,
+            maxHeight: 120000,
+            minWidthMessage: "La largeur de l'image doit être d'au moins 200 pixels.",
+            maxWidthMessage: "La largeur de l'image ne doit pas dépasser 600 pixels.",
+            minHeightMessage: "La hauteur de l'image doit être d'au moins 200 pixels.",
+            maxHeightMessage: "La hauteur de l'image ne doit pas dépasser 120000 pixels."
         )
     ]
     #[ORM\Column(length: 255)]

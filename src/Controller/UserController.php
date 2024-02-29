@@ -19,11 +19,13 @@ class UserController extends AbstractController
 {
 
     private UserPasswordHasherInterface $hasher;
+
     public function __construct(UserPasswordHasherInterface $hasher)
     {
         $this->hasher = $hasher;
 
     }
+
 //ajout frontEnd
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -37,19 +39,19 @@ class UserController extends AbstractController
             $password = $user->getPwd();
             $hashedPassword1 = $this->hasher->hashPassword(
                 $newUser,
-                $password,
+                $password
             );
             $user->setPwd($hashedPassword1);
-            $directory = 'FRONT/images';
-            $directoryy = 'C:/Users/bouaz/SecondProject/public/FRONT/images';
+            $directory = 'Front/images';
+            $directoryy = 'C:/Users/bouaz/ThirdProject/public/Front/images';
             // Récupérez le fichier téléchargé à partir du formulaire
             $file = $form->get('photo')->getData();
             // Générez un nom unique pour le fichier téléchargé
-            $fileName = uniqid().'.'.$file->guessExtension();
+            $fileName = uniqid() . '.' . $file->guessExtension();
             // Déplacez le fichier vers le répertoire de destination
             $file->move($directoryy, $fileName);
             // Enregistrez le chemin de l'image dans votre base de données
-            $user->setPhoto($directory.'/'.$fileName);
+            $user->setPhoto($directory . '/' . $fileName);
             $entityManager->persist($user);
             $entityManager->flush();
             return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
@@ -60,15 +62,16 @@ class UserController extends AbstractController
             'form' => $form,
         ]);
     }
+
     //suppression de user frontEnd
     #[Route('/{id}', name: 'app_user_back_delete', methods: ['POST'])]
-    public function delete_back(Request $request, EntityManagerInterface $entityManager,$id,UserRepository $repository): Response
+    public function delete_back(Request $request, EntityManagerInterface $entityManager, $id, UserRepository $repository): Response
     {
         $user = $repository->find($id);
-        if(!$id) {
+        if (!$id) {
             throw $this->createNotFoundException('No ID found');
         }
-        if($user != null) {
+        if ($user != null) {
             $entityManager->remove($user);
             $entityManager->flush();
         }
@@ -85,17 +88,28 @@ class UserController extends AbstractController
             'user' => $user,
         ]);
     }
+
 //modification de user frontEnd
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(ModifyUserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $directory = 'Front/images';
+            $directoryy = 'C:/Users/bouaz/ThirdProject/public/Front/images';
+            // Récupérez le fichier téléchargé à partir du formulaire
+            $file = $form->get('photo')->getData();
+            // Générez un nom unique pour le fichier téléchargé
+            $fileName = uniqid() . '.' . $file->guessExtension();
+            // Déplacez le fichier vers le répertoire de destination
+            $file->move($directoryy, $fileName);
+            // Enregistrez le chemin de l'image dans votre base de données
+            $user->setPhoto($directory . '/' . $fileName);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_user_show', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_show', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user/edit.html.twig', [
@@ -106,14 +120,14 @@ class UserController extends AbstractController
 
 //suppression de user backEnd
     #[Route('/{id}', name: 'app_user_delete', methods: ['POST'])]
-    public function delete(Request $request, EntityManagerInterface $entityManager,$id,UserRepository $repository): Response
+    public function delete(Request $request, EntityManagerInterface $entityManager, $id, UserRepository $repository): Response
     {
 
         $user = $repository->find($id);
-        if(!$id) {
+        if (!$id) {
             throw $this->createNotFoundException('No ID found');
         }
-        if($user != null) {
+        if ($user != null) {
             $entityManager->remove($user);
             $entityManager->flush();
         }
@@ -132,7 +146,7 @@ class UserController extends AbstractController
     }
 
 //ajout backEnd
-    #[Route('/new_back', name: 'app_user_back_new', methods: ['GET', 'POST'])]
+    #[Route('/new/back', name: 'app_user_back_new', methods: ['GET', 'POST'])]
     public function new_back(Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
@@ -147,19 +161,19 @@ class UserController extends AbstractController
                 $password,
             );
             $user->setPwd($hashedPassword1);
-            $directory = 'FRONT/images';
-            $directoryy = 'C:/Users/bouaz/SecondProject/public/Front/images';
+            $directory = 'Front/images';
+            $directoryy = 'C:/Users/bouaz/ThirdProject/public/Front/images';
             // Récupérez le fichier téléchargé à partir du formulaire
             $file = $form->get('photo')->getData();
             // Générez un nom unique pour le fichier téléchargé
-            $fileName = uniqid().'.'.$file->guessExtension();
+            $fileName = uniqid() . '.' . $file->guessExtension();
             // Déplacez le fichier vers le répertoire de destination
             $file->move($directoryy, $fileName);
             // Enregistrez le chemin de l'image dans votre base de données
-            $user->setPhoto($directory.'/'.$fileName);
+            $user->setPhoto($directory . '/' . $fileName);
             $entityManager->persist($user);
             $entityManager->flush();
-            return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
         }
         return $this->renderForm('user/new_back.html.twig', [
             'user' => $user,
@@ -168,18 +182,19 @@ class UserController extends AbstractController
     }
 
     //affichage de user Backend
-    #[Route('/{id}', name: 'app_user_back_show', methods: ['GET'])]
+    #[Route('/{id}/b', name: 'app_user_back_show', methods: ['GET'])]
     public function show_back(User $user): Response
     {
         return $this->render('user/show_back.html.twig', [
             'user' => $user,
         ]);
     }
+
     //modification de user Backend
     #[Route('/{id}/editt', name: 'app_user_back_edit', methods: ['GET', 'POST'])]
     public function edit_back(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(ModifyUserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -193,6 +208,7 @@ class UserController extends AbstractController
             'form' => $form,
         ]);
     }
+
     //suppression de user Backend
     /*  #[Route('/{id}', name: 'app_user_back_delete', methods: ['POST'])]
        public function deleteBack(Request $request, User $user, EntityManagerInterface $entityManager): Response

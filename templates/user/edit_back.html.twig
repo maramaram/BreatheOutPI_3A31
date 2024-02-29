@@ -4,10 +4,9 @@
 
 {% block body %}
     <h1>Edit User</h1>
-
-    {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('user/form.html.twig', {'button_label': 'Update'}) }}
 
     <a href="{{ path('app_user_back_show', {'id': user.id}) }}">view profile</a>
-
     {{ include('user/delete_back.html.twig') }}
+
 {% endblock %}
