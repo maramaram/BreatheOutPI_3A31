@@ -54,6 +54,41 @@ class UserController extends AbstractController
             $user->setPhoto($directory . '/' . $fileName);
             $entityManager->persist($user);
             $entityManager->flush();
+
+            $mail = new \PHPMailer\PHPMailer\PHPMailer(true); // Make sure to have the correct namespace
+
+
+            try {
+                $mail->isSMTP();
+                $mail->Host = 'smtp.office365.com';
+                $mail->SMTPAuth = true;
+                $mail->SMTPSecure = \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
+                $mail->Port = 587;
+                $mail->Username = 'BreatheOutEnergy@outlook.com'; // Your Outlook email address
+                $mail->Password = 'Breathe123@'; // Your Outlook password
+                // Sender and recipient settings
+                $mail->setFrom('BreatheOutEnergy@outlook.com', 'BreatheOut');
+                $nomUser = $user->getPrenom(); // Use the $user object
+                $emailUser = $user->getEmail(); // Use the $user object
+                $mail->addAddress($emailUser);
+                $mail->isHTML(true);
+                $mail->Subject = 'PRODUCT VERIFIED !';
+                $mail->Body = "Dear $nomUser , <br> Welcome to BreatheOut! 🌿
+
+We're delighted you've joined our mindful community. Get ready to unwind, destress, and discover your path to inner peace. Your journey starts here!
+
+Breathe in, breathe out, and enjoy the serenity.
+
+Best,
+The BreatheOut Team";
+                $mail->AltBody = "hi";
+                $mail->send();
+                $this->addFlash('success', 'Verification email sent. Please check your inbox.');
+            } catch (\PHPMailer\PHPMailer\Exception $e) {
+                $this->addFlash('error', 'Mailer Error: ' . $e->getMessage());
+                // Log the error message
+                // error_log('Mailer Error: ' . $e->getMessage());
+            }
             return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
         }
 
