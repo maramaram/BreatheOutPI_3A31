@@ -3,7 +3,6 @@
 {% block title %}Edit User{% endblock %}
 
 {% block menu %}
-
     <nav class="navbar navbar-expand-lg navigation fixed-top" id="navbar">
         <div class="container-fluid">
             <a class="navbar-brand" href="">
@@ -32,10 +31,19 @@
                     <li class="nav-item"><a class="nav-link" href="pricing.html">Blog</a></li>
                     <li class="nav-item"><a class="nav-link" href="contact.html">A propos de nous</a></li>
                 </ul>
-                <div class="my-md-0 ml-lg-4 mt-4 mt-lg-0 ml-auto text-lg-right mb-3 mb-lg-0">
-                    <a href="{{ path('app_user_show', {'id': app.user.getId()}) }}">
-                        <h3 class="text-color mb-0" style="margin-right: 10px;"><i></i>PROFILE</h3>
+                <li class="nav-item dropdown">
+                    <a href="{{ path('app_user_show', {'id': app.user.getId()}) }}" class="nav-link dropdown-toggle">
+                        <h3 class="text-color mb-0" style="margin-right: 10px;">
+                            <i></i>{{ user.prenom }} {{ user.nom }}
+                        </h3>
                     </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ path('app_user_show', {'id': app.user.getId()}) }}">Profile</a></li>
+                        <li><a class="dropdown-item" href="{{ path('app_logout') }}">Log Out</a></li>
+                    </ul>
+                </li>
+                <div class="my-md-0 ml-lg-4 mt-4 mt-lg-0 ml-auto text-lg-right mb-3 mb-lg-0">
+
                 </div>
             </div>
         </div>
@@ -55,14 +63,51 @@
         </div>
     </section>
 {% endblock %}
-
 {% block body %}
-    <h1>Edit User</h1>
+    <div class="container mt-5">
+        <h1>Edit User</h1>
 
-    {{ include('user/form.html.twig')}}
+        <form method="post" action="{{ path('app_user_edit', {'id': user.id}) }}" enctype="multipart/form-data">
+            {{ form_start(form) }}
 
-    <a href="{{ path('app_user_show', {'id': app.user.getId()}) }}">view profile</a>
+            <div class="form-group">
+                {{ form_label(form.nom, 'Nom', {'label_attr': {'class': 'font-weight-bold'}}) }}
+                {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+            </div>
 
-    {{ include('user/_delete_form.html.twig') }}
+            <div class="form-group">
+                {{ form_label(form.prenom, 'Prenom', {'label_attr': {'class': 'font-weight-bold'}}) }}
+                {{ form_widget(form.prenom, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.email, 'Email', {'label_attr': {'class': 'font-weight-bold'}}) }}
+                {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.adress, 'Adress', {'label_attr': {'class': 'font-weight-bold'}}) }}
+                {{ form_widget(form.adress, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.photo, 'Image', {'label_attr': {'class': 'font-weight-bold'}}) }}
+                {{ form_widget(form.photo, {'attr': {'class': 'form-control-file'}}) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.num_tel, 'Phone number', {'label_attr': {'class': 'font-weight-bold'}}) }}
+                {{ form_widget(form.num_tel, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+
+            {{ form_end(form) }}
+        </form>
+
+        <a href="{{ path('app_user_show', {'id': app.user.getId()}) }}" class="btn btn-secondary mt-3">Cancel</a>
+
+        {{ include('user/_delete_form.html.twig') }}
+    </div>
 {% endblock %}
 

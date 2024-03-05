@@ -62,7 +62,7 @@
         <!--**********************************
             Nav header end
         ***********************************-->
-
+        {% block Header%}
         <!--**********************************
             Header start
         ***********************************-->
@@ -244,10 +244,11 @@
                 </div>
             </div>
         </div>
+        {% endblock %}
         <!--**********************************
             Header end ti-comment-alt
         ***********************************-->
-
+        {% block sidebar %}
         <!--**********************************
             Sidebar start
         ***********************************-->
@@ -421,12 +422,13 @@
         <!--**********************************
             Sidebar end
         ***********************************-->
-        
+        {% endblock %}
         <!--**********************************
             Content body start
         ***********************************-->
+        {% block body %}
         <div class="content-body">
-{% block body %}
+
             <div class="container-fluid mt-3">
                 <div class="row">
                     <div class="col-lg-3 col-sm-6">
@@ -977,8 +979,8 @@
         <!--**********************************
             Content body end
         ***********************************-->
-
         {% endblock %}
+
         <!--**********************************
             Footer start
         ***********************************-->
@@ -1022,8 +1024,6 @@
     <!-- ChartistJS -->
     <script src="{{asset('Back/plugins/chartist/js/chartist.min.js')}}"></script>
     <script src="{{asset('Back/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js')}}"></script>
-
-
 
     <script src="{{asset('Back/js/dashboard/dashboard-1.js')}}"></script>
     {% endblock %}

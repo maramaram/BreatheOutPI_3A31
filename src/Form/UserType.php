@@ -12,6 +12,9 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Validator\Constraints\IsTrue;
+use VictorPrdh\RecaptchaBundle\Form\ReCaptchaType;
+
 class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -22,6 +25,7 @@ class UserType extends AbstractType
             ->add('email')
             ->add('pwd')
             ->add('date_N')
+            ->add('num_tel')
             ->add('adress')
             ->add('photo', FileType::class, [
                 'label' => 'Image',
@@ -37,7 +41,7 @@ class UserType extends AbstractType
                 'expanded' => true, // Set to true for radio buttons, false for a dropdown
                 'multiple' => false, // Set to true for multiple choices
             ])
-        ;
+           ->add('recaptcha',RecaptchaType::class);
         $builder->get('photo')->addModelTransformer(new FileToViewTransformerr());
 
     }

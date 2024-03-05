@@ -31,55 +31,75 @@
                     <li class="nav-item"><a class="nav-link" href="pricing.html">Blog</a></li>
                     <li class="nav-item"><a class="nav-link" href="contact.html">A propos de nous</a></li>
                 </ul>
-                <div class="my-md-0 ml-lg-4 mt-4 mt-lg-0 ml-auto text-lg-right mb-3 mb-lg-0">
-                    <a href="{{ path('app_user_show', {'id': app.user.getId()}) }}">
-                        <h3 class="text-color mb-0" style="margin-right: 10px;"><i></i>PROFILE</h3>
+                <li class="nav-item dropdown">
+                    <a href="{{ path('app_user_show', {'id': app.user.getId()}) }}" class="nav-link dropdown-toggle">
+                        <h3 class="text-color mb-0" style="margin-right: 10px;">
+                            <i></i>{{ user.prenom }} {{ user.nom }}
+                        </h3>
                     </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ path('app_user_show', {'id': app.user.getId()}) }}">Profile</a></li>
+                        <li><a class="dropdown-item" href="{{ path('app_logout') }}">Log Out</a></li>
+                    </ul>
+                </li>
+                <div class="my-md-0 ml-lg-4 mt-4 mt-lg-0 ml-auto text-lg-right mb-3 mb-lg-0">
+
                 </div>
             </div>
         </div>
     </nav>
 {% endblock %}
 {% block body %}
-    <h1>User</h1>
+    <div class="container mt-5">
+        <h1>User Details</h1>
 
-    <table class="table">
-        <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ user.id }}</td>
-        </tr>
-        <tr>
-            <th>Nom</th>
-            <td>{{ user.nom }}</td>
-        </tr>
-        <tr>
-            <th>Prenom</th>
-            <td>{{ user.prenom }}</td>
-        </tr>
-        <tr>
-            <th>Email</th>
-            <td>{{ user.email }}</td>
-        </tr>
-        <tr>
-            <th>PHOTO</th>
-            <td>{{ user.photo }}</td>
-        </tr>
-        <tr>
-            <th>Date_N</th>
-            <td>{{ user.dateN ? user.dateN|date('Y-m-d') : '' }}</td>
-        </tr>
-        <tr>
-            <th>Role</th>
-            <td>{{ user.role }}</td>
-        </tr>
-        </tbody>
-    </table>
+        <table class="table table-bordered mt-4">
+            <tbody>
+            <tr>
+                <th>ID</th>
+                <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ user.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ user.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>PHOTO</th>
+                <td>
+                    {% if user.photo %}
+                        <img src="{{ asset('/' ~ user.photo) }}" alt="User Photo" class="img-fluid">
+                    {% else %}
+                        No photo available
+                    {% endif %}
+                </td>
+            </tr>
 
-    <a href="{{ path('app_user_edit', {'id':app.user.getId()}) }}">edit</a>
-    <a href="{{ path('app_logout') }}">Logout</a>
-    {{ include('user/_delete_form.html.twig') }}
+            <tr>
+                <th>Date of Birth</th>
+                <td>{{ user.dateN ? user.dateN|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Role</th>
+                <td>{{ user.role }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_user_edit', {'id': app.user.getId()}) }}" class="btn btn-primary mt-3">Edit</a>
+        <a href="{{ path('app_logout') }}" class="btn btn-danger mt-3">Logout</a>
+
+        {{ include('user/_delete_form.html.twig') }}
+    </div>
 {% endblock %}
+
 
 {% block up%}
     <section class="slider">

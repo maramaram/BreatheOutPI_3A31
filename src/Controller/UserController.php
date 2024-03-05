@@ -1,9 +1,16 @@
 <?php
 
 namespace App\Controller;
-
+use MercurySeries\FlashyBundle\FlashyNotifier;
+use Pagerfanta\Pagerfanta;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Twilio\Rest\Client;
 use App\Entity\User;
+use App\Form\ChangerPasswordType;
+use App\Form\ConfirmCodeType;
 use App\Form\ModifyUserType;
+use App\Form\ResetPasswordType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -111,7 +118,7 @@ The BreatheOut Team";
             $entityManager->flush();
         }
         $user = $entityManager->getRepository(User::class)->find($id);
-        return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_user_index', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
     }
 
 //affichage de user frontEnd
@@ -172,11 +179,43 @@ The BreatheOut Team";
 
 
     //affichage list user Backend
-    #[Route('/', name: 'app_user_index', methods: ['GET'])]
-    public function index(UserRepository $userRepository): Response
+    #[Route('/back/{id}', name: 'app_user_index', methods: ['GET'])]
+    public function index($id,SessionInterface $session, FlashyNotifier $flashy,Request $request, UserRepository $userRepository): Response
     {
+        $isNewUserAdded = $session->get('isNewUserAdded', false);
+        if ($isNewUserAdded) {
+            $notificationLink = 'a new user is added';
+            $flashy->success('A new user is added', $notificationLink);
+            $session->set('isNewUserAdded', false);
+        }
+        // Récupérez vos données à paginer depuis la base de données
+        $queryBuilder = $userRepository->createQueryBuilder('u');
+
+        // Créez un adaptateur Pagerfanta pour vos données
+        $adapter = new QueryAdapter($queryBuilder);
+
+        // Créez l'objet Pagerfanta
+        $pagerfanta = new Pagerfanta($adapter);
+
+        // Définissez le nombre d'éléments par page
+        $pagerfanta->setMaxPerPage(5);
+
+        // Récupérez le numéro de page à partir de la requête (par exemple, via la query string)
+        $currentPage = $request->query->get('page', 1);
+
+        // Définissez la page actuelle
+        $pagerfanta->setCurrentPage($currentPage);
+
+        // Récupérez les utilisateurs de la page actuelle
+        $users = $pagerfanta->getCurrentPageResults();
+
+        // ...
+
         return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findAll(),
+
+            'users' => $users,
+            'pagerfanta' => $pagerfanta, // Make sure to pass the pagerfanta variable to the template
+
         ]);
     }
 
@@ -208,7 +247,7 @@ The BreatheOut Team";
             $user->setPhoto($directory . '/' . $fileName);
             $entityManager->persist($user);
             $entityManager->flush();
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_index', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
         }
         return $this->renderForm('user/new_back.html.twig', [
             'user' => $user,
@@ -235,7 +274,7 @@ The BreatheOut Team";
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_index', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user/edit_back.html.twig', [
@@ -243,7 +282,97 @@ The BreatheOut Team";
             'form' => $form,
         ]);
     }
+//forgot password user on login page
+    #[Route('/change/password', name: 'forgot')]
+    public function forgotPassword(Request $request, UserRepository $userRepository): Response
+    {
+        $form = $this->createForm(ResetPasswordType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $num_tel = $form->get('num_tel')->getData();
+            $user = $userRepository->findOneBy(['num_tel' => $num_tel]);
+            if ($user) {
+                $resetCode = sprintf('%04d', mt_rand(0, 9999));
+                // Twilio configuration
+                $sid    = "AC826dd4583d21e1d761edfdbefca0daf8";
+                $token  = "6dfb8cfec4006bd5b1df833c60c9eca2";
+                $twilio = new Client($sid, $token);
 
+                // Construct the URL with route parameters
+
+                // Include the URL in the body of the SMS message
+                $message = $twilio->messages
+                    ->create(
+                        "+21655614560",
+                        [
+                            "from" => "+14845529358",
+                            "body" => "Hi " . " " . $user->getNom() ." " .  $user->getPrenom() . " ". "This is your code to reset password : " . $resetCode
+                        ]
+                    );
+
+                return $this->redirectToRoute('password_code_confirm', ['idC' => $user->getId(), 'code' => $resetCode]);
+            } else {
+                $this->addFlash('error', 'Phone number does not exist');
+                return $this->redirectToRoute('forgot');
+            }
+        }
+        return $this->render('user/user_forgot_password.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/{idC}/{code}', name: 'password_code_confirm')]
+    public function password_code(UserRepository $repository , $idC , $code ,Request $request): Response
+    {
+
+        $newUser = $repository->find($idC);
+        $form = $this->createForm(ConfirmCodeType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user = $form->getData();
+            $code1 = $user['code'];
+            if($code1 == $code)
+            {
+                return $this->redirectToRoute('user_change_password', ['idC' => $newUser->getId()]);
+            }
+            else{
+                $this->addFlash('error', 'Invalid code');
+            }
+        }else{
+        return $this->render('user/user_forgot_password.html.twig', [
+            'form' => $form->createView(),
+        ]);}
+        return $this->render('user/code_confirm_check.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+    #[Route('{idC}', name: 'user_change_password')]
+    public function change_password(Request $request, UserRepository $repository, $idC, EntityManagerInterface $entityManager): Response
+    {
+        $newUser = $repository->find($idC);
+        $form = $this->createForm(ChangerPasswordType::class,$newUser);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user = $form->getData();
+            $password = $user->getPwd();
+            $hashedPassword1 = $this->hasher->hashPassword(
+                $newUser,
+                $password
+            );
+            $newUser->setPwd($hashedPassword1);
+            $entityManager->persist($newUser);
+            $entityManager->flush();
+            $this->addFlash('success', 'Password changed successfully!');
+            return $this->redirectToRoute('app_login');
+        }else{
+            $this->addFlash('ERROR', 'Password DIDNt change');
+        }
+        $this->addFlash('ERROR', 'Password DIDNt change');
+        return $this->render('user/change_password.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
     //suppression de user Backend
     /*  #[Route('/{id}', name: 'app_user_back_delete', methods: ['POST'])]
        public function deleteBack(Request $request, User $user, EntityManagerInterface $entityManager): Response
@@ -255,4 +384,18 @@ The BreatheOut Team";
 
            return $this->redirectToRoute('app_user_back_index', [], Response::HTTP_SEE_OTHER);
        }*/
+
+    // user inactive admin
+    #[Route('/inactive/user/{idActive}', name: 'user_inactive')]
+    public function user_active(UserRepository $repository,EntityManagerInterface $entityManager, $idActive): Response
+    {
+        $userActive = $repository->find($idActive);
+        if (!$userActive) {
+            throw $this->createNotFoundException('No user found');
+        }
+        $userActive->setStatus("active");
+        $entityManager->flush();
+        return $this->redirectToRoute('app_user_index', ['id' => $idActive], Response::HTTP_SEE_OTHER);
+    }
+
 }

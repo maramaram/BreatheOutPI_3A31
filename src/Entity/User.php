@@ -94,6 +94,9 @@ class User implements PasswordAuthenticatedUserInterface,UserInterface
     #[ORM\Column(length: 255)]
     private ?string $status = "inactive";
 
+    #[ORM\Column(length: 255)]
+    private ?string $num_tel = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -229,6 +232,29 @@ class User implements PasswordAuthenticatedUserInterface,UserInterface
     public function setStatus(string $status): static
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getNum_tel(): ?string
+    {
+        return $this->num_tel;
+    }
+
+    public function setNum_tel(string $num_tel): static
+    {
+        $this->num_tel = $num_tel;
+
+        return $this;
+    }
+    public function getNumTel(): ?string
+    {
+        return $this->num_tel;
+    }
+
+    public function setNumTel(string $num_tel): static
+    {
+        $this->num_tel = $num_tel;
 
         return $this;
     }

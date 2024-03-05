@@ -18,10 +18,65 @@
     </section>
 {% endblock %}
 {% block body %}
-    <h1>Sign up</h1>
 
-    {{ include('user/_form.html.twig') }}
+    <body id="body">
+<div class="hero-slider">
+    <div class="slider-item th-fullpage hero-area d-flex align-items-center justify-content-center" style="background-image: url({{ asset('front/images/slider/envi.jpg')}});" style="height: 100vh;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card-body">
+                        <h1 class="text-black-50">  Sign Up </h1>
+                        <div class="form-container">
+                            {{ form_start(form,{'attr':{'novalidate':'novalidate', 'class': 'text-white','class': 'text-danger'}}) }}
+                            {{ form_label(form.nom,"Nom", {'label_attr': {'class': 'text-black'}}) }}
+                            {{ form_errors(form.nom, {'attr': {'class': 'text-danger'}}) }}
+                            {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
 
-    <a href="{{ path('app_login') }}"></a>
+                            {{ form_label(form.prenom,"Prenom", {'label_attr': {'class': 'text-black'}}) }}
+                            {{ form_errors(form.prenom, {'attr': {'class': 'text-danger'}}) }}
+                            {{ form_widget(form.prenom, {'attr': {'class': 'form-control'}}) }}
+
+                            {{ form_label(form.email,"Email", {'label_attr': {'class': 'text-black'}}) }}
+                            {{ form_errors(form.email, {'attr': {'class': 'text-danger'}}) }}
+                            {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+
+                            {{ form_label(form.pwd,"Mot de passe", {'label_attr': {'class': 'text-black'}}) }}
+                            {{ form_errors(form.pwd, {'attr': {'class': 'text-danger'}}) }}
+                            {{ form_widget(form.pwd, {'attr': {'class': 'form-control'}}) }}
+
+                            {{ form_label(form.date_N,"Date de naissance", {'label_attr': {'class': 'text-black'}}) }}
+                            {{ form_errors(form.date_N, {'attr': {'class': 'text-danger'}}) }}
+                            {{ form_widget(form.date_N, {'attr': {'class': 'form-control'}}) }}
+
+                            {{ form_label(form.num_tel,"Numero de telephone", {'label_attr': {'class': 'text-black'}}) }}
+                            {{ form_errors(form.num_tel, {'attr': {'class': 'text-danger'}}) }}
+                            {{ form_widget(form.num_tel, {'attr': {'class': 'form-control'}}) }}
+
+                            {{ form_label(form.adress,"Votre Addresse", {'label_attr': {'class': 'text-black'}}) }}
+                            {{ form_errors(form.adress, {'attr': {'class': 'text-danger'}}) }}
+                            {{ form_widget(form.adress, {'attr': {'class': 'form-control'}}) }}
+
+                            {{ form_label(form.photo,"Photo", {'label_attr': {'class': 'text-black'}}) }}
+                            {{ form_errors(form.photo, {'attr': {'class': 'text-danger'}}) }}
+                            {{ form_widget(form.photo, {'attr': {'class': 'form-control'}}) }}
+
+                            {{ form_label(form.role,"Role", {'label_attr': {'class': 'text-black'}}) }}
+                            {{ form_errors(form.role, {'attr': {'class': 'text-danger'}}) }}
+                            {{ form_widget(form.role, {'attr': {'class': 'form-control'}}) }}
+
+                            <button class="btn">{{ button_label|default('Sign up') }}<a href="{{ path('app_login') }}"></a> </button>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 
 {% endblock %}
