@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3Validator;
 use MercurySeries\FlashyBundle\FlashyNotifier;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
@@ -35,7 +36,7 @@ class UserController extends AbstractController
 
 //ajout frontEnd
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager ,Recaptcha3Validator $recaptcha3Validator): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -61,7 +62,7 @@ class UserController extends AbstractController
             $user->setPhoto($directory . '/' . $fileName);
             $entityManager->persist($user);
             $entityManager->flush();
-
+            $score = $recaptcha3Validator->getLastResponse()->getScore();
             $mail = new \PHPMailer\PHPMailer\PHPMailer(true); // Make sure to have the correct namespace
 
 
@@ -96,6 +97,7 @@ The BreatheOut Team";
                 // Log the error message
                 // error_log('Mailer Error: ' . $e->getMessage());
             }
+
             return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
         }
 

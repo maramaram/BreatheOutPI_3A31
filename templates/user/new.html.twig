@@ -65,6 +65,8 @@
                             {{ form_errors(form.role, {'attr': {'class': 'text-danger'}}) }}
                             {{ form_widget(form.role, {'attr': {'class': 'form-control'}}) }}
 
+
+
                             <button class="btn">{{ button_label|default('Sign up') }}<a href="{{ path('app_login') }}"></a> </button>
                             {{ form_end(form) }}
                         </div>

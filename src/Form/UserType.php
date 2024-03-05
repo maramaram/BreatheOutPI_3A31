@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\User;
+use Karser\Recaptcha3Bundle\Form\Recaptcha3Type;
+use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\DataTransformerInterface;
@@ -41,7 +43,12 @@ class UserType extends AbstractType
                 'expanded' => true, // Set to true for radio buttons, false for a dropdown
                 'multiple' => false, // Set to true for multiple choices
             ])
-           ->add('recaptcha',RecaptchaType::class);
+            ->add('captcha', Recaptcha3Type::class, [
+                'constraints' => new Recaptcha3 ([
+                    'message' => 'karser_recaptcha3.message',
+                    'messageMissingValue' => 'karser_recaptcha3.message_missing_value',
+                ]),
+            ]);
         $builder->get('photo')->addModelTransformer(new FileToViewTransformerr());
 
     }
