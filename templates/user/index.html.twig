@@ -2,6 +2,31 @@
 
 {% block title %}User index{% endblock %}
 {% block js %}
+    <script src="{{asset('Back/plugins/common/common.min.js')}}"></script>
+    <script src="{{asset('Back/js/custom.min.js')}}"></script>
+    <script src="{{asset('Back/js/settings.js')}}"></script>
+    <script src="{{asset('Back/js/gleek.js')}}"></script>
+    <script src="{{asset('Back/js/styleSwitcher.js')}}"></script>
+
+    <!-- Chartjs -->
+    <script src="{{asset('Back/plugins/chart.js/Chart.bundle.min.js')}}"></script>
+    <!-- Circle progress -->
+    <script src="{{asset('Back/plugins/circle-progress/circle-progress.min.js')}}"></script>
+    <!-- Datamap -->
+    <script src="{{asset('Back/plugins/d3v3/index.js')}}"></script>
+    <script src="{{asset('Back/plugins/topojson/topojson.min.js')}}"></script>
+    <script src="{{asset('Back/plugins/datamaps/datamaps.world.min.js')}}"></script>
+    <!-- Morrisjs -->
+    <script src="{{asset('Back/plugins/raphael/raphael.min.js')}}"></script>
+    <script src="{{asset('Back/plugins/morris/morris.min.js')}}"></script>
+    <!-- Pignose Calender -->
+    <script src="{{asset('Back/plugins/moment/moment.min.js')}}"></script>
+    <script src="{{asset('Back/plugins/pg-calendar/js/pignose.calendar.min.js')}}"></script>
+    <!-- ChartistJS -->
+    <script src="{{asset('Back/plugins/chartist/js/chartist.min.js')}}"></script>
+    <script src="{{asset('Back/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js')}}"></script>
+
+    <script src="{{asset('Back/js/dashboard/dashboard-1.js')}}"></script>
     {{ parent() }}
     <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
     <script src="{{ asset('/assets/js/jquery.js') }}"></script>
@@ -30,7 +55,7 @@
 
                     <script src="{{ asset('/Back/js/jquery.js') }}"></script>
                     <div class="search-container mt-3">
-                        <input type="text" class="form-control" placeholder="Search with ID" id="search">
+                        <input type="text" class="form-control" placeholder="Search with NOM" id="search">
                     </div>
                 </div>
             </div>

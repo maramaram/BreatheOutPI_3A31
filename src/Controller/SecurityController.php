@@ -48,7 +48,7 @@ class SecurityController extends AbstractController
             case 'coach':
                 return $this->render('user/HomeOnCoach.html.twig');
             case 'admin':
-                return $this->render('user/HomeOnAdmin.html.twig');
+                    return $this->render('user/HomeOnAdmin.html.twig');
 
             default:
 
