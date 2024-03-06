@@ -1,0 +1,241 @@
+
+
+{% block title %}Chat GPT!{% endblock %}
+
+{% block body %}
+<section class="chat">
+<div class="custom-container">
+    <style>
+        .custom-container .container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 0px;
+            position: relative;
+            width: 874px;
+            height: 428px;
+            left: 20%;
+            top: 48px;
+            background: #343541;
+            transform: scale(0.8);
+        }
+
+        .custom-container .header {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            padding: 24px 48px;
+            gap: 24px;
+            width: 874px;
+            height: 78px;
+            flex: none;
+            order: 0;
+            align-self: stretch;
+            flex-grow: 0;
+        }
+
+        .custom-container .title {
+            width: 656px;
+            height: 28px;
+            font-family: 'Segoe UI';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 28px;
+            color: #D1D5DB;
+            flex: none;
+            order: 1;
+            flex-grow: 1;
+            position: absolute;
+            top: -11px;
+            left: 313px;
+            font-size: xx-large;
+            font-weight: 600;
+        }
+
+        .custom-container .avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 2px;
+            flex: none;
+            order: 0;
+            flex-grow: 0;
+            position: absolute;
+            top: 64px;
+        }
+
+        .custom-container .question {
+            width: 656px;
+            height: 28px;
+            font-family: 'Segoe UI';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 28px;
+            color: #D1D5DB;
+            flex: none;
+            order: 1;
+            flex-grow: 1;
+            position: absolute;
+            top: 64px;
+            left: 100px;
+        }
+
+        .custom-container .gpt-response {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            padding: 24px 48px;
+            gap: 24px;
+            height: 216px;
+            background: #444654;
+            flex: none;
+            order: 1;
+            align-self: stretch;
+            flex-grow: 0;
+        }
+
+        .custom-container .gpt-logo {
+            width: 30px;
+            height: 30px;
+            border-radius: 2px;
+            flex: none;
+            order: 0;
+            flex-grow: 0;
+        }
+
+        .custom-container .gpt {
+            width: 656px;
+            height: 168px;
+            font-family: 'Segoe UI';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 28px;
+            color: #D1D5DB;
+            flex: none;
+            order: 1;
+            flex-grow: 1;
+        }
+
+        .custom-container .stream {
+            color: white;
+            font-size: larger;
+        }
+
+        .custom-container .type {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 24px 0px;
+            gap: 4px;
+            width: 874px;
+            height: 134px;
+            flex: none;
+            order: 2;
+            align-self: stretch;
+            flex-grow: 0;
+            background: #343541;
+        }
+
+        .custom-container .input-div {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 0px 48px;
+            gap: 8px;
+            width: 874px;
+            height: 50px;
+            flex: none;
+            order: 0;
+            align-self: stretch;
+            flex-grow: 0;
+        }
+
+        .custom-container .text-input {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: center;
+            width: 778px;
+            height: 50px;
+            background: #444654;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+            flex: none;
+            order: 0;
+            align-self: stretch;
+            flex-grow: 0;
+        }
+
+        .custom-container .text {
+            position: absolute;
+            left: 98px;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: center;
+            width: 653px;
+            height: 38px;
+            background: #444654;
+            box-shadow: 0px 0px 15px rgb(0 0 0 / 10%);
+            flex: none;
+            order: 0;
+            align-self: stretch;
+            flex-grow: 0;
+            border: none;
+            top: 419px;
+            color: white;
+            text-decoration: none;
+            outline: none;
+        }
+
+        .custom-container .send {
+            width: 26px;
+            height: 30px;
+            flex: none;
+            order: 0;
+            flex-grow: 0;
+            position: absolute;
+            left: 728px;
+            top: -38px;
+            cursor: pointer;
+        }
+
+        .custom-container .btn {
+            position: absolute;
+            border: none;
+            background: none;
+        }
+    </style>
+
+    <div class="container">
+        <div class="header">
+            <h1 class="title">Small Chat GPT</h1>
+            <img src="{{asset('/image/avatar.png')}}" alt="avatar" class="avatar">
+            <span class="question" id="question">{{question}}</span>
+        </div>
+        <div class="gpt-response">
+            <img src="{{asset('/image/gpt.png')}}" alt="gpt" class="gpt-logo">
+            {{response}}
+          
+        </div>
+        <div class="type">
+            <div class="input-div">
+                <form action="{{path('send_chat')}}" method="post">
+                    <div class="text-input">
+                        <input type="text" name="text" id="text" placeholder="" class="text">
+                    </div>
+                    <button type="submit" class="btn">
+                        <img src="{{asset('/image/send.png')}}" alt="send" class="send">
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+
+
+{% endblock %}

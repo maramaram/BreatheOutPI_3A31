@@ -1,0 +1,211 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}AZIZ !{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">
+                    <h4>Table Exercices</h4>
+                </div>
+                <div class="input-group mb-3">
+                    <form id="searchhForm" class="container-fluid">  
+                        <div class="row">
+                            <div class="col">
+                                <input id="searchhInput" type="text" class="form-control" name="searchh">
+                            </div>
+                            <div class="col-auto">
+                                <button id="searchhButton" class="btn btn-outline-dark btn-block" type="submit">Chercher</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <a href="{{ path('app_exercice_pdf') }}" class="btn btn-red"><button class="btn btn-outline-dark btn-block" type="button">PDF</button> </a>
+                <a href="{{ path('ex_add') }}"> 
+                
+                    <button class="btn btn-outline-dark btn-block" type="button">Ajouter</button> 
+                </a>
+                <br> 
+                <div class="table-responsive">
+                    <table id="exerciceTable" class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nom</th>
+                                <th>Muscle Ciblé</th>
+                                <th>Difficulté</th>
+                                <th>Description</th>
+                                <th>Image</th>
+                                <th>Gif</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="searchhResults">
+                            <!-- Les données seront affichées ici dynamiquement -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-lg-12"> <!-- Utilisez col-lg-12 pour occuper toute la largeur de la grille -->
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">STATS</h4>
+            <canvas id="another-chart" style="width: 100vw; height: 40vh;"></canvas>
+            <!-- Utilisez 100vw pour occuper 100% de la largeur de l'écran et 100vh pour occuper 100% de la hauteur de l'écran -->
+        </div>
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}
+
+{% block js %}
+<script src="{{asset('Back/plugins/common/common.min.js')}}"></script>
+    <script src="{{asset('Back/js/custom.min.js')}}"></script>
+    <script src="{{asset('Back/js/settings.js')}}"></script>
+    <script src="{{asset('Back/js/gleek.js')}}"></script>
+    <script src="{{asset('Back/js/styleSwitcher.js')}}"></script>
+
+    <!-- Chartjs -->
+    <script src="{{asset('Back/plugins/chart.js/Chart.bundle.min.js')}}"></script>
+    <!-- Circle progress -->
+    <script src="{{asset('Back/plugins/circle-progress/circle-progress.min.js')}}"></script>
+    <!-- Datamap -->
+    <script src="{{asset('Back/plugins/d3v3/index.js')}}"></script>
+    <script src="{{asset('Back/plugins/topojson/topojson.min.js')}}"></script>
+    <script src="{{asset('Back/plugins/datamaps/datamaps.world.min.js')}}"></script>
+    <!-- Morrisjs -->
+    <script src="{{asset('Back/plugins/raphael/raphael.min.js')}}"></script>
+    <script src="{{asset('Back/plugins/morris/morris.min.js')}}"></script>
+    <!-- Pignose Calender -->
+    <script src="{{asset('Back/plugins/moment/moment.min.js')}}"></script>
+    <script src="{{asset('Back/plugins/pg-calendar/js/pignose.calendar.min.js')}}"></script>
+    <!-- ChartistJS -->
+    <script src="{{asset('Back/plugins/chartist/js/chartist.min.js')}}"></script>
+    <script src="{{asset('Back/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js')}}"></script>
+
+
+
+    <script src="{{asset('Back/js/dashboard/dashboard-1.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+    #most-viewed-chart,
+    #another-chart {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+</style>
+
+
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Bar Chart
+        var ctxBar = document.getElementById('another-chart').getContext('2d');
+        // Remplacez les données suivantes par les vôtres pour le graphique à barres
+        var dataBar = {
+            labels: ['Facile', 'Moyen', 'Difficile'],
+            datasets: [{
+                label: 'Data',
+                data: [{{ f|json_encode|raw }}, {{ m|json_encode|raw }}, {{ d|json_encode|raw }}],
+                backgroundColor: [ 'rgba(75, 192, 192, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)' ], // Définir les couleurs de fond de chaque barre (rouge, jaune, bleu)
+                 borderColor: [ 'rgba(75, 192, 192, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)' ], // Définir les couleurs des bordures de chaque barre (rouge, jaune, bleu)
+                borderWidth: 1
+            }]
+        };
+        var optionsBar = {
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Difficulté'
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Nombre exercices'
+                    }
+                }
+            }
+        };
+        var myBarChart = new Chart(ctxBar, {
+            type: 'bar',
+            data: dataBar,
+            options: optionsBar
+        });
+    });
+</script>
+<script>
+    // Fonction pour effectuer une recherche
+    function rechercherExercices(termeRecherche) {
+        // Créer une instance de l'objet FormData
+        var formData = new FormData();
+        formData.append('searchh', termeRecherche);
+
+        // Effectuer la requête Ajax pour récupérer les résultats de la recherche
+        fetch('/searchh', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Vider le contenu de la table avant d'ajouter de nouveaux résultats
+            document.getElementById('searchhResults').innerHTML = '';
+
+            // Manipuler les données JSON reçues et ajouter les nouveaux résultats
+            var resultsHtml = '';
+            console.log(data);
+            data.weza.forEach(function(exercice) {
+                // Construire le HTML pour chaque exercice
+                resultsHtml += '<tr>';
+                resultsHtml += '<td>' + exercice.id + '</td>';
+                resultsHtml += '<td>' + exercice.nom + '</td>';
+                resultsHtml += '<td>' + exercice.mc + '</td>';
+                if (exercice.nd == 1) {
+                    resultsHtml += '<td><span class="badge badge-success px-2" style="font-size: 12px;">Facile</span></td>';
+                } else if (exercice.nd == 2) {
+                    resultsHtml += '<td><span class="badge badge-primary px-2" style="font-size: 12px;">Moyen</span></td>';
+                } else if (exercice.nd == 3) {
+                    resultsHtml += '<td><span class="badge badge-danger px-2" style="font-size: 12px;">Difficile</span></td>';
+                }
+                resultsHtml += '<td class="color-primary"><div style="width: 400px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">' + exercice.des + '</div></td>';
+                resultsHtml += '<td><img src="' + exercice.img + '" width="58%" height="58%" /></td>';
+                resultsHtml += '<td><img src="' + exercice.gif + '" width="25%" height="25%" /></td>';
+                resultsHtml += '<td><a href="/bexercice/m/' + exercice.id + '"><button type="submit" class="btn btn-dark btn-block">Modifier</button></a><br><a href="/bexercice/d/' + exercice.id + '"><button type="submit" class="btn btn-dark btn-block">Supprimer</button></a></td>';
+                resultsHtml += '</tr>';
+            });
+
+            // Mettre à jour l'interface utilisateur avec les nouveaux résultats de la recherche
+            document.getElementById('searchhResults').innerHTML = resultsHtml;
+        })
+        .catch(error => {
+            console.error('Erreur lors de la requête:', error);
+        });
+    }
+
+    // Événement pour soumettre le formulaire de recherche
+    document.getElementById('searchhForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Empêcher la soumission du formulaire par défaut
+        var searchhTerm = document.getElementById('searchhInput').value;
+        rechercherExercices(searchhTerm);
+    });
+
+    // Charge initiale des exercices
+    document.addEventListener('DOMContentLoaded', function() {
+        rechercherExercices('');
+    });
+</script>
+{% endblock %}
