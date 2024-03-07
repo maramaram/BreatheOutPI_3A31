@@ -40,6 +40,9 @@
                value="{{ csrf_token('authenticate') }}"
         >
         <a href="{{ path('forgot') }}">mot de passe oublié</a>
+        <br>
+        <a href="{{ path('app_user_new') }}">creer un compte</a>
+        <br>
         <button class="btn btn-lg btn-primary" type="submit">
             Sign in
         </button>

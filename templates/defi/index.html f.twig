@@ -1,4 +1,4 @@
-{% extends 'basefront.html.twig' %}
+{% extends '/user/HomeOnclient.html.twig' %}
 
 {% block title %}EXERCICES{% endblock %}
 {% block up %}
@@ -20,6 +20,7 @@
 
 
 {% block body %}
+    {% block defi %}
 <div class="container-fluid mt-4">
     <div class="row d-flex justify-content-center">
         <div class="col-md-9">
@@ -203,8 +204,7 @@
 </section>
 {% endblock %}
 
-
-
+{% endblock %}
 
 
 {% block css %}
@@ -346,6 +346,7 @@ p {
 
 </style>
 {% endblock %}
+
 {% block js %}
 <!-- 
     Essential Scripts

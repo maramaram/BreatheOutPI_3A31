@@ -45,7 +45,7 @@
 <!-- Header Start -->
 <nav class="navbar navbar-expand-lg navigation fixed-top" id="navbar">
 	<div class="container-fluid">
-		<a class="navbar-brand" href="">
+		<a class="navbar-brand" href="{{ path('app_login')}}">
 			<h2 class="text-white text-capitalize"></i>Breathe<span class="text-color">Out</span></h2>
 		</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsid"
@@ -65,10 +65,10 @@
 						<li><a class="dropdown-item" href="{{ path('de_ftest') }}">Défis</a></li>
 					</ul>
 				</li>
-				<li class="nav-item"><a class="nav-link" href="service.html">Sessions</a></li>
-				<li class="nav-item"><a class="nav-link" href="pricing.html">Coachs</a></li>
-				<li class="nav-item"><a class="nav-link" href="pricing.html">Blog</a></li>
-				<li class="nav-item"><a class="nav-link" href="contact.html">A propos de nous</a></li>
+				<li class="nav-item"><a class="nav-link" href="{{ path('app_login')}}">Sessions</a></li>
+				<li class="nav-item"><a class="nav-link" href="{{ path('app_login')}}">Coachs</a></li>
+				<li class="nav-item"><a class="nav-link" href="{{ path('app_login')}}">Blog</a></li>
+				<li class="nav-item"><a class="nav-link" href="{{ path('app_login')}}">A propos de nous</a></li>
 			</ul>
 			<div class="my-md-0 ml-lg-4 mt-4 mt-lg-0 ml-auto text-lg-right mb-3 mb-lg-0">
 				<a href="tel:+23-345-67890">
@@ -115,7 +115,7 @@
 					<span class="number">01</span>
 					<h3 class="mt-3">Modern Equipment</h3>
 					<p class="mt-3 mb-4">Vestibulum sit amet blan augue, sit amet vehicula mi. Aliquam vitae varius.</p>
-					<a href="about.html" class="text-color text-uppercase font-size-13 letter-spacing font-weight-bold"><i class="ti-minus mr-2 "></i>Pratiquer les exercices</a>
+					<a href="{{ path('app_login') }}" class="text-color text-uppercase font-size-13 letter-spacing font-weight-bold"><i class="ti-minus mr-2 "></i>Pratiquer les exercices</a>
 				</div>
 			</div>
 			<div class="col-lg-4 col-md-6">
@@ -123,7 +123,7 @@
 					<span class="number">02</span>
 					<h3 class="mt-3">PROFFESIONAL TRAINer</h3>
 					<p class="mt-3 mb-4">Vestibulum sit amet blan augue, sit amet vehicula mi. Aliquam vitae varius.</p>
-					<a href="about.html" class="text-color text-uppercase font-size-13 letter-spacing font-weight-bold"><i class="ti-minus mr-2 "></i>Equipement de sport</a>
+					<a href="{{ path('app_login') }}" class="text-color text-uppercase font-size-13 letter-spacing font-weight-bold"><i class="ti-minus mr-2 "></i>Equipement de sport</a>
 				</div>
 			</div>
 			<div class="col-lg-4 col-md-6">
@@ -131,7 +131,7 @@
 					<span class="number">03</span>
 					<h3 class="mt-3">HEALTHY DIET Plan</h3>
 					<p class="mt-3 mb-4">Vestibulum sit amet blan augue, sit amet vehicula mi. Aliquam vitae varius.</p>
-					<a href="about.html" class="text-color text-uppercase font-size-13 letter-spacing font-weight-bold"><i class="ti-minus mr-2 "></i>Creer votre blog</a>
+					<a href="{{ path('app_login') }}" class="text-color text-uppercase font-size-13 letter-spacing font-weight-bold"><i class="ti-minus mr-2 "></i>Creer votre blog</a>
 				</div>
 			</div>
 		</div>
@@ -175,7 +175,7 @@
 						Book your early seat to get <span class="text-color">summer 25% </span>dicsount
 					</h2>
 
-					<a href="pricing.html" class="btn btn-main text-white">Boutique</a>
+					<a href="{{ path('app_login') }}" class="btn btn-main text-white">Boutique</a>
 				</div>
 			</div>
 		</div>
@@ -260,42 +260,42 @@
 	<div class="container-fluid p-0">
 		<div class="row no-gutters portfolio-gallery">
 			<div class="col-lg-3 col-md-6 col-sm-6">
-				<a href="images/gallery/gallery-01.jpg" class="popup-gallery">
-					<img src="images/gallery/gallery-01.jpg" alt="" class="img-fluid">
+				<a href="{{ path('app_login') }}" class="popup-gallery">
+					<img src="{{ path('app_login') }}" alt="" class="img-fluid">
 				</a>
 			</div>
 			<div class="col-lg-3 col-md-6 col-sm-6">
-				<a href="images/gallery/gallery-02.jpg" class="popup-gallery">
+				<a href="{{ path('app_login') }}" class="popup-gallery">
 					<img src="images/gallery/gallery-02.jpg" alt="" class="img-fluid">
 				</a>
 			</div>
 			<div class="col-lg-3 col-md-6 col-sm-6">
-				<a href="images/gallery/gallery-03.jpg" class="popup-gallery">
+				<a {{ path('app_login') }}" class="popup-gallery">
 					<img src="images/gallery/gallery-03.jpg" alt="" class="img-fluid">
 				</a>
 			</div>
 			<div class="col-lg-3 col-md-6 col-sm-6">
-				<a href="images/gallery/gallery-04.jpg" class="popup-gallery">
+				<a href="{{ path('app_login') }}" class="popup-gallery">
 					<img src="images/gallery/gallery-04.jpg" alt="" class="img-fluid">
 				</a>
 			</div>
 			<div class="col-lg-3 col-md-6 col-sm-6">
-				<a href="images/gallery/gallery-05.jpg" class="popup-gallery">
+				<a href="{{ path('app_login') }}" class="popup-gallery">
 					<img src="images/gallery/gallery-05.jpg" alt="" class="img-fluid">
 				</a>
 			</div>
 			<div class="col-lg-3 col-md-6 col-sm-6">
-				<a href="images/gallery/gallery-06.jpg" class="popup-gallery">
+				<a href="{{ path('app_login') }}" class="popup-gallery">
 					<img src="images/gallery/gallery-06.jpg" alt="" class="img-fluid">
 				</a>
 			</div>
 			<div class="col-lg-3 col-md-6 col-sm-6">
-				<a href="images/gallery/gallery-07.jpg" class="popup-gallery">
+				<a href="{{ path('app_login') }}" class="popup-gallery">
 					<img src="images/gallery/gallery-07.jpg" alt="" class="img-fluid">
 				</a>
 			</div>
 			<div class="col-lg-3 col-md-6 col-sm-6">
-				<a href="images/gallery/gallery-08.jpg" class="popup-gallery">
+				<a href="i{{ path('app_login') }}" class="popup-gallery">
 					<img src="images/gallery/gallery-08.jpg" alt="" class="img-fluid">
 				</a>
 			</div>

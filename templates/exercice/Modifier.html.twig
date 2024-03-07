@@ -1,8 +1,9 @@
-{% extends 'baseback.html.twig' %}
+{% extends '/user/HomeOnAdmin.html.twig' %}
 
 {% block title %}AZIZ !{% endblock %}
 
 {% block body %}
+    {% block exercices %}
 <div class="row">
     <div class="col-md-6">
         <div class="card">
@@ -148,4 +149,5 @@
         border-radius: 10px; /* Coins arrondis de la carte */
     }
 </style>
+{% endblock %}
 {% endblock %}

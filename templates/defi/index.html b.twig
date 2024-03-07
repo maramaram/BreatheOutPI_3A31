@@ -1,8 +1,9 @@
-{% extends 'baseback.html.twig' %}
+{% extends '/user/HomeOnAdmin.html.twig' %}
 
 {% block title %}AZIZ !{% endblock %}
 
 {% block body %}
+      <div class="container mt-5">
 <div class="container-fluid">
     <div class="row">
         <div class="card">
@@ -59,6 +60,7 @@
         </div>
     </div>
 </div>
+      </div>
 {% endblock %}
 {% block js %}
 <script src="{{asset('Back/plugins/common/common.min.js')}}"></script>
@@ -166,9 +168,9 @@
                 });
                 resultsHtml += '</td>';
                 resultsHtml += '<td>';
-                resultsHtml += '<a href="/de/mod/' + defi.id + '"><button type="button" class="btn btn-dark btn-block">Modifier</button></a>';
+                resultsHtml += '<a href="/bDefi/m/' + defi.id + '"><button type="button" class="btn btn-dark btn-block">Modifier</button></a>';
                 resultsHtml += '<br>';
-                resultsHtml += '<a href="/de/dex/' + defi.id + '"><button type="button" class="btn btn-dark btn-block">Supprimer</button></a>';
+                resultsHtml += '<a href="/bDefi/d/' + defi.id + '"><button type="button" class="btn btn-dark btn-block">Supprimer</button></a>';
                 resultsHtml += '</td>';
                 resultsHtml += '</tr>';
             });
