@@ -1,0 +1,145 @@
+{% extends '/user/HomeOnAdmin.html.twig' %}
+
+{% block title %}
+Backpost ✅
+{% endblock %}
+
+
+
+{% block body %}
+<div class="container mt-5">
+<div class="container-fluid">
+    <div class="row">
+      
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h4>Table posts</h4>
+                    </div>
+                    <div class="input-group mb-3">
+                                            
+                                        <input type="text" class="form-control" >
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-dark btn-block" type="button">Chercher</button>
+                                            </div>
+                                        </div>
+                                 <a href="{{path('po_add')}}"> <button class="btn btn-outline-dark btn-block" type="button">Ajouter</button> </a> 
+                                      <br> 
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>id_client</th>
+                                    <th>title</th>
+                                    <th>content</th>
+                                    <th>date</th>
+                                    <th>image</th>
+                                    <th>views</th>
+                                    <th>id_comments</th>
+                                    <th>action</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in weza %}
+                                <tr>
+                                    <th>{{i.id}}</th>
+                                    <td>{{i.Author.nom}}</td>
+                                    <td>{{i.title}}</td>
+                                    <td class="color-primary"><div  style="width: 400px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{i.content}}</div></td>
+                                    <td>{{i.date|date('Y-m-d H:i:s')}}</td>
+                                    <td><img src="{{asset(i.image)}}" width="200px" height="150px" /></td>
+                                    <td>{{i.views}}</td>
+                                    <td>{% for item in i.comment %}
+                                     {{ item.id }} {{'/'}} 
+                                      {% endfor %}
+                                    </td>
+                                     <td> <a href="{{path('po_dex',{'id':i.id})}}"><button type="submit" class="btn btn-dark btn-block">Supprimer</button></a><td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- /# card -->
+       
+    </div>
+</div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+    <style>
+        #most-viewed-chart {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+    </style>
+
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Most Daily Viewed Post</h4>
+                <canvas id="most-viewed-chart" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var ctx = document.getElementById('most-viewed-chart').getContext('2d');
+
+            // Parse the JSON-encoded data
+            var mostViewedPosts = JSON.parse('{{ mostViewedPosts|json_encode|raw }}');
+
+            var data = {
+                labels: mostViewedPosts.map(post => post.publishDay),
+                datasets: [{
+                    label: 'Views',
+                    data: mostViewedPosts.map(post => post.views),
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            };
+
+            var options = {
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: 'day',
+                            tooltipFormat: 'll'
+                        },
+                        title: {
+                            display: true,
+                            text: 'Publish Day'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Views'
+                        }
+                    }
+                }
+            };
+
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: data,
+                options: options
+            });
+        });
+    </script>
+
+
+
+
+{% endblock %}
+
