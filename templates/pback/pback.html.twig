@@ -1,0 +1,135 @@
+{% extends '/user/HomeOnAdmin.html.twig' %}
+
+{% block body %}
+    {% block panier %}
+    <style>
+        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+        .example-wrapper table { width: 100%; border-collapse: collapse; }
+        .example-wrapper th, .example-wrapper td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        .tri { cursor: pointer; }
+        .asc::after { content: ' ▲'; }
+        .desc::after { content: ' ▼'; }
+    </style>
+
+    <div class="example-wrapper">
+        <input type="search" class="form-control" placeholder="Chercher" id="search">
+        
+        <div>
+            <label><input type="checkbox" id="sortByName"> Trier par Nom</label>
+            <label><input type="checkbox" id="sortByQuantity"> Trier par Quantité</label>
+            <label><input type="checkbox" id="sortByPrice"> Trier par Prix</label>
+            <button id="sortButton" class="btn btn-primary">Trier</button>
+        </div>
+
+        <table id="tableac">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th><a href="#" class="tri" data-col="nom">Nom</a></th>
+                    <th>Description</th>
+                    <th><a href="#" class="tri" data-col="quantiteStock">Quantité en Stock</a></th>
+                    <th><a href="#" class="tri" data-col="prix">Prix</a></th>
+                    <th>Catégories</th>
+                    <th>images</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in produits %}
+                    <tr>
+                        <td>{{ i.getId() }}</td>
+                        <td><a href="#" class="tri" data-col="nom">{{ i.getNom() | upper }}</a></td>
+                        <td>{{ i.getDescription() }}</td>
+                        <td>{{ i.getQuantiteStock() }}</td>
+                        <td>{{ i.getPrix() }}</td>
+                        <td>{{ i.getCategories() }}</td>
+                        <td><img src="{{ asset(i.getimage()) }}" width="70%" height="70%" /></td>
+                        <td><a href="{{ path('app_Produits_Pedit', {id: i.id}) }}" class="btn btn-primary">Edit</a></td>
+                        <td><a href="{{ path('app_Produits_Pdelete', {id: i.id}) }}" class="btn btn-danger">Delete</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ path('app_Produits_pajouter') }}" class="btn btn-success">Ajouter Produit</a>
+        <a href="{{ path('app_produits_generate_pdf') }}" class="btn btn-primary">pdf</a>
+    </div>
+
+        <script src="{{ asset('/assets/js/jquery.js') }}"></script>
+    <script>
+        $(document).ready(function(){
+           function sort_table(column, order) {
+    var rows = $('#tableac tbody tr').get();
+
+    rows.sort(function(a, b) {
+        var A = $(a).find('td').eq(column).text().toUpperCase();
+        var B = $(b).find('td').eq(column).text().toUpperCase();
+
+        if (column === 3) { // Pour la colonne de quantité
+            A = parseInt(A);
+            B = parseInt(B);
+        }
+
+        if (A < B) {
+            return order === 'asc' ? -1 : 1;
+        }
+        if (A > B) {
+            return order === 'asc' ? 1 : -1;
+        }
+        return 0;
+    });
+
+    $.each(rows, function(index, row) {
+        $('#tableac tbody').append(row);
+    });
+}
+
+
+            $('.tri').click(function(){
+                var column = $(this).data('col');
+                var currentOrder = $(this).data('order') || 'asc';
+                var newOrder = (currentOrder === 'asc') ? 'desc' : 'asc';
+
+                $('.tri').not(this).data('order', null).removeClass('asc desc');
+                $(this).data('order', newOrder).removeClass('asc desc').addClass(newOrder);
+            });
+
+            $('#search').keyup(function(){
+                search_table($(this).val());
+            });
+
+            $('#sortButton').click(function() {
+                var sortByName = $('#sortByName').prop('checked');
+                var sortByQuantity = $('#sortByQuantity').prop('checked');
+                var sortByPrice = $('#sortByPrice').prop('checked');
+
+                // Trier par nom
+                if (sortByName) {
+                    sort_table(1, 'asc');
+                }
+
+                // Trier par quantité
+                if (sortByQuantity) {
+                    sort_table(3, 'asc');
+                }
+
+                // Trier par prix
+                if (sortByPrice) {
+                    sort_table(4, 'asc');
+                }
+            });
+
+            function search_table(value){
+                $('#tableac tbody tr').each(function(){
+                    var found = false;
+                    $(this).find('td:nth-child(1), td:nth-child(2), td:nth-child(4)').each(function(){ 
+                        if($(this).text().toLowerCase().includes(value.toLowerCase())){
+                            found = true;
+                            return false; 
+                        }
+                    });
+                    found ? $(this).show() : $(this).hide();
+                });
+            }
+        });
+    </script>
+        {% endblock %}
+{% endblock %}

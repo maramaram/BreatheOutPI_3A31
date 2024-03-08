@@ -36,6 +36,12 @@
   <link rel="stylesheet" href="{{asset('Front/plugins/slick-carousel/slick/slick-theme.css')}}">
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="{{asset('Front/css/style.css')}}">
+	<!-- Libraries Stylesheet -->
+	<link href="{{asset('lib/lightbox/css/lightbox.min.css')}}" rel="stylesheet">
+	<link href="{{asset('lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
+	<!-- Template Stylesheet -->
+	<link href="{{asset('css/style.css')}}" rel="stylesheet">
+	<link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
 {% endblock %}
 </head>
 <body>
@@ -527,7 +533,9 @@
    <script src="{{asset('Front/plugins/google-map/gmap.js')}}"></script>
 
    <script src="{{asset('Front/js/script.js')}}"></script>
+	<script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
 {% endblock %}
+{{ include('@MercurySeriesFlashy/flashy.html.twig') }}
    </body>
 
    </html>

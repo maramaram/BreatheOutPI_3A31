@@ -1,0 +1,24 @@
+{% extends '/user/HomeOnclient.html.twig' %}
+
+{% block body %}
+    {% block pannier %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h1>{{ info }}</h1>
+
+                {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'text-black'}}) }}
+                <div class="mb-3">
+                    {{ form_row(form.prix_tot, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_row(form.listeproduits, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                
+                <button type="submit" class="btn btn-success">Ajouter</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% endblock %}

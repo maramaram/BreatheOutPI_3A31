@@ -81,7 +81,7 @@ class UserController extends AbstractController
                 $mail->addAddress($emailUser);
                 $mail->isHTML(true);
                 $mail->Subject = 'PRODUCT VERIFIED !';
-                $mail->Body = "Dear $nomUser , <br> Welcome to BreatheOut! 🌿
+                $mail->Body = "Dear $nomUser , <br> Welcome to BreatheOut! 
 
 We're delighted you've joined our mindful community. Get ready to unwind, destress, and discover your path to inner peace. Your journey starts here!
 
@@ -97,6 +97,7 @@ The BreatheOut Team";
                 // Log the error message
                 // error_log('Mailer Error: ' . $e->getMessage());
             }
+            //creation de panier
 
             return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
         }

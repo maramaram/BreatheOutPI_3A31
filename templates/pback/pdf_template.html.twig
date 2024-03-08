@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Produits</title>
+</head>
+<body>
+<h1>Liste des Produits en Stock</h1>
+
+{% for produit in produitsList %}
+    <h2>{{ produit.getNom() }}</h2>
+    <p>
+        Nom: {{ produit.getNom() }}<br>
+        Description: {{ produit.getDescription() }}<br>
+        Quantité en Stock: {{ produit.getQuantiteStock() }}<br>
+        Prix: {{ produit.getPrix() }}<br>
+        Catégories: {{ produit.getCategories() }}<br>
+
+    </p>
+
+{% endfor %}
+
+<p>
+    Consultez ce lien
+    <a href="https://www.dr-muscu.fr/nutrition-sportive/proteines/" title="Cliquez ici pour plus d'informations" style="color: blue; text-decoration: underline;">
+        le site
+    </a>
+    avant de procéder à la signature
+</p>
+</body>
+</html>

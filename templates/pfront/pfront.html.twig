@@ -1,0 +1,81 @@
+{% extends '/user/HomeOnclient.html.twig' %}
+
+{% block head %}
+    {{ parent() }}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% endblock %}
+{% block body %}
+    <div class="container-fluid fruite py-5">
+        <div class="container py-5">
+            <h1 class="mb-4">Articles de sport</h1>
+            <div class="row g-4">
+                <div class="col-lg-3">
+                    <div class="row g-4">
+                        <div class="col-xl-3">
+                            <div class="input-group w-120 mx-auto d-flex">
+                                <input type="search" class="form-control-lg p-3" placeholder="Chercher" id="search" aria-describedby="search-icon-1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="tab-content">
+                        <div id="tab-1" class="tab-pane fade show p-0 active" >
+                            <div class="row g-4" id="tableac">
+                                {% for i in produits %}
+                                    <div class="col-md-6 col-lg-6 col-xl-4 fruite-item">
+                                        <div class="rounded position-relative">
+                                            <div class="fruite-img">
+                                                <img src="{{ asset(i.getimage()) }}" class="img-fluid w-100 rounded-top" alt="">
+                                            </div>
+                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                <h4>{{ i.nom }}</h4>
+                                                <p>{{ i.description }}</p>
+                                                <div class="d-flex justify-content-between flex-lg-wrap">
+                                                    <p class="text-dark fs-5 fw-bold mb-0">Quantité:{{ i.quantiteStock }} </p>
+                                                    <p class="text-dark fs-5 fw-bold mb-0">prix:{{ i.prix }} </p>
+                                                    <a href="{{ path('ajp', {'id': i.id}) }}" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            {# Affichage de la pagination #}
+                            <div class="d-flex justify-content-end mt-12">
+                                {{ knp_pagination_render(pagination, 'pfront/pagination.html.twig') }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="{{ asset('back/js/jquery.js') }}"></script>
+    <script>
+        $(document).ready(function(){
+            $('#search').keyup(function(){
+                search_table($(this).val());
+            });
+            function search_table(value){
+                $('#tableac .fruite-item').each(function(){
+                    var found = false;
+                    $(this).find('h4, p').each(function(){
+                        if($(this).text().toLowerCase().includes(value.toLowerCase())){
+                            found = true;
+                            return false;
+                        }
+                    });
+                    if(found){
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            }
+        });
+    </script>
+
+{% endblock %}

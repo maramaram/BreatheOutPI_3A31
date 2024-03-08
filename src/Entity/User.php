@@ -105,12 +105,14 @@ class User implements PasswordAuthenticatedUserInterface,UserInterface
     #[ORM\OneToMany(mappedBy: 'Author', targetEntity: Post::class)]
     private Collection $posts;
 
-
+    #[ORM\OneToOne(mappedBy: 'user',targetEntity: 'Panier', cascade: ['persist', 'remove'])]
+    private ?Panier $panier = null;
 
     public function __construct()
     {
         $this->commentaire = new ArrayCollection();
         $this->posts = new ArrayCollection();
+        $this->panier = new Panier($this);
     }
 
     /**
@@ -339,5 +341,27 @@ class User implements PasswordAuthenticatedUserInterface,UserInterface
     public function __toString()
     {
         return $this->id ." ". $this->nom;
+    }
+
+    public function getPanier(): ?Panier
+    {
+        return $this->panier;
+    }
+
+    public function setPanier(?Panier $panier): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($panier === null && $this->panier !== null) {
+            $this->panier->setUser(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($panier !== null && $panier->getUser() !== $this) {
+            $panier->setUser($this);
+        }
+
+        $this->panier = $panier;
+
+        return $this;
     }
 }

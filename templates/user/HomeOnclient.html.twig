@@ -11,8 +11,12 @@
             </button>
             <div class="collapse text-center navbar-collapse" id="navbarsid">
                 <ul class="navbar-nav mx-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="index.html">Boutique<span class="sr-only">(current)</span></a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="{{ path('app_produits') }}">Boutique<span class="sr-only">(current)</span></a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ path('app_panier_ajouterpf') }}">Panier</a></li>
+
+                        </ul>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true"
@@ -24,19 +28,20 @@
                         </ul>
                     </li>
                     <li class="nav-item"><a class="nav-link" href="service.html">Sessions</a></li>
-                    <li class="nav-item"><a class="nav-link" href="pricing.html">Coachs</a></li>
-                    <li class="nav-item"><a class="nav-link" href="pricing.html">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ path('po_ftest') }}">Blog</a></li>
                     <li class="nav-item"><a class="nav-link" href="contact.html">A propos de nous</a></li>
                 </ul>
                 <li class="nav-item dropdown">
                     <a href="{{ path('app_user_show', {'id': app.user.getId()}) }}" class="nav-link dropdown-toggle">
                         <h3 class="text-color mb-0" style="margin-right: 10px;">
                             <i></i>{{ app.user.getPrenom() }} {{ app.user.getNom() }}
+                            <img src="{{ asset('/' ~ app.user.getPhoto()) }}" alt="" class="img-fluid" height="50px" width="60px">
                         </h3>
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{{ path('app_user_show', {'id': app.user.getId()}) }}">Profile</a></li>
                         <li><a class="dropdown-item" href="{{ path('app_logout') }}">Log Out</a></li>
+
                     </ul>
                 </li>
                 <div class="my-md-0 ml-lg-4 mt-4 mt-lg-0 ml-auto text-lg-right mb-3 mb-lg-0">

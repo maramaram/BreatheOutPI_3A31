@@ -1,0 +1,74 @@
+
+
+{% extends '/user/HomeOnclient.html.twig' %}
+{% block title %}ajouter produits {% endblock %}
+
+{% block body %}
+    <style>
+        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+        .example-wrapper table { width: 100%; border-collapse: collapse; }
+        .example-wrapper th, .example-wrapper td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    </style>
+
+    <div class="example-wrapper">
+    <input type="search" class="form-control" placeholder="Chercher" id="search">
+        <table id="tableac">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Description</th>
+                    <th>Quantité en Stock</th>
+                    <th>Prix</th>
+                    <th>Catégories</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for Produit in produits %}
+                    <tr>
+                        <td>{{ Produit.getId() }}</td>
+                        <td>{{ Produit.getNom() | upper }}</td>
+                        <td>{{ Produit.getDescription() }}</td>
+                        <td>{{ Produit.getQuantiteStock() }}</td>
+                        <td>{{ Produit.getPrix() }}</td>
+                        <td>{{ Produit.getCategories() }}</td>
+                        <td> <a href="{{ path('app_Produits_Pedit', {id: Produit.id}) }}" class="btn btn-primary">Edit</a></td>
+                         <td> <a href="{{ path('app_Produits_Pdelete', {id: Produit.id}) }}" class="btn btn-danger">Delete</a></td>
+   
+
+
+                
+                    </tr>
+                  
+                {% endfor %}
+              
+            </tbody>
+        </table>
+        <tr> <a href="{{ path('app_Produits_pajouter') }}" class="btn btn-success">Ajouter Produit</a></tr>
+    </div>
+    <script src="{{ asset('/assets/js/jquery.js') }}"></script>
+    <script>
+        $(document).ready(function(){
+            $('#search').keyup(function(){
+                search_table($(this).val());
+            });
+            function search_table(value){
+                $('#tableac tbody tr').each(function(){
+                    var found = false;
+                    $(this).find('td:nth-child(2), td:nth-child(3)').each(function(){
+                        if($(this).text().toLowerCase().includes(value.toLowerCase())){
+                            found = true;
+                            return false;
+                        }
+                    });
+                    if(found){
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            }
+        });
+    </script>
+    </script>
+{% endblock %}

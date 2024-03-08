@@ -1,0 +1,51 @@
+{% extends '/user/HomeOnclient.html.twig' %}
+
+{% block body %}
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h1 class="mb-4">Votre Panier</h1>
+
+                {% if Panier.getListeproduits() is not empty %}
+                    <div class="cart-container">
+                        {% for produit in Panier.getListeproduits() %}
+                            <div class="card product-card mb-3">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <img src="{{ asset(produit.getimage()) }}" class="img-fluid rounded-top" alt="">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <h5 class="card-title">{{ produit.getNom() }}</h5>
+                                            <p class="card-text">{{ produit.getDescription() }}</p>
+                                            <div class="product-details">
+                                                <div class="quantity">Quantité: {{ produit.getQuantiteStock() }}</div>
+                                                <div class="price">Prix: {{ produit.getPrix() }} dt</div>
+                                            </div>
+                                            <div class="action-buttons mt-3">
+                                                <a href="{{ path('app_panier_incrementerproduit', {id: produit.id}) }}" class="btn btn-success-light">+</a>
+                                                <a href="{{ path('app_panier_decrementerproduit', {id: produit.id}) }}" class="btn btn-danger-light">-</a>
+                                                <a href="{{ path('app_panier_deleteproduit', {id: produit.id}) }}" class="btn btn-danger-light">Supprimer</a>
+                                                <a href="{{ path('valider', {id: produit.id}) }}" class="btn btn-primary">Valider</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="cart-summary">
+                        <p class="mb-1">Quantité Totale: {{ Panier.getQuantite() }}</p>
+                        <p>Prix Total: {{ Panier.getPrixTot() }} dt</p>
+                        <a href="{{ path('checkout', {'id': Panier.getId()}) }}" class="btn btn-success">Payer en ligne</a>
+
+                    </div>
+                {% else %}
+                    <p class="text-center">Votre panier est vide.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

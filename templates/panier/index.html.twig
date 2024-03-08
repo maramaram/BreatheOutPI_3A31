@@ -1,0 +1,70 @@
+{% extends '/user/HomeOnAdmin.html.twig' %}
+
+{% block body %}
+    {% block panier %}
+    <style>
+        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+        .example-wrapper table { width: 100%; border-collapse: collapse; }
+        .example-wrapper th, .example-wrapper td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    </style>
+
+    <div class="example-wrapper">
+     <input type="search" class="form-control" placeholder="Chercher" id="search">
+        <table class="table" id="tableac">
+            <thead>
+                <tr>
+
+                    <th>ID</th>
+                    <!-- Ajoutez d'autres colonnes si nécessaire -->
+                    <th>Nom produit</th>
+                  
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in panier %}
+                <tr> <td>{{ i.getId() }}</td>
+                    <td> {% for j in i.listeproduits %}
+                       
+                           
+                            <p>{{ j.getNom() | upper }}</p>
+                            
+                        
+                 
+                      
+                    {% endfor %}
+                    </td>
+                    <td> <a href="{{ path('app_panier_editp', {'id':i.id}) }}" class="btn btn-primary">edit</a></td>
+                             <td> <a href="{{ path('app_panier_deletep', {'id': i.id}) }}" class="btn btn-danger">Delete</a></td>
+                    </tr>
+               {% endfor %}
+            </tbody>
+        </table>
+        {% endblock %}
+        <tr> <a href="{{ path('app_panier_ajouterp') }}" class="btn btn-success">Ajouter au panier</a></tr>
+    </div>
+    <script src="{{ asset('/assets/js/jquery.js') }}"></script>
+    <script>
+        $(document).ready(function(){
+            $('#search').keyup(function(){
+                search_table($(this).val());
+            });
+            function search_table(value){
+                $('#tableac tbody tr').each(function(){
+                    var found = false;
+                    $(this).find('td:nth-child(1), td:nth-child(2)').each(function(){ 
+                        if($(this).text().toLowerCase().includes(value.toLowerCase())){
+                            found = true;
+                            return false; 
+                        }
+                    });
+                    if(found){
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            }
+        });
+    </script>
+
+{% endblock %}
