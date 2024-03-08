@@ -1,0 +1,41 @@
+{{ form_start(form,{'attr': {'novalidate':'novalidate'}}) }}
+
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <td class="label-column">{{ form_label(form.nom) }}</td>
+                <td class="form-input">{{ form_widget(form.nom, {'attr': {'class': 'form-control', 'style': 'width: 100%; height:25px;'}}) }}</td>
+                <td>{{ form_errors(form.nom) }}</td>
+            </tr>
+            <tr>
+                <td class="label-column">{{ form_label(form.prenom) }}</td>
+                <td class="form-input">{{ form_widget(form.prenom, {'attr': {'class': 'form-control', 'style': 'width: 100%; height:25px;'}}) }}</td>
+                <td>{{ form_errors(form.prenom) }}</td>
+            </tr>
+            <tr>
+                <td class="label-column">{{ form_label(form.disponibilite) }}</td>
+                <td class="form-input">{{ form_widget(form.disponibilite, {'attr': {'class': 'form-control', 'style': 'width: 100%; height:25px;'}}) }}</td>
+                <td>{{ form_errors(form.disponibilite) }}</td>            
+            </tr>
+            <tr>
+                <td class="label-column">{{ form_label(form.image) }}</td>
+                <td class="form-input">{{ form_widget(form.image, {'attr': {'class': 'form-control', 'style': 'width: 100%; height:25px;'}}) }}</td>
+                <td>{{ form_errors(form.image) }}</td>            
+            </tr>
+
+                <tr>
+                    <td class="label-column">{{ form_label(form.note) }}</td>
+                    <td class="form-input">{{ form_widget(form.note) }}</td>
+                    <td>{{ form_errors(form.note) }}</td>            
+                </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="form-actions">
+    <a href="{{ path('app_livreur_index') }}" class="btn btn-dark">Retour à la liste</a>
+    <button type="submit" class="btn btn-dark">{{ button_label|default('Enregistrer') }}</button>
+</div>
+
+{{ form_end(form) }}

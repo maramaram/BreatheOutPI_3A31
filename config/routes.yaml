@@ -1,3 +1,6 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+upload_pdf:
+  path: '/upload-pdf'
+  controller: 'App\Controller\YourController::uploadPdf'

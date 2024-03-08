@@ -1,0 +1,51 @@
+{% extends '/user/HomeOnclient.html.twig' %}
+
+{% block title %}Détails du Livreur{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h4>Informations sur le Livreur</h4>
+                        </div>
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th>image</th>
+                                    <td><img src="{{asset(livreur.image)}}"width="30%"height="30%"></td>
+                                </tr>
+                                <tr>
+                                    <th>Nom</th>
+                                    <td>{{ livreur.nom }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Prénom</th>
+                                    <td>{{ livreur.prenom }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Disponibilité</th>
+                                    <td>{{ livreur.disponibilite }}</td>
+                                </tr>
+                                <th style="width: 17% ">Note</th>
+                                <td class="rating">
+                                           {% for i in range(1, 5) %}
+                                              {% if livreur.note is defined and livreur.note >= i %}
+                                                 <div class="star-filled"></div>
+                                              {% else %}
+                                                 <div class="star-empty"></div>
+                                              {% endif %}
+                                            {% endfor %}
+                                        </td>
+                            </tbody>
+                        </table>
+                         <a href="{{ path('app_commande_showfront', {'id': idcommande} )}}" class="btn btn-dark">Retour Commande</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

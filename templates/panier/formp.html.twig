@@ -40,7 +40,7 @@
                         <p class="mb-1">Quantité Totale: {{ Panier.getQuantite() }}</p>
                         <p>Prix Total: {{ Panier.getPrixTot() }} dt</p>
                         <a href="{{ path('checkout', {'id': Panier.getId()}) }}" class="btn btn-success">Payer en ligne</a>
-
+                         <a href="{{ path('app_commande_neww') }}" class="btn btn-success">Commander</a>
                     </div>
                 {% else %}
                     <p class="text-center">Votre panier est vide.</p>

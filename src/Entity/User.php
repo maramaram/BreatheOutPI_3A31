@@ -108,11 +108,14 @@ class User implements PasswordAuthenticatedUserInterface,UserInterface
     #[ORM\OneToOne(mappedBy: 'user',targetEntity: 'Panier', cascade: ['persist', 'remove'])]
     private ?Panier $panier = null;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Commande::class)]
+    private Collection $commandes;
     public function __construct()
     {
         $this->commentaire = new ArrayCollection();
         $this->posts = new ArrayCollection();
         $this->panier = new Panier($this);
+        $this->commandes = new ArrayCollection();
     }
 
     /**
@@ -361,6 +364,37 @@ class User implements PasswordAuthenticatedUserInterface,UserInterface
         }
 
         $this->panier = $panier;
+
+        return $this;
+    }
+
+
+    /**
+     * @return Collection<int, Commande>
+     */
+    public function getCommandes(): Collection
+    {
+        return $this->commandes;
+    }
+
+    public function addCommande(Commande $commande): static
+    {
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes->add($commande);
+            $commande->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(Commande $commande): static
+    {
+        if ($this->commandes->removeElement($commande)) {
+            // set the owning side to null (unless already changed)
+            if ($commande->getUser() === $this) {
+                $commande->setUser(null);
+            }
+        }
 
         return $this;
     }

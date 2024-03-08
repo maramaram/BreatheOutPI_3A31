@@ -1,0 +1,50 @@
+{% extends '/user/HomeOnAdmin.html.twig' %}
+
+{% block title %}Détails du Livreur{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h4>Informations sur le Livreur</h4>
+                        </div>
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th>image</th>
+                                    <td><img src="{{asset(livreur.image)}}"width="30%"height="30%"></td>
+                                </tr>
+                                <tr>
+                                    <th>Id</th>
+                                    <td>{{ livreur.id }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Nom</th>
+                                    <td>{{ livreur.nom }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Prénom</th>
+                                    <td>{{ livreur.prenom }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Disponibilité</th>
+                                    <td>{{ livreur.disponibilite }}</td>
+                                </tr>
+                                
+
+                            </tbody>
+                        </table>
+                        <div class="button-container">
+                            <a href="{{ path('app_livreur_index') }}" class="btn btn-dark">Retour à la liste</a>
+                            <a href="{{ path('app_livreur_edit', {'id': livreur.id}) }}" class="btn btn-dark">Modifier</a>
+                            {{ include('livreur/_delete_form.html.twig') }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

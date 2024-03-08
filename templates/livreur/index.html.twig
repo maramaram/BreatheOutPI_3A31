@@ -1,0 +1,83 @@
+{% extends '/user/HomeOnAdmin.html.twig' %}
+
+{% block title %}Liste des Livreurs{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h4>Liste des Livreurs</h4>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" />
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-dark" type="button">Chercher</button>
+                        </div>
+                    </div>
+                    <a href="{{ path('app_livreur_new') }}"><button class="btn btn-outline-dark btn-block" type="button">Ajouter</button></a>
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nom</th>
+                                    <th>Prénom</th>
+                                    <th>Disponibilité</th>
+                                    <th style="width: 17% ">Note</th>
+                                    <th>image</th>
+                                    <th style="width: 25% ">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for livreur in livreurs %}
+                                    <tr>
+                                        <td>{{ livreur.id }}</td>
+                                        <td>{{ livreur.nom }}</td>
+                                        <td>{{ livreur.prenom }}</td>
+                                        <td>{{ livreur.disponibilite }}</td>
+                                        <td class="rating">
+                                           {% for i in range(1, 5) %}
+                                              {% if livreur.note is defined and livreur.note >= i %}
+                                                 <div class="star-filled"></div>
+                                              {% else %}
+                                                 <div class="star-empty"></div>
+                                              {% endif %}
+                                            {% endfor %}
+                                        </td>
+
+
+                                        
+
+
+                                        <td>
+                                           {% if livreur.image is not null %}
+                                              <img src="{{ asset(livreur.image) }}" width="30%" height="30%">
+                                           {% else %}
+                                               <span>Aucune image disponible</span>
+                                           {% endif %}
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="{{ path('app_livreur_show', {'id': livreur.id}) }}" class="btn btn-dark">Voir</a>
+                                            <a href="{{ path('app_livreur_edit', {'id': livreur.id}) }}" class="btn btn-dark">Modifier</a>
+                                            {{ include('livreur/_delete_form.html.twig') }}
+                                        </td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="5">Aucun enregistrement trouvé</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

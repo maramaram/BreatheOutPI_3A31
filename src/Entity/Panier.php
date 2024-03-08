@@ -25,7 +25,7 @@ class Panier
 
     #[ORM\Column]
     private ?int $prix_tot =0;
-     
+
     #[ORM\Column(type: 'integer')]
     private ?int $quantite = 0;
 
@@ -51,7 +51,7 @@ class Panier
     {
         return $this->listeproduits;
     }
-   
+
     public function getQuantite(): int
     {
         return count($this->listeproduits);
@@ -67,18 +67,18 @@ class Panier
     {
         // Vérifie si le produit est déjà dans le panier
         $produitDansPanier = $this->listeproduits->contains($listeproduit);
-    
+
         if (!$produitDansPanier) {
             // Vérifiez la quantité en stock du produit
             $quantiteEnStock = $listeproduit->getQuantiteStock();
-    
+
             if ($quantiteEnStock > 0) {
                 // Ajoute le produit à la liste des produits du panier
                 $this->listeproduits->add($listeproduit);
-    
+
                 // Diminue la quantité en stock du produit
                 $listeproduit->setQuantiteStock($quantiteEnStock - 1);
-    
+
                 // Mettez à jour la quantité totale du panier
                 $this->updateTotalQuantity();
             } else {
@@ -86,13 +86,13 @@ class Panier
                 // Vous pouvez lever une exception, afficher un message, etc.
             }
         }
-    
+
         return $this;
     }
-    
-    
-   
-    
+
+
+
+
 private function updateTotalQuantity(): void
 {
     // Réinitialise la quantité totale du panier à 0
@@ -126,6 +126,24 @@ private function updateTotalQuantity(): void
     }
 
     public function setPrixTot(int $prixTot): static
+    {
+        $this->prixTot = $prixTot;
+
+        return $this;
+    }
+
+    public function getPrix_tot(): int
+    {
+        $prixTot = 0;
+
+        foreach ($this->listeproduits as $produit) {
+            $prixTot += $produit->getPrix();
+        }
+
+        return $prixTot;
+    }
+
+    public function setPrix_tot(int $prixTot): static
     {
         $this->prixTot = $prixTot;
 

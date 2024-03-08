@@ -1,0 +1,108 @@
+{% extends '/user/HomeOnAdmin.html.twig' %}
+
+{% block title %}Liste des Commandes{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h4>Liste des Commandes</h4>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" />
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-dark" type="button">Chercher</button>
+                        </div>
+                    </div>
+                    <a href="{{ path('app_commande_new') }}">
+                        <button class="btn btn-outline-dark btn-block" type="button">Ajouter</button>
+                    </a>
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Statut</th>
+                                    <th>Prix Total du Panier</th>
+                                    <th>Adress du Client</th>
+                                    <th>ID du livreur</th>
+                                    <th style="width: 25% ">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for commande in pagination %}
+                                    <tr>
+                                        <td>{{ commande.id }}</td>
+                                        <td>{{ commande.statut }}</td>
+
+                                        <td>{{commande.user.getPanier().getPrixTot() }}</td>
+                                        <td>{{ commande.user.getAdress() }}</td>
+                                        <td>{{ commande.livreur.getId() }}</td>
+                                        <td class="text-center">
+                                            <a href="{{ path('app_commande_show', {'id': commande.id}) }}" class="btn btn-dark">Voir</a>
+                                            <a href="{{ path('app_commande_edit', {'id': commande.id}) }}" class="btn btn-dark">Modifier</a>
+                                            {{ include('commande/_delete_form.html.twig') }}
+                                        </td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="4">Aucun enregistrement trouvé</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <div style="text-align: right;">
+                            <a href="{{ path('app_commande_pdf') }}" class="btn btn-dark">Télécharger les commandes en PDF</a>
+
+                        <div class="code_qr">
+                        <div class="information" id="qrInformation"></div>
+                        <div > 
+                         <button id="generateQrCodeButton" class="btn btn-dark mt-2" onclick="generateQRCode('{{ fileContent }}')">Générer le QR Code</button>
+                        </div>
+                        <div style="text-align: center;">
+                         <img class="qrious">
+                        </div>
+                        </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mt-5">
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            {% set previousPage = pagination.getCurrentPageNumber() - 1 %}
+            {% if previousPage >= 1 %}
+                <li class="page-item"><a class="page-link" href="{{ path('app_commande_index', {'page': previousPage}) }}">Précédent</a></li>
+            {% else %}
+                <li class="page-item disabled"><span class="page-link">Précédent</span></li>
+            {% endif %}
+            
+            {% for page in pagination.getPaginationData().pagesInRange %}
+                {% if page == pagination.getCurrentPageNumber() %}
+                    <li class="page-item active" aria-current="page"><span class="page-link">{{ page }}</span></li>
+                {% else %}
+                    <li class="page-item"><a class="page-link" href="{{ path('app_commande_index', {'page': page}) }}">{{ page }}</a></li>
+                {% endif %}
+            {% endfor %}
+            
+            {% set nextPage = pagination.getCurrentPageNumber() + 1 %}
+            {% if nextPage <= pagination.getPaginationData().pageCount %}
+                <li class="page-item"><a class="page-link" href="{{ path('app_commande_index', {'page': nextPage}) }}">Suivant</a></li>
+            {% else %}
+                <li class="page-item disabled"><span class="page-link">Suivant</span></li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+</div>
+
+
+{% endblock %}
