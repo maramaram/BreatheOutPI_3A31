@@ -61,6 +61,7 @@ class Livreur
     #[ORM\OneToMany(mappedBy: 'livreur', targetEntity: Commande::class)]
     private Collection $commande;
 
+<<<<<<< HEAD
     #[ORM\Column(length: 255, nullable: true)]
     //#[Assert\NotNull(message: "Veuillez télécharger une image.")]
     #[Assert\File(mimeTypes: ['image/jpeg', 'image/png'])]
@@ -75,6 +76,23 @@ class Livreur
     private $note;
 
     
+=======
+    #[ORM\Column(length: 255)]
+    
+    #[  Assert\NotNull(message: "Veuillez télécharger une image."),
+        Assert\Image(
+            minWidth: 200,
+            maxWidth: 400,
+            minHeight: 200,
+            maxHeight: 400,
+            minWidthMessage: "La largeur de l'image doit être d'au moins 200 pixels.",
+            maxWidthMessage: "La largeur de l'image ne doit pas dépasser 400 pixels.",
+            minHeightMessage: "La hauteur de l'image doit être d'au moins 200 pixels.",
+            maxHeightMessage: "La hauteur de l'image ne doit pas dépasser 400 pixels."
+        )
+    ]
+    private ?string $image = null;
+>>>>>>> 8188c65b1cba03a243414e6a61dc83f925ac8bbe
 
     public function __construct()
     {
@@ -163,6 +181,7 @@ class Livreur
 
         return $this;
     }
+<<<<<<< HEAD
 
     public function getNote(): ?int
     {
@@ -175,4 +194,6 @@ class Livreur
 
         return $this;
     }
+=======
+>>>>>>> 8188c65b1cba03a243414e6a61dc83f925ac8bbe
 }

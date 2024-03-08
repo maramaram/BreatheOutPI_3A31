@@ -10,7 +10,11 @@ use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+<<<<<<< HEAD
 use Sbyaute\StarRatingBundle\Form\StarRatingType;
+=======
+
+>>>>>>> 8188c65b1cba03a243414e6a61dc83f925ac8bbe
 class LivreurType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -24,9 +28,12 @@ class LivreurType extends AbstractType
                 'required' => false, // Si l'image n'est pas obligatoire
                 'mapped' => false, // Ne pas mapper directement le champ à l'entité
             ])
+<<<<<<< HEAD
             ->add('note', StarRatingType::class, [
                 'label' => 'note'
             ]);
+=======
+>>>>>>> 8188c65b1cba03a243414e6a61dc83f925ac8bbe
         ;
         $builder->get('image')->addModelTransformer(new FileToViewTransformerss());
     }

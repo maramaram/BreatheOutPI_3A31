@@ -27,9 +27,14 @@
                                     <th>Nom</th>
                                     <th>Prénom</th>
                                     <th>Disponibilité</th>
+<<<<<<< HEAD
                                     <th style="width: 17% ">Note</th>
                                     <th>image</th>
                                     <th style="width: 25% ">Actions</th>
+=======
+                                    <th>image</th>
+                                    <th>Actions</th>
+>>>>>>> 8188c65b1cba03a243414e6a61dc83f925ac8bbe
                                 </tr>
                             </thead>
                             <tbody>
@@ -39,6 +44,7 @@
                                         <td>{{ livreur.nom }}</td>
                                         <td>{{ livreur.prenom }}</td>
                                         <td>{{ livreur.disponibilite }}</td>
+<<<<<<< HEAD
                                         <td class="rating">
                                            {% for i in range(1, 5) %}
                                               {% if livreur.note is defined and livreur.note >= i %}
@@ -60,6 +66,9 @@
                                                <span>Aucune image disponible</span>
                                            {% endif %}
                                         </td>
+=======
+                                        <td><img src="{{asset(livreur.image)}}"width="30%"height="30%"></td>
+>>>>>>> 8188c65b1cba03a243414e6a61dc83f925ac8bbe
                                         <td class="text-center">
                                             <a href="{{ path('app_livreur_show', {'id': livreur.id}) }}" class="btn btn-dark">Voir</a>
                                             <a href="{{ path('app_livreur_edit', {'id': livreur.id}) }}" class="btn btn-dark">Modifier</a>

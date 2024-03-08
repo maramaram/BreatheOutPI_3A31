@@ -13,7 +13,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\HttpFoundation\File\File;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8188c65b1cba03a243414e6a61dc83f925ac8bbe
 
 #[Route('/livreur')]
 class LivreurController extends AbstractController
@@ -34,8 +37,28 @@ class LivreurController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+<<<<<<< HEAD
         $directory = 'Front/images';
         $directoryy = '../public/Front/images';//D:/projetpi/projetwebjava/public/Front/images
+=======
+            $directory = 'Front/images';
+            $directoryy = 'D:/projetpi/projetwebjava/public/Front/images';
+            // Récupérez le fichier téléchargé à partir du formulaire
+            $file = $form->get('image')->getData();
+
+            // Générez un nom unique pour le fichier téléchargé
+            $fileName = uniqid().'.'.$file->guessExtension();
+
+            // Déplacez le fichier vers le répertoire de destination
+            $file->move($directoryy, $fileName);
+
+            // Enregistrez le chemin de l'image dans votre base de données
+            $livreur->setImage($directory.'/'.$fileName);
+
+            // Persistez l'entité dans la base de données
+            $entityManager->persist($livreur);
+            $entityManager->flush();
+>>>>>>> 8188c65b1cba03a243414e6a61dc83f925ac8bbe
 
         // Récupérez le fichier téléchargé à partir du formulaire
         $file = $form->get('image')->getData();
@@ -78,9 +101,28 @@ public function edit(Request $request, Livreur $livreur, EntityManagerInterface 
     $form = $this->createForm(LivreurType::class, $livreur);
     $form->handleRequest($request);
 
+<<<<<<< HEAD
     if ($form->isSubmitted() && $form->isValid()) {
         $directory = 'Front/images';
         $directoryy = '../public/Front/images';
+=======
+        if ($form->isSubmitted() && $form->isValid()) {
+            $directory = 'Front/images';
+            $directoryy = 'D:/projetpi/projetwebjava/public/Front/images';
+            // Récupérez le fichier téléchargé à partir du formulaire
+            $file = $form->get('image')->getData();
+
+            // Générez un nom unique pour le fichier téléchargé
+            $fileName = uniqid().'.'.$file->guessExtension();
+
+            // Déplacez le fichier vers le répertoire de destination
+            $file->move($directoryy, $fileName);
+
+            // Enregistrez le chemin de l'image dans votre base de données
+            $livreur->setImage($directory.'/'.$fileName);
+
+            $entityManager->flush();
+>>>>>>> 8188c65b1cba03a243414e6a61dc83f925ac8bbe
 
         // Récupérez le fichier téléchargé à partir du formulaire
         $file = $form->get('image')->getData();
