@@ -27,16 +27,14 @@ class Commande
     #[ORM\ManyToOne(inversedBy: 'commande')]
     private ?Livreur $livreur = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(inversedBy: 'user')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Panier $panier = null;
-
+    private ?User $user = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
-
 
     public function getStatut(): ?string
     {
@@ -62,18 +60,18 @@ class Commande
         return $this;
     }
 
-    public function getPanier(): ?Panier
-    {
-        return $this->panier;
+    // Supprimez également les méthodes associées à la relation avec Panier
 
+    public function getUser(): ?User
+    {
+        return $this->user;
     }
 
-    public function setPanier(?Panier $panier): static
+    public function setUser(?User $user): static
     {
-        $this->panier = $panier;
+        $this->user = $user;
 
         return $this;
     }
-
     
 }

@@ -14,6 +14,10 @@
                         <table class="table">
                             <tbody>
                                 <tr>
+                                    <th>image</th>
+                                    <td><img src="{{asset(livreur.image)}}"width="30%"height="30%"></td>
+                                </tr>
+                                <tr>
                                     <th>Id</th>
                                     <td>{{ livreur.id }}</td>
                                 </tr>
@@ -29,6 +33,8 @@
                                     <th>Disponibilité</th>
                                     <td>{{ livreur.disponibilite }}</td>
                                 </tr>
+                                
+
                             </tbody>
                         </table>
                         <div class="button-container">

@@ -20,6 +20,11 @@
     <link rel="stylesheet" href="{{asset('Back/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css')}}">
     <!-- Custom Stylesheet -->
     <link href="{{asset('Back/css/style.css')}}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/starrating/css/rating.css') }}" />
+    
+
     {% endblock %}
 </head>
 
@@ -1026,6 +1031,13 @@
 
 
     <script src="{{asset('Back/js/dashboard/dashboard-1.js')}}"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="{{ asset('bundles/starrating/js/rating.js') }}"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
+    <script src="{{asset('Back/js/qrious.js')}}"></script>
+    <script src="{{asset('Back/js/scripts.js')}}"></script>
     {% endblock %}
 </body>
 

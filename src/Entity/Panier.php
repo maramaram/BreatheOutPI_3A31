@@ -21,11 +21,6 @@ class Panier
     #[ORM\ManyToMany(targetEntity: Produits::class, inversedBy: 'paniers')]
     private Collection $produits_id;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $client = null;
-
-
     public function __construct()
     {
         $this->produits_id = new ArrayCollection();
@@ -71,20 +66,6 @@ class Panier
 
         return $this;
     }
-
-    public function getClient(): ?User
-    {
-        return $this->client;
-    }
-
-    public function setClient(?User $client): static
-    {
-        $this->client = $client;
-
-        return $this;
-    }
-
-    
 
     
 }

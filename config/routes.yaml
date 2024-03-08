@@ -6,4 +6,7 @@
    # controller: App\Controller\TestController::index
 
 
+upload_pdf:
+    path: '/upload-pdf'
+    controller: 'App\Controller\YourController::uploadPdf'
 

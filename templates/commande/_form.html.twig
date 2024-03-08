@@ -14,18 +14,18 @@
                 <td>{{ form_errors(form.livreur) }}</td>
             </tr>
             <tr>
-                <td class="label-column">{{ form_label(form.panier) }}</td>
-                <td class="form-input">{{ form_widget(form.panier, {'attr': {'class': 'form-control'}}) }}</td>
-                <td>{{ form_errors(form.panier) }}</td>
+                <td class="label-column">{{ form_label(form.user) }}</td>
+                <td class="form-input">{{ form_widget(form.user, {'attr': {'class': 'form-control'}}) }}</td>
+                <td>{{ form_errors(form.user) }}</td>
             </tr>
         </tbody>
     </table>
 </div>
-{{ form_end(form) }}
 
 <div class="form-actions">
     <a href="{{ path('app_commande_index') }}" class="btn btn-dark">Retour à la liste</a>
     <button type="submit" class="btn btn-dark">{{ button_label|default('Enregistrer') }}</button>
 </div>
+{{ form_end(form) }}
 
 

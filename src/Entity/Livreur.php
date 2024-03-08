@@ -9,6 +9,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+
+
 #[ORM\Entity(repositoryClass: LivreurRepository::class)]
 #[ApiResource]
 class Livreur
@@ -58,6 +60,21 @@ class Livreur
 
     #[ORM\OneToMany(mappedBy: 'livreur', targetEntity: Commande::class)]
     private Collection $commande;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    //#[Assert\NotNull(message: "Veuillez télécharger une image.")]
+    #[Assert\File(mimeTypes: ['image/jpeg', 'image/png'])]
+    private ?string $image = null;
+    
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[Assert\Range(
+        min: 1,
+        max: 5,
+        notInRangeMessage: 'La notation doit être entre 1 et 5.'
+    )]
+    private $note;
+
+    
 
     public function __construct()
     {
@@ -131,6 +148,30 @@ class Livreur
                 $commande->setLivreur(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): static
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getNote(): ?int
+    {
+        return $this->note;
+    }
+
+    public function setNote(?int $note): self
+    {
+        $this->note = $note;
 
         return $this;
     }

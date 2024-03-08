@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Entity\Livreur; // Assurez-vous que le chemin est correct
 use App\Entity\Panier;
+use App\Entity\User;
 
 class CommandeType extends AbstractType
 {
@@ -20,9 +21,9 @@ class CommandeType extends AbstractType
                 'class' => Livreur::class,
                 'choice_label' => 'nom', // Remplacez 'nom' par le champ approprié à afficher
             ])
-            ->add('panier', EntityType::class, [
-                'class' => Panier::class,
-                'choice_label' => 'id', // Remplacez 'id' par le champ approprié à afficher
+            ->add('user', EntityType::class, [
+                'class' => User::class,
+                'choice_label' => 'id', // Remplacez 'username' par le champ approprié à afficher
             ]);
     }
 
