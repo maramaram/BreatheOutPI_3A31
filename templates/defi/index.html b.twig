@@ -5,73 +5,189 @@
 {% block body %}
 <div class="container-fluid">
     <div class="row">
-      
-            <div class="card">
-                <div class="card-body">
-                    <div class="card-title">
-                        <h4>Table Défis</h4>
-                    </div>
-                    <div class="input-group mb-3">
-                                            
-                                        <input type="text" class="form-control" >
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-dark btn-block" type="button">Chercher</button>
-                                            </div>
-                                        </div>
-                                     <a href="{{path('de_add')}}"> <button class="btn btn-outline-dark btn-block" type="button">Ajouter</button> </a>
-                                      <br> 
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Nom</th>
-                                    <th>Difficulté</th>
-                                    <th>Nombre De Jours</th>
-                                    <th>Description</th>
-                                    <th>Exercices</th>
-                                    <th>Séries/Répétitions</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for i in weza %}
-                                <tr>
-                                    <th>{{i.id}}</th>
-                                    <td><b>{{i.nom}}</b></td>
-                                    {% if i.nd == 1 %}
-                                    <td><span class="badge badge-success px-2" style="font-size: 12px;">Facile</span></td>
-                                    {% endif %}        
-                                    {% if i.nd == 2 %}
-                                    <td><span class="badge badge-primary px-2" style="font-size: 12px;">Moyen</span></td>
-                                    {% endif %}
-                                    {% if i.nd == 3 %}
-                                    <td><span class="badge badge-danger px-2" style="font-size: 12px;">Difficile</span></td>
-                                    {% endif %}
-                                    <td><b><center>{{i.nbj}}</center></b></td>
-                                    <td class="color-primary"><div  style="width: 400px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{i.des}}</div></td>
-                                    <td>{% for j in i.ex %}
-                                    <p>{{j.nom}}</p>
-                                    {% endfor %}
-                                    </td>
-                                    <td>{% for j in i.ex %}
-                                    <p>{{j.nd * 2}}/{{j.nd * 5}}</p>
-                                    {% endfor %}
-                                    </td>
-                                    <td> 
-                                         <a href="{{path('de_mod',{'id':i.id})}}"><button type="submit" class="btn btn-dark btn-block">Modifier</button></a>
-                                         <br>
-                                        <a href="{{path('de_dex',{'id':i.id})}}"><button type="submit" class="btn btn-dark btn-block">Supprimer</button></a>
-                                            </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">
+                    <h4>Table Défis</h4>
+                </div>
+                <div class="input-group mb-3">
+                    <form id="searchForm" class="container-fluid">  
+                        <div class="row">
+                            <div class="col">
+                                <input id="searchInput" type="text" class="form-control" name="dsearchh" placeholder="Recherche...">
+                            </div>
+                            <div class="col-auto">
+                                <button id="searchButton" class="btn btn-outline-dark btn-block" type="submit">Chercher</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <a href="{{ path('app_defi_pdf') }}" class="btn btn-red"><button class="btn btn-outline-dark btn-block" type="button">PDF</button> </a>
+                <a href="{{ path('de_add') }}"> 
+                    <button class="btn btn-outline-dark btn-block" type="button">Ajouter</button> 
+                </a>
+                <br> 
+                <div class="table-responsive">
+                    <table id="defiTable" class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nom</th>
+                                <th>Difficulté</th>
+                                <th>Nombre De Jours</th>
+                                <th>Description</th>
+                                <th>Exercices</th>
+                                <th>Séries/Répétitions</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="searchResults">
+                            <!-- Les données seront affichées ici dynamiquement -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <!-- /# card -->
-       
+        </div>
     </div>
 </div>
+<div class="col-lg-12"> <!-- Utilisez col-lg-12 pour occuper toute la largeur de la grille -->
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">STATS</h4>
+            <canvas id="another-chart" style="width: 100vw; height: 40vh;"></canvas>
+            <!-- Utilisez 100vw pour occuper 100% de la largeur de l'écran et 100vh pour occuper 100% de la hauteur de l'écran -->
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script src="{{asset('Back/plugins/common/common.min.js')}}"></script>
+    <script src="{{asset('Back/js/custom.min.js')}}"></script>
+    <script src="{{asset('Back/js/settings.js')}}"></script>
+    <script src="{{asset('Back/js/gleek.js')}}"></script>
+    <script src="{{asset('Back/js/styleSwitcher.js')}}"></script>
+
+    <!-- Chartjs -->
+    <script src="{{asset('Back/plugins/chart.js/Chart.bundle.min.js')}}"></script>
+    <!-- Circle progress -->
+    <script src="{{asset('Back/plugins/circle-progress/circle-progress.min.js')}}"></script>
+    <!-- Datamap -->
+    <script src="{{asset('Back/plugins/d3v3/index.js')}}"></script>
+    <script src="{{asset('Back/plugins/topojson/topojson.min.js')}}"></script>
+    <script src="{{asset('Back/plugins/datamaps/datamaps.world.min.js')}}"></script>
+    <!-- Morrisjs -->
+    <script src="{{asset('Back/plugins/raphael/raphael.min.js')}}"></script>
+    <script src="{{asset('Back/plugins/morris/morris.min.js')}}"></script>
+    <!-- Pignose Calender -->
+    <script src="{{asset('Back/plugins/moment/moment.min.js')}}"></script>
+    <script src="{{asset('Back/plugins/pg-calendar/js/pignose.calendar.min.js')}}"></script>
+    <!-- ChartistJS -->
+    <script src="{{asset('Back/plugins/chartist/js/chartist.min.js')}}"></script>
+    <script src="{{asset('Back/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js')}}"></script>
+
+
+
+    <script src="{{asset('Back/js/dashboard/dashboard-1.js')}}"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Bar Chart
+        var ctxBar = document.getElementById('another-chart').getContext('2d');
+        // Remplacez les données suivantes par les vôtres pour le graphique à barres
+        var dataBar = {
+            labels: ['Facile', 'Moyen', 'Difficile'],
+            datasets: [{
+                label: 'Data',
+                data: [{{ f|json_encode|raw }}, {{ m|json_encode|raw }}, {{ d|json_encode|raw }}],
+                backgroundColor: [ 'rgba(75, 192, 192, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)' ], // Définir les couleurs de fond de chaque barre (rouge, jaune, bleu)
+                 borderColor: [ 'rgba(75, 192, 192, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)' ], // Définir les couleurs des bordures de chaque barre (rouge, jaune, bleu)
+                borderWidth: 1
+            }]
+        };
+        var optionsBar = {
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Difficulté'
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Nombre exercices'
+                    }
+                }
+            }
+        };
+        var myBarChart = new Chart(ctxBar, {
+            type: 'bar',
+            data: dataBar,
+            options: optionsBar
+        });
+    });
+</script>
+<script>
+    // Fonction pour effectuer une recherche
+    function rechercherDefis(termeRecherche) {
+        var formData = new FormData();
+        formData.append('dsearchh', termeRecherche); // Modifier la clé du formulaire
+
+        fetch('{{ path('dsearchh') }}', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            var resultsHtml = '';
+            console.log(data);
+            data.weza.forEach(function(defi) {
+                resultsHtml += '<tr>';
+                resultsHtml += '<td>' + defi.id + '</td>';
+                resultsHtml += '<td>' + defi.nom + '</td>';
+                // Difficulté
+                if (defi.nd == 1) {
+                    resultsHtml += '<td><span class="badge badge-success px-2" style="font-size: 12px;">Facile</span></td>';
+                } else if (defi.nd == 2) {
+                    resultsHtml += '<td><span class="badge badge-primary px-2" style="font-size: 12px;">Moyen</span></td>';
+                } else if (defi.nd == 3) {
+                    resultsHtml += '<td><span class="badge badge-danger px-2" style="font-size: 12px;">Difficile</span></td>';
+                }
+                resultsHtml += '<td>' + defi.nbj + '</td>';
+                resultsHtml += '<td>' + defi.des + '</td>';
+                resultsHtml += '<td>';
+                defi.ex.forEach(function(exercice) {
+                    resultsHtml += '<p>' + exercice.nom + '</p>';
+                });
+                resultsHtml += '</td>';
+                resultsHtml += '<td>';
+                defi.ex.forEach(function(exercice) {
+                    resultsHtml += '<p>' + exercice.nd * 2 + '/' + exercice.nd * 5 + '</p>';
+                });
+                resultsHtml += '</td>';
+                resultsHtml += '<td>';
+                resultsHtml += '<a href="/de/mod/' + defi.id + '"><button type="button" class="btn btn-dark btn-block">Modifier</button></a>';
+                resultsHtml += '<br>';
+                resultsHtml += '<a href="/de/dex/' + defi.id + '"><button type="button" class="btn btn-dark btn-block">Supprimer</button></a>';
+                resultsHtml += '</td>';
+                resultsHtml += '</tr>';
+            });
+
+            document.getElementById('searchResults').innerHTML = resultsHtml;
+        })
+        .catch(error => {
+            console.error('Erreur lors de la requête:', error);
+        });
+    }
+
+    document.getElementById('searchForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var searchTerm = document.getElementById('searchInput').value;
+        rechercherDefis(searchTerm);
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        rechercherDefis('');
+    });
+</script>
 {% endblock %}

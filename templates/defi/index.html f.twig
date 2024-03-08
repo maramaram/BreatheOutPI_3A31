@@ -27,14 +27,21 @@
                 <h3 class="heading mt-5 text-center">Salut! Choisissez-vous?</h3> 
                 <div class="d-flex justify-content-center px-5">
                     <div class="search">
-                        <input type="text" class="search-input" placeholder="Recherche..." name=""> 
-                        <a href="#" class="search-icon">
-                            <i class="fa fa-search"></i>
-                        </a>
-                    </div> 
+                        <input type="text" class="search-input" id="searchInput" placeholder="Recherche..." name=""> <a href="#" class="search-icon" onclick="rechercherDefis(document.getElementById('searchInput').value, document.getElementById('diff').value)"> <i class="fa fa-search"></i> </a>
+                        
+                    </div>
+                     <div class="row mt-4 g-2 px-4 mb-11">
+    <select id="diff" >
+        <option value="1">Facile</option>
+        <option value="2">Moyen</option>
+        <option value="3">Difficile</option>
+        <option value="">Tout</option>
+        <!-- Ajoutez d'autres options pour les muscles -->
+    </select>
+</div> 
                 </div>
-                <div class="row mt-4 g-1 px-4 mb-5 justify-content-center"> <!-- Ajout de justify-content-center ici -->
-                    <div class="col-md-2 text-center"> <!-- Ajout de text-center ici -->
+                <div class="row mt-4 g-1 px-4 mb-5 justify-content-center"  > <!-- Ajout de justify-content-center ici -->
+                    <div class="col-md-2 text-center" onclick="rechercherDefis('','1')"> <!-- Ajout de text-center ici -->
                         <div class="card-inner p-3 d-flex flex-column align-items-center"> 
                             <img src="{{asset('Front/images/exo/simple.png')}}" width="100"> 
                             <div class="text-center mg-text"> 
@@ -42,7 +49,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-2 text-center"> <!-- Ajout de text-center ici -->
+                    <div class="col-md-2 text-center" onclick="rechercherDefis('','2')"> <!-- Ajout de text-center ici -->
                         <div class="card-inner p-3 d-flex flex-column align-items-center">
                             <img src="{{asset('Front/images/exo/normal.png')}}" width="100">
                             <div class="text-center mg-text"> 
@@ -50,7 +57,7 @@
                             </div>
                         </div>
                     </div> 
-                    <div class="col-md-2 text-center"> <!-- Ajout de text-center ici -->
+                    <div class="col-md-2 text-center" onclick="rechercherDefis('','3')"> <!-- Ajout de text-center ici -->
                         <div class="card-inner p-3 d-flex flex-column align-items-center"> 
                             <img src="{{asset('Front/images/exo/hard.png')}}" width="100"> 
                             <div class="text-center mg-text"> 
@@ -83,9 +90,9 @@
 		<div class="row">
 	
 
-<div class="row">
-  {% for i in weza %}
-    <div class="col-lg-3 col-md-3 mb-2">
+<div class="row" id="searchResults">
+  {% for i in pagination %}
+    <div class="col-lg-4 col-md-6 mb-4">
       <section class="performance-facts" style="height: 425px;">
         <header class="performance-facts__header">
           <h1 class="performance-facts__title">{{i.nom}}</h1>
@@ -166,16 +173,32 @@
 		</div>
 
 		<div class="row justify-content-center mt-5">
-			<nav aria-label="Page navigation ">
-  <ul class="pagination justify-content-center">
-    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-    <li class="page-item active" aria-current="page"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-  </ul>
-</nav>
-		</div>
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            {% set previousPage = pagination.getCurrentPageNumber() - 1 %}
+            {% if previousPage >= 1 %}
+                <li class="page-item"><a class="page-link" href="{{ path('de_ftest', {'page': previousPage}) }}">Précédent</a></li>
+            {% else %}
+                <li class="page-item disabled"><span class="page-link">Précédent</span></li>
+            {% endif %}
+            
+            {% for page in pagination.getPaginationData().pagesInRange %}
+                {% if page == pagination.getCurrentPageNumber() %}
+                    <li class="page-item active" aria-current="page"><span class="page-link">{{ page }}</span></li>
+                {% else %}
+                    <li class="page-item"><a class="page-link" href="{{ path('de_ftest', {'page': page}) }}">{{ page }}</a></li>
+                {% endif %}
+            {% endfor %}
+            
+            {% set nextPage = pagination.getCurrentPageNumber() + 1 %}
+            {% if nextPage <= pagination.getPaginationData().pageCount %}
+                <li class="page-item"><a class="page-link" href="{{ path('de_ftest', {'page': nextPage}) }}">Suivant</a></li>
+            {% else %}
+                <li class="page-item disabled"><span class="page-link">Suivant</span></li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
 	
 </section>
 {% endblock %}
@@ -322,4 +345,143 @@ p {
 }
 
 </style>
+{% endblock %}
+{% block js %}
+<!-- 
+    Essential Scripts
+    =====================================-->
+
+
+   <!-- Main jQuery -->
+   <script src="{{asset('Front/plugins/jquery/jquery.js')}}"></script>
+   <!-- Bootstrap 4.3.1 -->
+   <script src="{{asset('Front/plugins/bootstrap/js/bootstrap.min.js')}}"></script>
+   <!-- Slick Slider -->
+   <script src="{{asset('Front/plugins/slick-carousel/slick/slick.min.js')}}"></script>
+   <!--  Magnific Popup-->
+   <script src="{{asset('Front/plugins/magnific-popup/dist/jquery.magnific-popup.min.js')}}"></script>
+   <!-- Form Validator -->
+   <script src="{{asset('http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.32/jquery.form.js')}}"></script>
+   <script src="{{asset('http://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.min.js')}}"></script>
+   <!-- Google Map -->
+   <script src="{{asset('https://maps.googleapis.com/maps/api/js?key=AIzaSyBu5nZKbeK-WHQ70oqOWo-_4VmwOwKP9YQ')}}"></script>
+   <script src="{{asset('Front/plugins/google-map/gmap.js')}}"></script>
+
+   <script src="{{asset('Front/js/script.js')}}"></script>
+<script>
+   function rechercherDefis(termeRecherche, difficulte) {
+    var formData = new FormData();
+    formData.append('dsearch', termeRecherche);
+    formData.append('difficulte', difficulte);
+
+    fetch('{{ path('dsearch') }}', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        var resultsHtml = '';
+        console.log(data);
+        data.weza.forEach(function(defi) {
+            resultsHtml += `
+            <div class="col-lg-4 col-md-6 mb-4"> <!-- Ajout de l'espace entre chaque répétition -->
+                <section class="performance-facts" style="height: 425px;">
+                    <header class="performance-facts__header">
+                        <h1 class="performance-facts__title">${defi.nom}</h1>
+                        <p>${defi.nbj} Jours</p>
+                    </header>
+                    <table class="performance-facts__table">
+                        <thead>
+                            <tr>
+                                <th colspan="3" class="small-info">
+                                    Exercice par jour
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th colspan="2">
+                                    <b>Nombre d'exercices: </b>
+                                    ${defi.ex.length}
+                                </th>
+                                <td>
+                                    Séries/Répétitions
+                                </td>
+                            </tr>
+                            <tr class="thick-row">
+                                <td colspan="3" class="small-info">
+                                    <b>% S/R *</b>
+                                </td>
+                            </tr>`;
+            
+            defi.ex.forEach(function(exercice) {
+                resultsHtml += `
+                            <tr>
+                                <th colspan="2">
+                            
+                                    <a href="/fexercice/detail/${exercice.id}" style="color: black;"><b>${exercice.nom}</b></a>
+                                </th>
+                                <td>
+                                    <b>${exercice.nd * 2}/${exercice.nd * 5}</b>
+                                </td>
+                            </tr>`;
+            });
+
+            resultsHtml += `
+                            <tr class="thick-end">
+                                <th colspan="2">
+                                    <b>30 min max par exercice</b>
+                                </th>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="performance-facts__table--grid">
+                        <tbody>
+                            <tr class="thin-end">
+                                <td colspan="2">
+                                    <div style="text-align: center; margin-bottom: 20px;">`;
+            
+            if (defi.nd == 1) {
+                resultsHtml += `<img src="{{asset('Front/images/exo/et1.png')}}" width="40%" height="40%" />`;
+            } else if (defi.nd == 2) {
+                resultsHtml += `<img src="{{asset('Front/images/exo/et2.png')}}" width="40%" height="40%" />`;
+            } else if (defi.nd == 3) {
+                resultsHtml += `<img src="{{asset('Front/images/exo/et3.png')}}" width="40%" height="40%" />`;
+            }
+
+            resultsHtml += `
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="small-info">${defi.des}</p>
+                </section>
+            </div>`;
+        });
+
+        document.getElementById('searchResults').innerHTML = resultsHtml;
+    })
+    .catch(error => {
+        console.error('Erreur lors de la requête:', error);
+    });
+}
+
+document.getElementById('searchForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    var searchTerm = document.getElementById('searchInput').value;
+    var difficulty = document.getElementById('difficultyInput').value; // Récupérer la valeur de la difficulté
+    
+    if (!this.classList.contains('searched')) {
+        rechercherDefis(searchTerm, difficulty);
+        this.classList.add('searched');
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    rechercherDefis('');
+});
+</script>
+
 {% endblock %}

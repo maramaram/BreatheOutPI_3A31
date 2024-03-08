@@ -7,9 +7,9 @@
     <div class="row">
       <div class="col-lg-12 text-center">
           <ul class="list-inline mb-0">
-            <li class="list-inline-item"><a href="index.html" class="text-sm letter-spacing text-white text-uppercase font-weight-bold">Home</a></li>
+            <li class="list-inline-item"><a href="index.html" class="text-sm letter-spacing text-white text-uppercase font-weight-bold">Accueil</a></li>
             <li class="list-inline-item"><span class="text-white">|</span></li>
-            <li class="list-inline-item"><a href="#" class="text-color text-uppercase text-sm letter-spacing">About us</a></li>
+            <li class="list-inline-item"><a href="#" class="text-color text-uppercase text-sm letter-spacing">À propos</a></li>
           </ul>
            <h1 class="text-lg text-white mt-2">Exercices</h1>
       </div>
@@ -25,27 +25,43 @@
   <div class="col-md-9"> <div class="card p-4 mt-3">
    <h3 class="heading mt-5 text-center">Salut! choisissez-vous?</h3> 
    <div class="d-flex justify-content-center px-5"> <div class="search">
-    <input type="text" class="search-input" placeholder="Recherche..." name=""> <a href="#" class="search-icon"> <i class="fa fa-search"></i> </a>
+    <input type="text" class="search-input" id="searchInput" placeholder="Recherche..." name=""> <a href="#" class="search-icon" onclick="rechercherExercices(document.getElementById('searchInput').value, document.getElementById('muscleSelect').value)"> <i class="fa fa-search"></i> </a>
      </div> 
+     <div class="row mt-4 g-2 px-4 mb-11">
+    <select id="muscleSelect" >
+        <option value="Pectoraux">Pectoraux</option>
+        <option value="Epaules">Epaules</option>
+        <option value="Epaules">Biceps</option>
+        <option value="Epaules">Triceps</option>
+        <option value="Epaules">Abdos</option>
+        <option value="Epaules">Dos</option>
+        <option value="Epaules">Quadriceps</option>
+        <option value="Epaules">Ischio-jambiers</option>
+        <option value="Epaules">Fessiers</option>
+        <option value="Epaules">Mollets</option>
+        <option value="">Tout</option>
+        <!-- Ajoutez d'autres options pour les muscles -->
+    </select>
+</div>
      </div>
       <div class="row mt-4 g-1 px-4 mb-5"> 
-      <div class="col-md-2"> 
-      <div class="card-inner p-3 d-flex flex-column align-items-center"> 
-      <img src="{{asset('Front/images/exo/pec.png')}}" width="100"> 
-      <div class="text-center mg-text"> 
-      <span class="mg-text">Pectoraux</span> 
-      </div>
-       </div>
-        </div>
-         <div class="col-md-2">
-          <div class="card-inner p-3 d-flex flex-column align-items-center">
-           <img src="{{asset('Front/images/exo/ep.png')}}" width="100">
+   <div class="col-md-2" onclick="rechercherExercices('', 'pectoraux')"> 
+        <div class="card-inner p-3 d-flex flex-column align-items-center"> 
+            <img src="{{asset('Front/images/exo/pec.png')}}" width="100"> 
             <div class="text-center mg-text"> 
-            <span class="mg-text">Epaules</span>
-             </div>
-              </div>
-               </div> 
-               <div class="col-md-2">
+                <span class="mg-text">Pectoraux</span> 
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2" onclick="rechercherExercices('', 'epaules')">
+        <div class="card-inner p-3 d-flex flex-column align-items-center">
+            <img src="{{asset('Front/images/exo/ep.png')}}" width="100">
+            <div class="text-center mg-text"> 
+                <span class="mg-text">Epaules</span>
+            </div>
+        </div>
+    </div> 
+  <div class="col-md-2">
                 <div class="card-inner p-3 d-flex flex-column align-items-center"> 
                 <img src="{{asset('Front/images/exo/bi.png')}}" width="100"> <div class="text-center mg-text"> 
                 <span class="mg-text">Biceps</span> 
@@ -66,42 +82,41 @@
                      </div>
                       </div>
                        </div> 
-                       </div> 
-                      
-                       <div class="row mt-4 g-1 px-4 mb-5 justify-content-center"> 
-      <div class="col-md-2"> 
-      <div class="card-inner p-3 d-flex flex-column align-items-center"> 
-      <img src="{{asset('Front/images/exo/jaa.png')}}" width="100"> 
-      <div class="text-center mg-text"> 
-      <span class="mg-text">Quadriceps</span> 
-      </div>
-       </div>
+</div>
+
+<div class="row mt-4 g-1 px-4 mb-5 justify-content-center"> 
+    <div class="col-md-2" onclick="rechercherExercices('', 'quadriceps')"> 
+        <div class="card-inner p-3 d-flex flex-column align-items-center"> 
+            <img src="{{asset('Front/images/exo/jaa.png')}}" width="100"> 
+            <div class="text-center mg-text"> 
+                <span class="mg-text">Quadriceps</span> 
+            </div>
         </div>
-        <div class="col-md-2"> 
-      <div class="card-inner p-3 d-flex flex-column align-items-center"> 
-      <img src="{{asset('Front/images/exo/jar.png')}}" width="100"> 
-      <div class="text-center mg-text"> 
-      <span class="mg-text">Ischio-jambiers</span> 
-      </div>
-       </div>
+    </div>
+    <div class="col-md-2" onclick="rechercherExercices('', 'ischio-jambiers')"> 
+        <div class="card-inner p-3 d-flex flex-column align-items-center"> 
+            <img src="{{asset('Front/images/exo/jar.png')}}" width="100"> 
+            <div class="text-center mg-text"> 
+                <span class="mg-text">Ischio-jambiers</span> 
+            </div>
         </div>
-        <div class="col-md-2"> 
-      <div class="card-inner p-3 d-flex flex-column align-items-center"> 
-      <img src="{{asset('Front/images/exo/ass.png')}}" width="100"> 
-      <div class="text-center mg-text"> 
-      <span class="mg-text">Fessiers</span> 
-      </div>
-       </div>
+    </div>
+    <div class="col-md-2" onclick="rechercherExercices('', 'fessiers')"> 
+        <div class="card-inner p-3 d-flex flex-column align-items-center"> 
+            <img src="{{asset('Front/images/exo/ass.png')}}" width="100"> 
+            <div class="text-center mg-text"> 
+                <span class="mg-text">Fessiers</span> 
+            </div>
         </div>
-           <div class="col-md-2"> 
-      <div class="card-inner p-3 d-flex flex-column align-items-center"> 
-      <img src="{{asset('Front/images/exo/mo.png')}}" width="100"> 
-      <div class="text-center mg-text"> 
-      <span class="mg-text">Mollets</span> 
-      </div>
-       </div>
+    </div>
+    <div class="col-md-2" onclick="rechercherExercices('', 'mollets')"> 
+        <div class="card-inner p-3 d-flex flex-column align-items-center"> 
+            <img src="{{asset('Front/images/exo/mo.png')}}" width="100"> 
+            <div class="text-center mg-text"> 
+                <span class="mg-text">Mollets</span> 
+            </div>
         </div>
-        </div>
+    </div>
         
                        </div> 
                        
@@ -130,10 +145,10 @@
 
                         <section class="section blog bg-gray">
 	<div class="container">
-		<div class="row">
+		<div class="row" id="searchResults">
 	
 
-{% for i in weza %}
+{% for i in pagination %}
 
 <div class="col-lg-4 col-md-6 mb-4"> 
     <article class="card border-0 rounded-0">
@@ -167,18 +182,33 @@
 
 		</div>
 
-		<div class="row justify-content-center mt-5">
-			<nav aria-label="Page navigation ">
-  <ul class="pagination justify-content-center">
-    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-    <li class="page-item active" aria-current="page"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-  </ul>
-</nav>
-		</div>
-	</div>
+<div class="row justify-content-center mt-5">
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            {% set previousPage = pagination.getCurrentPageNumber() - 1 %}
+            {% if previousPage >= 1 %}
+                <li class="page-item"><a class="page-link" href="{{ path('ex_ftest', {'page': previousPage}) }}">Précédent</a></li>
+            {% else %}
+                <li class="page-item disabled"><span class="page-link">Précédent</span></li>
+            {% endif %}
+            
+            {% for page in pagination.getPaginationData().pagesInRange %}
+                {% if page == pagination.getCurrentPageNumber() %}
+                    <li class="page-item active" aria-current="page"><span class="page-link">{{ page }}</span></li>
+                {% else %}
+                    <li class="page-item"><a class="page-link" href="{{ path('ex_ftest', {'page': page}) }}">{{ page }}</a></li>
+                {% endif %}
+            {% endfor %}
+            
+            {% set nextPage = pagination.getCurrentPageNumber() + 1 %}
+            {% if nextPage <= pagination.getPaginationData().pageCount %}
+                <li class="page-item"><a class="page-link" href="{{ path('ex_ftest', {'page': nextPage}) }}">Suivant</a></li>
+            {% else %}
+                <li class="page-item disabled"><span class="page-link">Suivant</span></li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
 </section>
 {% endblock %}
 
@@ -203,4 +233,94 @@
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="{{asset('Front/css/style.css')}}">
 <link rel="stylesheet" href="{{asset('Front/css/exo.css')}}">
+{% endblock %}
+{% block js %}
+<!-- 
+    Essential Scripts
+    =====================================-->
+
+
+   <!-- Main jQuery -->
+   <script src="{{asset('Front/plugins/jquery/jquery.js')}}"></script>
+   <!-- Bootstrap 4.3.1 -->
+   <script src="{{asset('Front/plugins/bootstrap/js/bootstrap.min.js')}}"></script>
+   <!-- Slick Slider -->
+   <script src="{{asset('Front/plugins/slick-carousel/slick/slick.min.js')}}"></script>
+   <!--  Magnific Popup-->
+   <script src="{{asset('Front/plugins/magnific-popup/dist/jquery.magnific-popup.min.js')}}"></script>
+   <!-- Form Validator -->
+   <script src="{{asset('http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.32/jquery.form.js')}}"></script>
+   <script src="{{asset('http://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.min.js')}}"></script>
+   <!-- Google Map -->
+   <script src="{{asset('https://maps.googleapis.com/maps/api/js?key=AIzaSyBu5nZKbeK-WHQ70oqOWo-_4VmwOwKP9YQ')}}"></script>
+   <script src="{{asset('Front/plugins/google-map/gmap.js')}}"></script>
+
+   <script src="{{asset('Front/js/script.js')}}"></script>
+
+   <script>
+    function rechercherExercices(termeRecherche, muscleCible) {
+        var formData = new FormData();
+        formData.append('search', termeRecherche);
+        formData.append('muscle', muscleCible); // Ajouter le muscle ciblé à la requête
+
+        fetch('/search', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('searchResults').innerHTML = '';
+
+            var resultsHtml = '';
+            console.log(data);
+            data.weza.forEach(function(exercice) {
+                resultsHtml += `
+                    <div class="col-lg-4 col-md-6 mb-4"> 
+                        <article class="card border-0 rounded-0">
+                            <a href="/fexercice/detail/${exercice.id}"><img src="${exercice.img}" alt="" class="img-fluid"></a>
+                            <div class="mt-3 px-4 py-3" style="min-height: 225px; position: relative;">
+                                <div class="blog-post-meta text-capitalize mb-2">
+                                    <span class="post-meta date-meta mr-2">
+                                        <i class="ti-calendar mr-2"></i>${exercice.mc}
+                                    </span> 
+                                </div>
+                                <center><a href="/fexercice/detail/${exercice.id}"><h4 class="mb-3 font-secondary">${exercice.nom}</h4></a></center>
+                                <div style="position: absolute; bottom: 15px; left: 0; right: 0; text-align: center;">`;
+
+                if (exercice.nd == 1) {
+                    resultsHtml += '<img src="{{asset('Front/images/exo/dif1.png')}}" width="30%" height="30%" />';
+                } else if (exercice.nd == 2) {
+                    resultsHtml += '<img src="{{asset('Front/images/exo/dif2.png')}}" width="30%" height="30%" />';
+                } else if (exercice.nd == 3) {
+                    resultsHtml += '<img src="{{asset('Front/images/exo/dif3.png')}}" width="30%" height="30%" />';
+                }
+
+                resultsHtml += `</div>
+                            </div>
+                        </article>
+                    </div>`;
+            });
+
+            document.getElementById('searchResults').innerHTML = resultsHtml;
+
+            // Mettre à jour la pagination si elle existe
+            if (data.pagination) {
+                document.getElementById('pagination').innerHTML = data.pagination;
+            }
+        })
+        .catch(error => {
+            console.error('Erreur lors de la requête:', error);
+        });
+    }
+
+    document.getElementById('searchForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var searchTerm = document.getElementById('searchInput').value;
+        rechercherExercices(searchTerm);
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        rechercherExercices('');
+    });
+</script>
 {% endblock %}

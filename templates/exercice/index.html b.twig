@@ -11,18 +11,20 @@
                     <h4>Table Exercices</h4>
                 </div>
                 <div class="input-group mb-3">
-                    <form id="searchForm" class="container-fluid">  
+                    <form id="searchhForm" class="container-fluid">  
                         <div class="row">
                             <div class="col">
-                                <input id="searchInput" type="text" class="form-control" name="search">
+                                <input id="searchhInput" type="text" class="form-control" name="searchh">
                             </div>
                             <div class="col-auto">
-                                <button id="searchButton" class="btn btn-outline-dark btn-block" type="submit">Chercher</button>
+                                <button id="searchhButton" class="btn btn-outline-dark btn-block" type="submit">Chercher</button>
                             </div>
                         </div>
                     </form>
                 </div>
+                <a href="{{ path('app_exercice_pdf') }}" class="btn btn-red"><button class="btn btn-outline-dark btn-block" type="button">PDF</button> </a>
                 <a href="{{ path('ex_add') }}"> 
+                
                     <button class="btn btn-outline-dark btn-block" type="button">Ajouter</button> 
                 </a>
                 <br> 
@@ -40,7 +42,7 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody id="searchResults">
+                        <tbody id="searchhResults">
                             <!-- Les données seront affichées ici dynamiquement -->
                         </tbody>
                     </table>
@@ -49,6 +51,20 @@
         </div>
     </div>
 </div>
+<div class="col-lg-12"> <!-- Utilisez col-lg-12 pour occuper toute la largeur de la grille -->
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">STATS</h4>
+            <canvas id="another-chart" style="width: 100vw; height: 40vh;"></canvas>
+            <!-- Utilisez 100vw pour occuper 100% de la largeur de l'écran et 100vh pour occuper 100% de la hauteur de l'écran -->
+        </div>
+    </div>
+</div>
+
+
+
+
+
 {% endblock %}
 
 {% block js %}
@@ -79,22 +95,75 @@
 
 
     <script src="{{asset('Back/js/dashboard/dashboard-1.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+    #most-viewed-chart,
+    #another-chart {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+</style>
+
+
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Bar Chart
+        var ctxBar = document.getElementById('another-chart').getContext('2d');
+        // Remplacez les données suivantes par les vôtres pour le graphique à barres
+        var dataBar = {
+            labels: ['Facile', 'Moyen', 'Difficile'],
+            datasets: [{
+                label: 'Data',
+                data: [{{ f|json_encode|raw }}, {{ m|json_encode|raw }}, {{ d|json_encode|raw }}],
+                backgroundColor: [ 'rgba(75, 192, 192, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)' ], // Définir les couleurs de fond de chaque barre (rouge, jaune, bleu)
+                 borderColor: [ 'rgba(75, 192, 192, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)' ], // Définir les couleurs des bordures de chaque barre (rouge, jaune, bleu)
+                borderWidth: 1
+            }]
+        };
+        var optionsBar = {
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Difficulté'
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Nombre exercices'
+                    }
+                }
+            }
+        };
+        var myBarChart = new Chart(ctxBar, {
+            type: 'bar',
+            data: dataBar,
+            options: optionsBar
+        });
+    });
+</script>
 <script>
     // Fonction pour effectuer une recherche
     function rechercherExercices(termeRecherche) {
         // Créer une instance de l'objet FormData
         var formData = new FormData();
-        formData.append('search', termeRecherche);
+        formData.append('searchh', termeRecherche);
 
         // Effectuer la requête Ajax pour récupérer les résultats de la recherche
-        fetch('/search', {
+        fetch('/searchh', {
             method: 'POST',
             body: formData
         })
         .then(response => response.json())
         .then(data => {
             // Vider le contenu de la table avant d'ajouter de nouveaux résultats
-            document.getElementById('searchResults').innerHTML = '';
+            document.getElementById('searchhResults').innerHTML = '';
 
             // Manipuler les données JSON reçues et ajouter les nouveaux résultats
             var resultsHtml = '';
@@ -120,7 +189,7 @@
             });
 
             // Mettre à jour l'interface utilisateur avec les nouveaux résultats de la recherche
-            document.getElementById('searchResults').innerHTML = resultsHtml;
+            document.getElementById('searchhResults').innerHTML = resultsHtml;
         })
         .catch(error => {
             console.error('Erreur lors de la requête:', error);
@@ -128,10 +197,10 @@
     }
 
     // Événement pour soumettre le formulaire de recherche
-    document.getElementById('searchForm').addEventListener('submit', function(event) {
+    document.getElementById('searchhForm').addEventListener('submit', function(event) {
         event.preventDefault(); // Empêcher la soumission du formulaire par défaut
-        var searchTerm = document.getElementById('searchInput').value;
-        rechercherExercices(searchTerm);
+        var searchhTerm = document.getElementById('searchhInput').value;
+        rechercherExercices(searchhTerm);
     });
 
     // Charge initiale des exercices
