@@ -16,8 +16,6 @@ use Symfony\Component\HttpFoundation\File\File;
 
 class SessionController extends AbstractController
 {
- 
-
     #[Route('/fSession', name: 'se_ftest')]
     public function findex(SessionRepository $a): Response
     {
@@ -28,14 +26,14 @@ class SessionController extends AbstractController
         ]);
     }
 
-    #[Route('/bSession', name: 'se_btest')]
-    public function bindex(SessionRepository $a): Response
-    {
-        $exo = $a->findAll();
+        #[Route('/bSession', name: 'se_btest')]
+        public function bindex(SessionRepository $a): Response
+        {
+                $exo=$a->findAll(); // Remplacez findAll() par votre propre requête si nécessaire
         return $this->render('session/index.html b.twig', [
             'controller_name' => 'TestController',
-            'weza'=> $exo
-        ]);
+            'weza' => $exo,
+            ]);
     }
 
     #[Route('/bSession/d/{id}', name: 'se_dex')]
@@ -73,10 +71,10 @@ class SessionController extends AbstractController
             // Persistez l'entité dans la base de données
             $e->persist($Session);
             $e->flush();
-            // Redirigez l'utilisateur vers une autre page après l'ajout réussi
+            
             return $this->redirectToRoute('se_btest');
         }
-        
+            
         // Affichez le formulaire dans le template
         return $this->render('session/Ajouter.html.twig', [
             'form' => $form->createView(),
@@ -126,6 +124,5 @@ class SessionController extends AbstractController
                 'weza'=> $weza
             ]);
          }
-        
- 
         }
+    

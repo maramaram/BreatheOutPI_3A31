@@ -3,6 +3,8 @@
 {% block title %}FIRAS !{% endblock %}
 
 {% block body %}
+<script src="{{ asset( 'assetsback/js/jquery.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <div class="container-fluid">
     <div class="row">
       
@@ -14,14 +16,23 @@
                     <div class="input-group mb-3">
                                             
                                         <input type="text" class="form-control" >
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-dark btn-block" type="button">Chercher</button>
-                                            </div>
+                                           
                                         </div>
                                      <a href="{{path('re_add')}}"> <button class="btn btn-outline-dark btn-block" type="button">Ajouter</button> </a>
                                       <br> 
+                                       <div class="container">
+        <div>
+            <!-- Boutons à droite -->
+            <a href="{{ path('TriCroissant') }}" class="btn btn-light">
+                <i class="fas fa-sort-amount-up me-1"></i> Tri Croissant par Date
+            </a>
+            <a href="{{ path('TriDecroissant') }}" class="btn btn-light ms-2">
+                <i class="fas fa-sort-amount-down me-1"></i> Tri Décroissant par Date
+            </a>
+        </div>
+                                      <input type="search" class="form-control" placeholder="Chercher" id="search">
                     <div class="table-responsive">
-                        <table class="table table-hover">
+                        <table class="table table-hover" id="tableac">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -60,8 +71,94 @@
                     </div>
                 </div>
             </div>
+           
             <!-- /# card -->
        
     </div>
 </div>
+ <div class="row">
+        <div class="col-md-12 text-center" id="pagination-container">
+            <!-- Pagination links will be dynamically added here -->
+        </div>
+    </div>
+<script>
+        $(document).ready(function() {
+            $('#search').keyup(function() {
+                search_table($(this).val());
+            });
+
+            function search_table(value) {
+                $('#tableac tbody tr').each(function() {
+                    var found = false;
+                    $(this).find('td:nth-child(2), td:nth-child(3)').each(function() {
+                        if ($(this).text().toLowerCase().includes(value.toLowerCase())) {
+                            found = true;
+                            return false;
+                        }
+                    });
+                    if (found) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            }
+
+            $('#tableac th').click(function() {
+                var table = $(this).parents('table').eq(0)
+                var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
+                this.asc = !this.asc
+                if (!this.asc) {
+                    rows = rows.reverse()
+                }
+                for (var i = 0; i < rows.length; i++) {
+                    table.append(rows[i])
+                }
+            });
+
+            function comparer(index) {
+                return function(a, b) {
+                    var valA = getCellValue(a, index),
+                        valB = getCellValue(b, index)
+                    return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.toString().localeCompare(valB)
+                }
+            }
+
+            function getCellValue(row, index) {
+                return $(row).children('td').eq(index).text()
+            }
+
+            const itemsPerPage = 3;
+            const partners = $('#tableac tbody tr');
+            const numPages = Math.ceil(partners.length / itemsPerPage);
+
+            function paginate(page) {
+                partners.hide().slice((page - 1) * itemsPerPage, page * itemsPerPage).show();
+            }
+
+            function createPaginationLinks() {
+                const paginationContainer = $('#pagination-container');
+                for (let i = 1; i <= numPages; i++) {
+                    const link = $('<a>', {
+                        href: '#',
+                        text: i,
+                        click: function(event) {
+                            event.preventDefault();
+                            paginate(i);
+                        }
+                    });
+                    paginationContainer.append(link).append(' ');
+                }
+            }
+
+            createPaginationLinks();
+            paginate(1);
+        });
+    </script>
+    <script>
+    // Afficher le modal dès que la page est chargée
+    $(document).ready(function() {
+        $('#successModal').modal('show');
+    });
+</script>
 {% endblock %}

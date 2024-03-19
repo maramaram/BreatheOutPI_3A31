@@ -15,8 +15,31 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request ;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\HttpFoundation\File\File;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
+use Pagerfanta\Pagerfanta;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Doctrine\ORM\QueryBuilder;
+
 class ReservationController extends AbstractController
 {
+    
+    #[Route('/TriCroissant', name: 'TriCroissant')]
+    public function TriCroissant(ReservationRepository $eventRepository): Response
+    {
+    $event = $eventRepository->TriCroissant();
+    return $this->render('reservation/index.html b.twig', [
+        'weza' => $event
+    ]);
+    }
+
+    #[Route('/TriDecroissant', name: 'TriDecroissant')]
+    public function TriDecroissant(ReservationRepository $eventRepository): Response
+    {
+        $event = $eventRepository->TriDecroissant();
+        return $this->render('reservation/index.html b.twig', [
+            'weza' => $event
+    ]);
+    } 
     #[Route('/fReservation/ajou/{id}', name: 're_ftest')]
     public function findex(EntityManagerInterface $e,SessionRepository $s,UserRepository $u,$id): Response
     { 

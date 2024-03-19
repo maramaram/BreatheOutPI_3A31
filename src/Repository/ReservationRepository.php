@@ -45,4 +45,19 @@ class ReservationRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+
+public function TriCroissant(): array
+{   
+$queryBuilder = $this->createQueryBuilder('m1')
+    ->orderBy('m1.date', 'ASC');
+return $queryBuilder->getQuery()->getResult();
+}
+
+public function TriDecroissant(): array
+{   
+$queryBuilder = $this->createQueryBuilder('m1')
+    ->orderBy('m1.date', 'DESC');
+return $queryBuilder->getQuery()->getResult();
+}
 }

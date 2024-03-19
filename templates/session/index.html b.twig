@@ -18,6 +18,16 @@
                                                 <button class="btn btn-outline-dark btn-block" type="button">Chercher</button>
                                             </div>
                                         </div>
+                                        <div class="container">
+        <div>
+            <!-- Boutons à droite -->
+            <a href="{{ path('TriCroissant') }}" class="btn btn-light">
+                <i class="fas fa-sort-amount-up me-1"></i> Tri Croissant par Date
+            </a>
+            <a href="{{ path('TriDecroissant') }}" class="btn btn-light ms-2">
+                <i class="fas fa-sort-amount-down me-1"></i> Tri Décroissant par Date
+            </a>
+        </div>
                                      <a href="{{path('se_add')}}"> <button class="btn btn-outline-dark btn-block" type="button">Ajouter</button> </a>
                                       <br> 
                     <div class="table-responsive">
@@ -26,7 +36,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Type</th>
-                                    <th>Coatch</th>
+                                    <th>Coach</th>
                                     <th>Description</th>
                                     <th>date</th>
                                     <th>Capaciter</th>
@@ -73,7 +83,7 @@
                 </div>
             </div>
             <!-- /# card -->
-       
+
     </div>
 </div>
 {% endblock %}

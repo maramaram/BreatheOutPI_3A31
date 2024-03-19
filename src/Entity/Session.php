@@ -39,13 +39,6 @@ class Session
     #[ORM\OneToMany(targetEntity: Reservation::class, mappedBy: 'session')]
     private Collection $reservations;
 
-    #[
-        Assert\NotNull(message: "Veuillez télécharger un MP4."),
-        Assert\File(
-            mimeTypes: ["video/mp4"],
-            mimeTypesMessage: "Veuillez télécharger un fichier MP4 valide"
-        )
-    ]
     #[ORM\Column(length: 255)]
     private ?string $vid = null;
 
