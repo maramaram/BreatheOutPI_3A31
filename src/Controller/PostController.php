@@ -21,6 +21,10 @@ class PostController extends AbstractController
     #[Route('/bPost', name: 'po_btest')]
     public function bindco(EntityManagerInterface $entityManager, PostRepository $postRepository): Response
     {
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createNotFoundException('No ID found');
+        }
         // Fetch most viewed posts using native SQL
         $mostViewedPosts = $entityManager->getConnection()->executeQuery(
             'SELECT 
@@ -59,7 +63,10 @@ class PostController extends AbstractController
     
     #[Route('/fPost', name: 'po_ftest')]
     public function findco(PostRepository $a): Response
-    {       
+    {    $user = $this->getUser();
+        if (!$user) {
+            throw $this->createNotFoundException('No ID found');
+        }
         $coo = $a->findAll();
         return $this->render('post/Front.html.twig', [
             'controller_name' => 'TestController',
@@ -69,7 +76,11 @@ class PostController extends AbstractController
 
     #[Route('/fPostcomment/{id}', name: 'poco_ftest')]
     public function findcom(PostRepository $a,$id,EntityManagerInterface $e): Response
-    {   
+    {
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createNotFoundException('No ID found');
+        }
         $Post = $a->find($id);
         $Post->setViews($Post->getViews() + 1);
         $e->persist($Post);
@@ -90,6 +101,10 @@ class PostController extends AbstractController
     #[Route('/bPost/d/{id}', name: 'po_dex')]
     public function supprimer(EntityManagerInterface $e,$id,PostRepository $a)
     {
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createNotFoundException('No ID found');
+        }
         $weza=$a->find($id);
         $e->remove($weza);
         $e->flush();
@@ -100,6 +115,10 @@ class PostController extends AbstractController
         #[Route('/bPost/f/f/{id}', name: 'fpo_dex')]
     public function supprimerf(EntityManagerInterface $e,$id,PostRepository $a)
     {
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createNotFoundException('No ID found');
+        }
         $weza=$a->find($id);
         $e->remove($weza);
         $e->flush();
@@ -112,6 +131,10 @@ class PostController extends AbstractController
     #[Route('/bPost/a/', name: 'po_add')]
     public function ajouter(Request $r, EntityManagerInterface $e): Response
     {
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createNotFoundException('No ID found');
+        }
         $Post = new Post();
         $form = $this->createForm(PostType::class, $Post);
         $form->handleRequest($r);
@@ -156,6 +179,10 @@ class PostController extends AbstractController
     #[Route('/fPost/a/', name: 'fpo_add')]
     public function ajouterf(UserRepository $repository,Request $r, EntityManagerInterface $e): Response
     {
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createNotFoundException('No ID found');
+        }
         $user = $this->getUser();
         if (!$user) {
             throw $this->createNotFoundException('No ID found');

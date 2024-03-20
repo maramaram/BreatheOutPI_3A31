@@ -25,7 +25,7 @@ class UserType extends AbstractType
             ->add('nom')
             ->add('prenom')
             ->add('email')
-            ->add('pwd')
+            ->add('pwd',PasswordType::class)
             ->add('date_N')
             ->add('num_tel')
             ->add('adress')

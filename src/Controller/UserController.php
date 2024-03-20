@@ -72,12 +72,12 @@ class UserController extends AbstractController
                 $mail->SMTPAuth = true;
                 $mail->SMTPSecure = \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
                 $mail->Port = 587;
-                $mail->Username = 'BreatheOutEnergy@outlook.com'; // Your Outlook email address
-                $mail->Password = 'Breathe123@'; // Your Outlook password
+                $mail->Username = 'kamelhs02@outlook.com';
+                $mail->Password = '';
                 // Sender and recipient settings
-                $mail->setFrom('BreatheOutEnergy@outlook.com', 'BreatheOut');
-                $nomUser = $user->getPrenom(); // Use the $user object
-                $emailUser = $user->getEmail(); // Use the $user object
+                $mail->setFrom('', 'BreatheOut1');
+                $nomUser = $user->getPrenom();
+                $emailUser = $user->getEmail();
                 $mail->addAddress($emailUser);
                 $mail->isHTML(true);
                 $mail->Subject = 'PRODUCT VERIFIED !';

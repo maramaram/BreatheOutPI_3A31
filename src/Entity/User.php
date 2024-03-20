@@ -80,18 +80,7 @@ class User implements PasswordAuthenticatedUserInterface,UserInterface
     #[Assert\NotBlank(message:"Adress is required")]
     private ?string $adress = null;
 
-    #[
-        Assert\Image(
-            minWidth: 200,
-            maxWidth: 600,
-            minHeight: 200,
-            maxHeight: 120000,
-            minWidthMessage: "La largeur de l'image doit être d'au moins 200 pixels.",
-            maxWidthMessage: "La largeur de l'image ne doit pas dépasser 600 pixels.",
-            minHeightMessage: "La hauteur de l'image doit être d'au moins 200 pixels.",
-            maxHeightMessage: "La hauteur de l'image ne doit pas dépasser 120000 pixels."
-        )
-    ]
+
     #[ORM\Column(length: 255)]
     private ?string $photo = null;
 
@@ -110,8 +99,17 @@ class User implements PasswordAuthenticatedUserInterface,UserInterface
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Commande::class)]
     private Collection $commandes;
+
+
+    #[ORM\OneToMany(targetEntity: Session::class, mappedBy: 'coach')]
+    private Collection $sessions;
+
+    #[ORM\OneToMany(targetEntity: Reservation::class, mappedBy: 'User')]
+    private Collection $reservations;
     public function __construct()
     {
+        $this->sessions = new ArrayCollection();
+        $this->reservations = new ArrayCollection();
         $this->commentaire = new ArrayCollection();
         $this->posts = new ArrayCollection();
         $this->panier = new Panier($this);
@@ -398,4 +396,61 @@ class User implements PasswordAuthenticatedUserInterface,UserInterface
 
         return $this;
     }
+
+    public function addReservation(Reservation $reservation): static
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations->add($reservation);
+            $reservation->setUser($this);
+        }
+
+        return $this;
+    }
+    public function addSession(Session $session): static
+    {
+        if (!$this->sessions->contains($session)) {
+            $this->sessions->add($session);
+            $session->setCoach($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Session>
+     */
+    public function getSessions(): Collection
+    {
+        return $this->sessions;
+    }
+    public function removeSession(Session $session): static
+    {
+        if ($this->sessions->removeElement($session)) {
+            // set the owning side to null (unless already changed)
+            if ($session->getCoach() === $this) {
+                $session->setCoach(null);
+            }
+        }
+
+        return $this;
+    }
+    /**
+     * @return Collection<int, Reservation>
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+    public function removeReservation(Reservation $reservation): static
+    {
+        if ($this->reservations->removeElement($reservation)) {
+            // set the owning side to null (unless already changed)
+            if ($reservation->getUser() === $this) {
+                $reservation->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

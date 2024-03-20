@@ -99,7 +99,7 @@ class CommentController extends AbstractController
     
         if ($form->isSubmitted() && $form->isValid()) {
             
-            $forbiddenWords = ['nigga', 'black', 'wezza']; 
+            $forbiddenWords = ['door', 'window', 'sky'];
             $content = strtolower($Comment->getContenu());
     
             foreach ($forbiddenWords as $word) {

@@ -73,6 +73,10 @@ class ProduitsController extends AbstractController
     #[Route('/Produits/pajouter', name: 'app_Produits_pajouter')]
     public function pajouter(Request $request, EntityManagerInterface $entityManagerInterface)
     {
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createNotFoundException('No ID found');
+        }
         $Produits = new Produits();
 
         $form = $this->createForm(AddProduitsType::class, $Produits);
@@ -105,6 +109,10 @@ class ProduitsController extends AbstractController
     #[Route('/Produits/Pdelete/{id}', name: 'app_Produits_Pdelete')]
     public function Pdelete($id ,EntityManagerInterface $entityManagerInterface , ProduitsRepository $ProduitsRepository)
     {
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createNotFoundException('No ID found');
+        }
         $Produits = $ProduitsRepository->find($id);
         $entityManagerInterface->remove($Produits);
         $entityManagerInterface->flush();
@@ -115,6 +123,10 @@ class ProduitsController extends AbstractController
     #[Route('/Produits/Pedit/{id}', name: 'app_Produits_Pedit')]
     public function Pedit(Request $request, $id, EntityManagerInterface $entityManagerInterface, ProduitsRepository $ProduitsRepository)
     {
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createNotFoundException('No ID found');
+        }
         $Produits = $ProduitsRepository->find($id);
         $form = $this->createForm(AddProduitsType::class, $Produits);
         $form->handleRequest($request);
@@ -150,6 +162,10 @@ class ProduitsController extends AbstractController
     #[Route('/bproduits/generate-pdf', name: 'app_produits_generate_pdf')]
     public function generatePdf(Request $request, ProduitsRepository $produitsRepository): Response
     {
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createNotFoundException('No ID found');
+        }
         // Récupérez tous les produits depuis la base de données
         $produitsList = $produitsRepository->findAll();
 

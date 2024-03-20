@@ -103,7 +103,7 @@ class CommandeController extends AbstractController
             ->setMaxResults(1)
             ->getQuery()
             ->execute();
-        
+
             $entityManager->persist($commande);
             $entityManager->flush();
 

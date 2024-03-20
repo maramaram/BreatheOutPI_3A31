@@ -20,6 +20,10 @@ class QrCodeController extends AbstractController
     #[Route('/generate-qrcode', name: 'generate_qrcode')]
     public function generateQrCode(): Response
     {
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createNotFoundException('No ID found');
+        }
         $data = 'Données à encoder dans le QR Code';
         $filename = 'qrcode.png';
 
